@@ -9,4 +9,5 @@ metadata:
     - spectral
 spec:
   targets:
+    - ./techdocs/api-style-guides/catalog-info.yaml
     - ./techdocs/sdx-api-standards/catalog-info.yaml

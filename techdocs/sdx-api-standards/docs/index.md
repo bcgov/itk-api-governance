@@ -1,11 +1,11 @@
 ---
 title: SDX API Standard
 ---
-# Secure Data Exchange (SDX) API Standard 0.2.0
+# Secure Data Exchange (SDX) API Standard
 
 The Secure Data Exchange (SDX) provides a secure, standard platform for exchanging data between organizations. This documentation summarizes the SDX API Standard for published HTTP APIs.
 
-This page describes release **0.2.0**, the current release of the SDX API Standard. Older releases can be accessed from tagged commits in the repository.
+This page describes the current release of the SDX API Standard. Older releases can be accessed from tagged commits in the repository.
 
 The API Standard is a living standard with named releases. Requirements use the keywords **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** as defined by [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 
@@ -113,6 +113,8 @@ The SDX ruleset will validate the following mandatory rules:
 - Exclusion of internal edge headers and `X-Edge-Token` from the external API contract.
 
 <p style="color: red;"><strong>Review note:</strong> The SDX Ruleset will need to be created.  It will be a combination of the Basic ruleset plus SDX specific rules.  It will not include the Strict ruleset.  All of the rules above MUST be passed.</p>
+
+[B.C. API Governance Basic Style Guide](/docs/default/component/api-style-guides/basic-style-guide/)
 
 ### API Standard Release
 

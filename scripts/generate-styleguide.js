@@ -206,6 +206,7 @@ function generateStyleguide(inputPath, outputPath) {
   }
 
   const finalContent = outputLines.join('\n').trimEnd() + '\n';
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, finalContent, 'utf-8');
   console.log(`Generated: ${outputPath}`);
 }
@@ -244,11 +245,13 @@ console.log(`Found ${rulesetFiles.length} ruleset file(s):`);
 
 for (const filePath of rulesetFiles) {
   const baseName = path.basename(filePath, '-ruleset.yaml');
-  const mdName = baseName.toUpperCase() + '_STYLE_GUIDE.md';
-  const outputPath = path.join(projectRoot, 'dist', 'spectral', mdName);        // ← always in project root
+  const mdName = `${baseName}-style-guide.md`;
+  const distOutputPath = path.join(projectRoot, 'dist', 'spectral', mdName);
+  const techdocsOutputPath = path.join(projectRoot, 'techdocs', 'api-style-guides', 'docs', mdName);
 
   console.log(`  ${filePath} → ${mdName}`);
-  generateStyleguide(filePath, outputPath);
+  generateStyleguide(filePath, distOutputPath);
+  generateStyleguide(filePath, techdocsOutputPath);
 }
 
 console.log('Done.');

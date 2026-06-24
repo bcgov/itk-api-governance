@@ -5,7 +5,7 @@ adherence.
 
 A markdown formatted versions of the style guide can be found for each ruleset in the spectral directory.
 
-See [BASIC_STYLE_GUIDE.md](/dist/spectral/BASIC_STYLE_GUIDE.md) and [STRICT_STYLE_GUIDE.md](/dist/spectral/STRICT_STYLE_GUIDE.md)
+See [basic-style-guide.md](/dist/spectral/basic-style-guide.md) and [strict-style-guide.md](/dist/spectral/strict-style-guide.md)
 
 ## TechDocs
 
@@ -16,6 +16,7 @@ Current TechDocs components:
 
 | Component | Description |
 | --------- | ----------- |
+| [api-style-guides](techdocs/api-style-guides) | Generated API Governance Spectral style guides |
 | [sdx-api-standards](techdocs/sdx-api-standards) | Secure Data Exchange (SDX) API standards documentation |
 
 
