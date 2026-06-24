@@ -1,0 +1,45 @@
+name: Build TechDocs with DevHub TechDocs Publish Action
+
+permissions:
+    contents: read
+
+on:
+    workflow_dispatch:
+    push:
+        branches: [ main ]
+        paths:
+            - "catalog-info.yaml"
+            - "**/catalog-info.yaml"
+            - "**/mkdocs.yml"
+            - "**/docs/**"
+    pull_request:
+        branches: [ main ]
+        paths:
+            - "catalog-info.yaml"
+            - "**/catalog-info.yaml"
+            - "**/mkdocs.yml"
+            - "**/docs/**"
+
+jobs:
+    test_techdocs_build_job:
+        runs-on: ubuntu-latest
+
+        name: Build TechDocs content
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: '0'
+            -   name: Build TechDocs
+                uses: bcgov/devhub-techdocs-publish@stable
+                id: build_and_publish
+                with:
+                    publish: 'false'
+# The parameters below can be uncommented when publishing is enabled and secrets
+# have been exposed to the repo.
+#                    production:  ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
+#                    bucket_name: ${{ secrets.TECHDOCS_S3_BUCKET_NAME }}
+#                    s3_access_key_id: ${{ secrets.TECHDOCS_AWS_ACCESS_KEY_ID }}
+#                    s3_secret_access_key: ${{ secrets.TECHDOCS_AWS_SECRET_ACCESS_KEY }}
+#                    s3_region: ${{ secrets.TECHDOCS_AWS_REGION }}
+#                    s3_endpoint: ${{ secrets.TECHDOCS_AWS_ENDPOINT }}

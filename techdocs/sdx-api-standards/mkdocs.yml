@@ -1,0 +1,14 @@
+site_name: "SDX API Standards TechDocs"
+site_description: "Secure Data Exchange (SDX) API standards documentation"
+docs_dir: "docs"
+repo_url: "https://github.com/bcgov/csit-api-governance-spectral-style-guide"
+edit_uri: edit/main/techdocs/sdx-api-standards/docs
+nav:
+    - index.md
+plugins:
+    - techdocs-core
+    # This plugin is used by some DevHub TechDocs repositories but may not be
+    # included in every local TechDocs build image.
+    # - techdocs-git-audit
+markdown_extensions:
+    - md_in_html

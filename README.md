@@ -7,6 +7,17 @@ A markdown formatted versions of the style guide can be found for each ruleset i
 
 See [BASIC_STYLE_GUIDE.md](/dist/spectral/BASIC_STYLE_GUIDE.md) and [STRICT_STYLE_GUIDE.md](/dist/spectral/STRICT_STYLE_GUIDE.md)
 
+## TechDocs
+
+This repository includes a root Backstage `Location` in [catalog-info.yaml](catalog-info.yaml) that can reference one or more TechDocs components.
+Each TechDocs component should live in its own directory under `techdocs/` with its own `catalog-info.yaml`, `mkdocs.yml`, and `docs/` folder.
+
+Current TechDocs components:
+
+| Component | Description |
+| --------- | ----------- |
+| [sdx-api-standards](techdocs/sdx-api-standards) | Secure Data Exchange (SDX) API standards documentation |
+
 
 The **style guide** builds on Spectral's built-in OAS ruleset which can be found here:
 ```

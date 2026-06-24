@@ -1,0 +1,24 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sdx-api-standards-techdocs
+  title: SDX API Standards TechDocs
+  description: Secure Data Exchange (SDX) API standards documentation.
+  annotations:
+    github.com/project-slug: bcgov/csit-api-governance-spectral-style-guide
+    backstage.io/techdocs-ref: dir:.
+    bcgovpubcode.gov.bc.ca/ministry: CITZ
+    bcgovpubcode.gov.bc.ca/product_description: Secure Data Exchange (SDX) API standards documentation.
+    bcgovpubcode.gov.bc.ca/product_owner: Stainton, Drew
+    bcgovpubcode.gov.bc.ca/hosting_platform: Not-Applicable
+    backstage.io/source-template: template:default/docs-template
+  tags:
+    - api-governance
+    - api-standards
+    - secure-data-exchange
+    - sdx
+    - spectral
+spec:
+  type: documentation
+  lifecycle: experimental
+  owner: group:default/databc-aps
