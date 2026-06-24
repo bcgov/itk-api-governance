@@ -1,10 +1,10 @@
 # Strict OpenAPI Style Guide
 
-This Spectral ruleset extends the Basic OpenAPI Style Guide and applies stricter enforcement 
+This Spectral ruleset extends the [Basic OpenAPI Style Guide](basic-style-guide.md) and applies stricter enforcement 
 by elevating many recommended best practices to errors, adding mandatory content requirements, 
 and enforcing stricter structural and documentation standards.
 
-Key conventions and enforcements (in addition to all rules from the basic ruleset):
+Key conventions and enforcements (in addition to all rules from the [Basic OpenAPI Style Guide](basic-style-guide.md)):
 
 - All built-in best-practice rules from spectral:oas that were warnings are now errors
 - Mandatory descriptions required for: info, tags, operations, parameters, schemas, requestBodies, headers, securitySchemes

@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: sdx-ruleset.yaml
-# Generated: 2026-06-24T22:14:15.755Z
+# Generated: 2026-06-24T22:20:59.023Z
 extends: ./basic-ruleset.yaml
 functions:
   - sdx-no-internal-headers

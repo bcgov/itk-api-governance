@@ -2,7 +2,7 @@
 # This Spectral ruleset enforces the mandatory OpenAPI validation requirements
 # for APIs published through Secure Data Exchange (SDX).
 #
-# It extends the Basic OpenAPI Style Guide, escalates SDX-mandatory Basic
+# It extends the [Basic OpenAPI Style Guide](basic-style-guide.md), escalates SDX-mandatory Basic
 # warnings to errors, and adds SDX-specific gateway authorization and internal
 # transport rules.
 extends: ./basic-ruleset.yaml
