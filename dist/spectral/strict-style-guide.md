@@ -69,7 +69,7 @@ See [Basic Style Guide](basic-style-guide.md#openapi-tags-uniqueness)
 
 Operation must have an operationId
 
-See [Basic Style Guide](basic-style-guide.md#operation-operationId)
+See [Basic Style Guide](basic-style-guide.md#operation-operationid)
 
 ---
 
@@ -150,7 +150,7 @@ See [Basic Style Guide](basic-style-guide.md#oas2-host-trailing-slash)
 
 Operations with an in: formData parameter must include application/x-www-form-urlencoded or multipart/form-data in their consumes property.
 
-See [Basic Style Guide](basic-style-guide.md#oas2-operation-formData-consume-check)
+See [Basic Style Guide](basic-style-guide.md#oas2-operation-formdata-consume-check)
 
 ---
 
@@ -204,7 +204,7 @@ See [Basic Style Guide](basic-style-guide.md#oas3-callbacks-in-callbacks)
 
 Server URL should not point to example.com.
 
-See [Basic Style Guide](basic-style-guide.md#oas3-server-not-example.com)
+See [Basic Style Guide](basic-style-guide.md#oas3-server-not-examplecom)
 
 ---
 
@@ -438,7 +438,7 @@ See [Basic Style Guide](basic-style-guide.md#schema-description)
 
 Ensures every requestBody defined in components has a description.
 
-See [Basic Style Guide](basic-style-guide.md#requestBody-description)
+See [Basic Style Guide](basic-style-guide.md#requestbody-description)
 
 ---
 
@@ -456,7 +456,7 @@ See [Basic Style Guide](basic-style-guide.md#header-description)
 
 Ensures every securityScheme defined in components has a description.
 
-See [Basic Style Guide](basic-style-guide.md#securityScheme-description)
+See [Basic Style Guide](basic-style-guide.md#securityscheme-description)
 
 ---
 

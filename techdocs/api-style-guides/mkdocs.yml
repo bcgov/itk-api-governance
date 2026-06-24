@@ -6,6 +6,7 @@ edit_uri: ""
 nav:
     - Overview: index.md
     - basic-style-guide.md
+    - sdx-style-guide.md
     - strict-style-guide.md
 plugins:
     - techdocs-core

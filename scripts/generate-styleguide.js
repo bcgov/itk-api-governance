@@ -205,10 +205,17 @@ function generateStyleguide(inputPath, outputPath) {
     emitSection(outputLines, section);
   }
 
-  const finalContent = outputLines.join('\n').trimEnd() + '\n';
+  const finalContent = normalizeMarkdownAnchorLinks(outputLines.join('\n').trimEnd() + '\n');
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, finalContent, 'utf-8');
   console.log(`Generated: ${outputPath}`);
+}
+
+function normalizeMarkdownAnchorLinks(content) {
+  return content.replace(
+    /(\[[^\]]+\]\([^)\s]+\.md#)([^)]+)(\))/g,
+    (_match, prefix, anchor, suffix) => `${prefix}${anchor.toLowerCase().replace(/\./g, '')}${suffix}`
+  );
 }
 
 function findRulesetFiles(dir) {

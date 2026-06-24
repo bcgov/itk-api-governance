@@ -1,0 +1,53 @@
+---
+# Fully dereferenced Spectral ruleset (all $ref resolved)
+# Original: sdx-ruleset.yaml
+# Generated: 2026-06-24T22:14:15.755Z
+extends: ./basic-ruleset.yaml
+functions:
+  - sdx-no-internal-headers
+  - sdx-oauth2-scope-descriptions-consistent
+  - sdx-oauth2-security-schemes
+  - sdx-operation-security-scopes
+rules:
+  oas2-require-openapi-3: error
+  operation-operationId: error
+  no-eval-in-markdown: error
+  no-script-tags-in-markdown: error
+  oas3-valid-media-example: error
+  oas3-valid-schema-example: error
+  sdx-oauth2-security-schemes:
+    description: SDX security schemes must include OAuth2 schemes with complete flow metadata, and OpenID Connect schemes must not conflict with the OAuth2 identity provider.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.components.securitySchemes
+    then:
+      function: sdx-oauth2-security-schemes
+  sdx-oauth2-scope-descriptions-consistent:
+    description: OAuth2 scope descriptions must be consistent across flows.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.components.securitySchemes
+    then:
+      function: sdx-oauth2-scope-descriptions-consistent
+  sdx-operation-security-scopes:
+    description: Every operation security option must include an SDX OAuth2 scheme.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.paths
+    then:
+      function: sdx-operation-security-scopes
+  sdx-no-internal-headers:
+    description: External API contracts must not expose SDX internal transport headers.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $
+    then:
+      function: sdx-no-internal-headers

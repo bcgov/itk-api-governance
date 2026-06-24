@@ -71,11 +71,11 @@ An OAD with environment-specific URLs will need to be uploaded for each SDX envi
 
 ### OAuth2 Security Scheme
 
-SDX Gateway authorization MUST be documented with an OpenAPI OAuth2 security scheme, not an OpenID Connect security scheme. OpenID Connect security schemes can derive scopes from the identity provider's well-known configuration. In the **Standard Realm**, that configuration can include many scopes that are unrelated to a specific API. An OAuth2 security scheme lets the API specification explicitly define only the scopes that are part of the API contract, which makes the OAD clearer for consumers and easier for SDX and downstream tooling to process consistently.
+SDX Gateway authorization MUST be documented with an OpenAPI OAuth2 security scheme. OpenID Connect security schemes SHOULD NOT be used for SDX Gateway authorization. OpenID Connect security schemes MAY be present when they use the same identity provider as the SDX OAuth2 security scheme and do not conflict with the OAuth2 API contract. OpenID Connect security schemes can derive scopes from the identity provider's well-known configuration. In the **Standard Realm**, that configuration can include many scopes that are unrelated to a specific API. An OAuth2 security scheme lets the API specification explicitly define only the scopes that are part of the API contract, which makes the OAD clearer for consumers and easier for SDX and downstream tooling to process consistently.
 
-The OAuth2 security scheme MUST include the supported flows, token URLs, authorization URLs, scopes, and scope descriptions. When the same scope is declared under multiple OAuth2 flows, the description MUST be consistent.
+The OAuth2 security scheme MUST include the supported flows, token URLs, and authorization URLs required by those flows. OAuth2 scopes MAY be omitted when the API does not require scopes. When scopes are declared, each scope MUST include a description. When the same scope is declared under multiple OAuth2 flows, the description MUST be consistent.
 
-Operations must use OpenAPI `security` declarations to identify the SDX Gateway scopes required to access the operation. This lets SDX compare the operation's required scopes with the granted scopes in the access token.
+APIs MUST use OpenAPI `security` declarations to identify the SDX Gateway OAuth2 scheme and any scopes required to access operations. This can be declared globally at the OpenAPI document root, or locally on each operation. When an operation declares its own `security`, that local declaration overrides the global declaration and MUST still include the SDX OAuth2 scheme.
 
 ### Well-Formed API Contract
 
@@ -93,8 +93,6 @@ The external API contract must not expose SDX internal transport details. Intern
 
 The OAD will be validated against the SDX OpenAPI validation rules before the API is provisioned. The OAD MUST pass with zero errors. The validation may produce warnings that can be used to further improve the OAD, but warnings alone will not prevent the API from being provisioned.
 
-The SDX ruleset is defined by the [B.C. API Governance Spectral Style Guide](https://github.com/bcgov/csit-api-governance-spectral-style-guide).
-
 The SDX ruleset will validate the following mandatory rules:
 
 - OpenAPI 3.x or newer, rather than Swagger 2.0.
@@ -106,15 +104,13 @@ The SDX ruleset will validate the following mandatory rules:
 - Typed enum values.
 - Operation IDs for all operations.
 - No unsafe Markdown such as script tags or `eval`.
-- Use of an OpenAPI OAuth2 security scheme rather than an OpenAPI OpenID Connect security scheme for SDX Gateway authorization.
-- OAuth2 flows, token URLs, authorization URLs, scopes, and scope descriptions.
+- Use of an OpenAPI OAuth2 security scheme for SDX Gateway authorization. OpenID Connect security schemes SHOULD NOT be used for SDX Gateway authorization, but MAY be present when they use the same identity provider as the SDX OAuth2 security scheme and do not conflict with the OAuth2 API contract.
+- OAuth2 flows, token URLs, authorization URLs, and scope descriptions when scopes are declared.
 - Consistent descriptions when the same scope is declared under multiple OAuth2 flows.
-- Operation-level `security` declarations for SDX Gateway scopes.
+- Global or operation-level `security` declarations for the SDX Gateway OAuth2 scheme and scopes. Operation-level declarations override global declarations and must still include the SDX OAuth2 scheme.
 - Exclusion of internal edge headers and `X-Edge-Token` from the external API contract.
 
-<p style="color: red;"><strong>Review note:</strong> The SDX Ruleset will need to be created.  It will be a combination of the Basic ruleset plus SDX specific rules.  It will not include the Strict ruleset.  All of the rules above MUST be passed.</p>
-
-[B.C. API Governance Basic Style Guide](/docs/default/component/api-style-guides/basic-style-guide/)
+Refer to the [SDX API Style Guide](/docs/default/component/api-style-guides/sdx-style-guide/) for greater detail.
 
 ### API Standard Release
 
