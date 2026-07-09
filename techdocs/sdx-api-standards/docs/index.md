@@ -40,11 +40,7 @@ APIs that are planned as Authoritative Data Registries MUST conform to the ADR A
 
 ## Security Requirements
 
-Every request to an SDX API MUST include an OpenID Connect (OIDC) JWT access token issued by the **Standard Realm**. SDX uses the tokens **client_id** or **azp** claims to identify the requesting client.
-
-The API service MUST have a client registered with the [Integrated Identity Services (IIS) Integration Registry](https://sso-requests.apps.gold.devops.gov.bc.ca/).
-
-<p style="color: red;"><strong>Review note:</strong> Why does the provider API require an IIS client? The consumer needs a client to request a token. Since SDX is not using audience, the provider client may be optional for a provider API.  Should we update this to reference the **Standard Realm**</p>
+Every request to an SDX API MUST include an OpenID Connect (OIDC) JWT access token issued by the Common Hosted Single Sign-On (CSS) Standard Realm. SDX uses the tokens **client_id** or **azp** claims to identify the requesting client.
 
 SDX Gateway authorization is based on scopes. SDX inspects the access token for the scopes required by the requested operation before allowing the request to pass through the gateway.
 
@@ -52,12 +48,9 @@ The provider service MAY require other authentication or authorization mechanism
 
 Every operation:
 
-- MUST require a JWT access token issued by the **Standard Realm** to access the operation.
-- MUST require a `protected-c` scope if the operation deals with Protected-C data.
+- MUST require a JWT access token issued by the CSS Standard Realm to access the operation.
 - MAY require one or more scopes to access the operation.
 - MAY be further restricted by provider-owned authentication or authorization controls outside the scope of SDX.
-
-Protected-C data is government information where unauthorized disclosure could reasonably be expected to result in extremely grave harm to an individual, organization, or government. See the [B.C. Information Security Classification Standard](https://www2.gov.bc.ca/assets/gov/government/services-for-government-and-broader-public-sector/information-technology-services/standards-files/618_information_security_classification_standard.pdf).
 
 ## API Documentation Requirements
 
@@ -67,11 +60,12 @@ SDX APIs are documented with OpenAPI Descriptions (OADs). The OAD is the contrac
 
 An OAD with environment-specific URLs will need to be uploaded for each SDX environment provisioned.
 
-> **Note:** Operations, security requirements, and scopes are expected to remain consistent across environments for the same OAD version; changes to those parts of the contract should typically be published as a different OAD version.
+!!! note
+    Operations, security requirements, and scopes are expected to remain consistent across environments for the same OAD version; changes to those parts of the contract should typically be published as a different OAD version.
 
 ### OAuth2 Security Scheme
 
-SDX Gateway authorization MUST be documented with an OpenAPI OAuth2 security scheme. OpenID Connect security schemes SHOULD NOT be used for SDX Gateway authorization. OpenID Connect security schemes MAY be present when they use the same identity provider as the SDX OAuth2 security scheme and do not conflict with the OAuth2 API contract. OpenID Connect security schemes can derive scopes from the identity provider's well-known configuration. In the **Standard Realm**, that configuration can include many scopes that are unrelated to a specific API. An OAuth2 security scheme lets the API specification explicitly define only the scopes that are part of the API contract, which makes the OAD clearer for consumers and easier for SDX and downstream tooling to process consistently.
+SDX Gateway authorization MUST be documented with an OpenAPI OAuth2 security scheme. OpenID Connect security schemes SHOULD NOT be used for SDX Gateway authorization. OpenID Connect security schemes MAY be present when they use the same identity provider as the SDX OAuth2 security scheme and do not conflict with the OAuth2 API contract. OpenID Connect security schemes can derive scopes from the identity provider's well-known configuration. In the CSS Standard Realm, that configuration can include many scopes that are unrelated to a specific API. An OAuth2 security scheme lets the API specification explicitly define only the scopes that are part of the API contract, which makes the OAD clearer for consumers and easier for SDX and downstream tooling to process consistently.
 
 The OAuth2 security scheme MUST include the supported flows, token URLs, and authorization URLs required by those flows. OAuth2 scopes MAY be omitted when the API does not require scopes. When scopes are declared, each scope MUST include a description. When the same scope is declared under multiple OAuth2 flows, the description MUST be consistent.
 
@@ -142,7 +136,6 @@ components:
           scopes:
             mass-haul:read: Read mass haul records.
             mass-haul:write: Create and update mass haul records.
-            protected-c: Access operations that exchange Protected-C data.
 paths:
   /loads:
     get:
@@ -158,7 +151,6 @@ paths:
       security:
         - oauth2:
             - mass-haul:write
-            - protected-c
       responses:
         "201":
           description: Mass haul load created.
@@ -166,16 +158,24 @@ paths:
 
 ## SDX Processing
 
-When SDX loads or imports a provided OAD, SDX will update amd add SDX-specific metadata so that the API can be published consistently through SDX and downstream catalogues.
+When SDX loads or imports a provided OAD, SDX will update and add SDX-specific metadata so that the API can be published consistently through SDX and downstream catalogues.
 
-SDX may update or add:
+SDX will update:
 
 - OAuth token endpoint details, where applicable.
 - The `servers` section.
+
+SDX will add:
+
 - SDX documentation in the OAD description.
-- A `secure-data-exchange` tag.
 - An external reference to these SDX TechDocs.
 - SDX-related external API headers.
+
+SDX will remove:
+
+- The `info.contact` section because this contact information source may become stale. Contact information will be published in the ITK API catalogue where it can be kept up-to-date.
+
+SDX will not modify provider-owned `info.termsOfService` or `info.license` values. Except for the SDX-managed metadata listed above, SDX will not modify provider-owned API contract content before publication.
 
 Example SDX metadata:
 
@@ -183,9 +183,6 @@ Example SDX metadata:
 externalDocs:
   description: Secure Data Exchange API Standard
   url: https://developer.gov.bc.ca/docs/default/component/secure-data-exchange-tech-docs/
-tags:
-  - name: secure-data-exchange
-    description: Published through Secure Data Exchange.
 ```
 
 SDX-related external API header handling:

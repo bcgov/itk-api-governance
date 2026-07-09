@@ -52,22 +52,82 @@ Use the generated ruleset URL that matches your governance context:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/main/dist/spectral/basic-ruleset.yaml
+  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/basic-ruleset.yaml
 ```
 
 For stricter validation, extend the Strict ruleset instead:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/main/dist/spectral/strict-ruleset.yaml
+  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/strict-ruleset.yaml
 ```
 
 For APIs published through SDX, extend the SDX ruleset:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/main/dist/spectral/sdx-ruleset.yaml
+  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/sdx-ruleset.yaml
 ```
+
+### Ruleset Versions
+
+Ruleset versions are published as Git tags in this repository. Each validation API environment is
+configured with the tag prefix it should discover. The validation API only exposes tags that use the
+configured prefix followed by a semantic version.
+
+For example, the dev validation API discovers tags with the `dev-ruleset-` prefix. This repository
+tag:
+
+```text
+dev-ruleset-v1.0.0
+```
+
+is exposed by the dev validation API as version:
+
+```text
+v1.0.0
+```
+
+Tags that do not use the environment's configured prefix or do not contain a valid semantic version
+are ignored by that validation API.
+
+Ruleset releases are promoted through environments by creating the corresponding environment tag:
+
+| Environment | Tag prefix | Example tag |
+| ----------- | ---------- | ----------- |
+| Dev | `dev-ruleset-` | `dev-ruleset-v1.0.0` |
+| Test | `test-ruleset-` | `test-ruleset-v1.0.0` |
+| Prod | `prod-ruleset-` | `prod-ruleset-v1.0.0` |
+
+Using different tag prefixes allows a new ruleset version to move through development and testing
+before it becomes available in production.
+
+Each environment exposes the version without the environment prefix. For example, the dev, test, and
+prod tags above are all exposed as version `v1.0.0` by their corresponding validation API
+environment.
+
+Use the validation API discovery endpoints to find the currently available versions and rulesets:
+
+```text
+GET /versions
+GET /versions/{version}/rulesets
+```
+
+Validation requests identify both the ruleset version and the ruleset name:
+
+```text
+POST /versions/{version}/rulesets/{ruleset}/validations
+```
+
+For example:
+
+```text
+/versions/v1.0.0/rulesets/basic-ruleset/validations
+```
+
+When validating APIs through SDX tooling, use a published ruleset version rather than `main`. The
+`main` branch may change as rules are developed, while an environment ruleset tag represents a
+stable ruleset release for that environment.
 
 ### Editor Integration
 
@@ -92,7 +152,7 @@ npx @stoplight/spectral-cli lint openapi.yaml --ruleset .spectral.yaml
 You can also lint directly against one of the generated rulesets:
 
 ```bash
-npx @stoplight/spectral-cli lint openapi.yaml --ruleset https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/main/dist/spectral/basic-ruleset.yaml
+npx @stoplight/spectral-cli lint openapi.yaml --ruleset https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/basic-ruleset.yaml
 ```
 
 ### Generated Files

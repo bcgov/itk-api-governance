@@ -10,3 +10,4 @@ plugins:
     - techdocs-git-audit
 markdown_extensions:
     - md_in_html
+    - admonition

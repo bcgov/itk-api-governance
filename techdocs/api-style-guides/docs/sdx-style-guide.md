@@ -7,6 +7,9 @@ It extends the [Basic OpenAPI Style Guide](basic-style-guide.md), escalates SDX-
 warnings to errors, and adds SDX-specific gateway authorization and internal
 transport rules.
 
+For policy context and requirements that are not expressed as Spectral rules, see the
+[SDX API Standard](/docs/default/component/sdx-api-standards/).
+
 ## SDX Mandatory Basic Rules
 
 SDX provisioning requires these Basic rules to pass with zero errors.
