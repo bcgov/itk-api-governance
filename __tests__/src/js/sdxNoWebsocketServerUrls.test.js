@@ -15,7 +15,7 @@ describe('Spectral Validation', () => {
     await testInstance.validateOas({
       oasYaml: validSdxOas.replace('https://api.example.gov.bc.ca/sdx', 'wss://api.example.gov.bc.ca/sdx'),
       expected: [
-        ['sdx-no-websocket-server-urls', Severity.Error, 'SDX does not support WebSocket server URLs.', '/servers/0/url'],
+        ['sdx-no-websocket-server-urls', Severity.Error, 'Server URL uses a WebSocket scheme unsupported by SDX.', '/servers/0/url'],
       ],
     });
   });

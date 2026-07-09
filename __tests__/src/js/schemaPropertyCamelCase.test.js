@@ -235,11 +235,11 @@ definitions:
         type: integer
       `,
       expected: [
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/responses/200/schema/items/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/schema/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1upload/post/parameters/0/schema/properties/file-name'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/definitions/ItemIdSchema/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/definitions/SkipParam/properties/skip-item'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/responses/200/schema/items/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/schema/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1upload/post/parameters/0/schema/properties/file-name'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/definitions/ItemIdSchema/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/definitions/SkipParam/properties/skip-item'],
       ],
     });
   });
@@ -376,16 +376,16 @@ components:
               item-id: { type: integer }
       `,
       expected: [
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1product/get/responses/200/content/application~1json/schema/properties/product-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/parameters/0/schema/properties/active-ind'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/responses/200/content/application~1json/schema/items/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/parameters/0/schema/properties/parameter-value'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/0/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/1/properties/error-message'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1upload/post/requestBody/content/application~1json/schema/properties/file-name'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/components/schemas/ItemIdSchema/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/components/parameters/SkipParam/schema/properties/skip-item'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/components/requestBodies/CreateBody/content/application~1json/schema/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1product/get/responses/200/content/application~1json/schema/properties/product-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/parameters/0/schema/properties/active-ind'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/responses/200/content/application~1json/schema/items/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/parameters/0/schema/properties/parameter-value'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/0/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/1/properties/error-message'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1upload/post/requestBody/content/application~1json/schema/properties/file-name'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/components/schemas/ItemIdSchema/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/components/parameters/SkipParam/schema/properties/skip-item'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/components/requestBodies/CreateBody/content/application~1json/schema/properties/item-id'],
       ],
     });
   });
@@ -513,16 +513,16 @@ components:
               item-id: { type: integer }
       `,
       expected: [
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1product/get/responses/200/content/application~1json/schema/properties/product-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/parameters/0/schema/properties/active-ind'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/responses/200/content/application~1json/schema/items/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/parameters/0/schema/properties/parameter-value'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/0/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/1/properties/error-message'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1upload/post/requestBody/content/application~1json/schema/properties/file-name'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/components/schemas/ItemIdSchema/properties/item-id'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/components/parameters/SkipParam/schema/properties/skip-item'],
-        ['schema-property-camel-case', Severity.Error, 'Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/components/requestBodies/CreateBody/content/application~1json/schema/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1product/get/responses/200/content/application~1json/schema/properties/product-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/parameters/0/schema/properties/active-ind'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items/get/responses/200/content/application~1json/schema/items/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/parameters/0/schema/properties/parameter-value'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/0/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{itemId}/get/responses/200/content/application~1json/schema/oneOf/1/properties/error-message'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1upload/post/requestBody/content/application~1json/schema/properties/file-name'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/components/schemas/ItemIdSchema/properties/item-id'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/components/parameters/SkipParam/schema/properties/skip-item'],
+        ['schema-property-camel-case', Severity.Error, 'Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/components/requestBodies/CreateBody/content/application~1json/schema/properties/item-id'],
       ],
     });
   });

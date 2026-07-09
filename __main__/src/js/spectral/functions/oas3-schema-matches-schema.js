@@ -124,7 +124,7 @@ function validateObject(actual, expected, basePath, schemaName, log, allowAdditi
   for (const prop of expectedRequired) {
     if (!actualRequired.includes(prop)) {
       violations.push({
-        message: `Required property '${prop}' in ${schemaName} must remain required (cannot become optional)`,
+        message: `Required property '${prop}' in ${schemaName} changed from required to optional.`,
         path: [...basePath, "required"]
       });
     }
@@ -176,7 +176,7 @@ function validateObject(actual, expected, basePath, schemaName, log, allowAdditi
     if (expectedProp.enum) {
       if (!actualProp.enum || !Array.isArray(actualProp.enum)) {
         violations.push({
-          message: `Property '${propName}' must restrict values with enum in ${schemaName} (expected: ${expectedProp.enum.map(v => JSON.stringify(v)).join(', ')})`,
+          message: `Property '${propName}' in ${schemaName} is missing enum values (expected: ${expectedProp.enum.map(v => JSON.stringify(v)).join(', ')})`,
           path: propPath
         });
       } else {
@@ -203,7 +203,7 @@ function validateObject(actual, expected, basePath, schemaName, log, allowAdditi
     // Pattern
     if (expectedProp.pattern && !actualProp.pattern) {
       violations.push({
-        message: `Property '${propName}' must enforce pattern in ${schemaName} (expected: ${expectedProp.pattern})`,
+        message: `Property '${propName}' in ${schemaName} does not match expected pattern ${expectedProp.pattern}`,
         path: propPath
       });
     } else if (expectedProp.pattern && actualProp.pattern && actualProp.pattern !== expectedProp.pattern) {
@@ -264,7 +264,7 @@ function validateConstraint(actual, expected, path, actualKey, expectedKey, viol
   if (expected[expectedKey] !== undefined) {
     if (actual[actualKey] === undefined) {
       violations.push({
-        message: `Property at ${path.join('/')} must define ${actualKey} (expected at least ${expected[expectedKey]})`,
+        message: `Property at ${path.join('/')} is missing ${actualKey} (expected at least ${expected[expectedKey]})`,
         path
       });
     } else if (!compareFn(actual[actualKey], expected[expectedKey])) {

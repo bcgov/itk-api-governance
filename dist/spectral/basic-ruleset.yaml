@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: basic-ruleset.yaml
-# Generated: 2026-06-24T21:30:32.912Z
+# Generated: 2026-07-09T20:44:01.894Z
 extends: spectral:oas
 functions:
   - no-empty-property-names
@@ -59,7 +59,7 @@ rules:
   oas3_1-servers-in-webhook: warn
   operation-id-camel-case:
     description: operationId should be camelCase (starts with lowercase letter, no separators)
-    message: operationId should be camelCase (starts with lowercase letter, no separators)
+    message: operationId is not camelCase (starts with lowercase letter, no separators)
     severity: warn
     given: $..operationId
     then:
@@ -68,13 +68,14 @@ rules:
         match: ^[a-z][a-zA-Z0-9]*$
   path-segments-kebab-case:
     description: Static path segments should be kebab-case (lowercase letters, numbers, hyphens only)
+    message: '{{error}}'
     severity: warn
     given: $.paths.*
     then:
       function: path-segments-kebab-case
   path-param-camel-case:
     description: Path parameter names should be camelCase
-    message: Path parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)
+    message: Path parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)
     severity: warn
     given: $.paths..parameters[?(@.in == 'path')].name
     then:
@@ -83,7 +84,7 @@ rules:
         match: ^[a-z][a-zA-Z0-9]*$
   query-param-camel-case:
     description: Query parameter names should be camelCase
-    message: Query parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)
+    message: Query parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)
     severity: warn
     given: $.paths..parameters[?(@.in == 'query')].name
     then:
@@ -92,7 +93,7 @@ rules:
         match: ^[a-z][a-zA-Z0-9]*$
   schema-property-camel-case:
     description: Schema property names should be camelCase
-    message: Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)
+    message: Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)
     severity: warn
     resolved: false
     given:
@@ -166,7 +167,7 @@ rules:
       In OAS 3.1, prefer 'examples' over the deprecated 'example'.
       Warn only when 'example' is used **without** 'examples' (i.e. prefer 'examples' when providing examples).
       No warning if both are present, only 'examples' is present, or neither is present.
-    message: Use 'examples' instead of (or in addition to) the deprecated 'example' in OAS 3.1 schemas
+    message: Schema uses deprecated 'example' without 'examples'. Use 'examples' for OAS 3.1 schemas.
     severity: warn
     formats:
       - oas3_1
@@ -186,7 +187,7 @@ rules:
       function: oas3_1-schema-has-example-but-no-examples
   oas2-require-openapi-3:
     description: Document must use OpenAPI 3.x (or newer). Swagger 2.0 is not allowed.
-    message: 'Swagger 2.0 detected (uses ''swagger'' key). Use ''openapi: 3.x.x'' instead.'
+    message: 'Document uses Swagger 2.0 through the ''swagger'' key. Use ''openapi: 3.x.x'' for OpenAPI 3.x.'
     severity: warn
     given: $
     then:
@@ -207,7 +208,7 @@ rules:
   operation-description: warn
   schema-description:
     description: Every schema in components/schemas must have a description
-    message: Schema '{{value}}' is missing a description
+    message: Schema is missing a description.
     severity: warn
     given: $.components.schemas.*
     then:
@@ -215,7 +216,7 @@ rules:
       function: truthy
   requestBody-description:
     description: Every requestBody in components/requestBodies must have a description
-    message: RequestBody '{{value}}' is missing a description
+    message: RequestBody is missing a description.
     severity: warn
     given: $.components.requestBodies.*
     then:
@@ -223,7 +224,7 @@ rules:
       function: truthy
   header-description:
     description: Every header in components/headers must have a description
-    message: Header '{{value}}' is missing a description
+    message: Header is missing a description.
     severity: warn
     given: $.components.headers.*
     then:
@@ -231,7 +232,7 @@ rules:
       function: truthy
   securityScheme-description:
     description: Every securityScheme in components/securitySchemes must have a description
-    message: SecurityScheme '{{value}}' is missing a description
+    message: SecurityScheme is missing a description.
     severity: warn
     given: $.components.securitySchemes.*
     then:
@@ -343,7 +344,7 @@ rules:
       function: truthy
   path-item-summary:
     description: Every path item must have a summary
-    message: Path '{{value}}' is missing a summary
+    message: Path item is missing a summary.
     severity: warn
     given: $.paths.*
     then:

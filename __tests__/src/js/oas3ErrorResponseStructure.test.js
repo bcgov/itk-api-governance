@@ -176,7 +176,7 @@ paths:
       expected: [
         ['oas3_1-internal-error-response-structure', Severity.Error, 'Missing required property \'message\' in ErrorResponse', '/paths/~1users/post/responses/500/content/application~1json/schema/properties'],
         ['oas3_1-internal-error-response-structure', Severity.Error, 'Property \'details\' type mismatch in ErrorResponse: expected \'object\', found \'string or object\'', '/paths/~1users/post/responses/500/content/application~1json/schema/properties/details'],
-        ['oas3_1-internal-error-response-structure', Severity.Error, 'Required property \'message\' in ErrorResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/500/content/application~1json/schema/required'],
+        ['oas3_1-internal-error-response-structure', Severity.Error, 'Required property \'message\' in ErrorResponse changed from required to optional.', '/paths/~1users/post/responses/500/content/application~1json/schema/required'],
       ],
     });
   });
@@ -207,8 +207,8 @@ paths:
       expected: [
         ['oas3_1-internal-error-response-structure', Severity.Error, 'Missing required property \'error\' in ErrorResponse', '/paths/~1users/post/responses/500/content/application~1json/schema'],
         ['oas3_1-internal-error-response-structure', Severity.Error, 'Missing required property \'message\' in ErrorResponse', '/paths/~1users/post/responses/500/content/application~1json/schema'],
-        ['oas3_1-internal-error-response-structure', Severity.Error, 'Required property \'error\' in ErrorResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/500/content/application~1json/schema'],
-        ['oas3_1-internal-error-response-structure', Severity.Error, 'Required property \'message\' in ErrorResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/500/content/application~1json/schema'],
+        ['oas3_1-internal-error-response-structure', Severity.Error, 'Required property \'error\' in ErrorResponse changed from required to optional.', '/paths/~1users/post/responses/500/content/application~1json/schema'],
+        ['oas3_1-internal-error-response-structure', Severity.Error, 'Required property \'message\' in ErrorResponse changed from required to optional.', '/paths/~1users/post/responses/500/content/application~1json/schema'],
         ['oas3_1-internal-error-response-structure', Severity.Error, 'Schema type mismatch for ErrorResponse: expected \'object\', found \'string\'', '/paths/~1users/post/responses/500/content/application~1json/schema'],
       ],
     });

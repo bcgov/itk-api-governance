@@ -66,7 +66,7 @@ components:
       openIdConnectUrl: https://sso.example.gov.bc.ca/.well-known/openid-configuration
       `,
       expected: [
-        ['sdx-oauth2-security-schemes', Severity.Error, 'At least one OAuth2 security scheme must be defined for SDX Gateway authorization.', '/components/securitySchemes'],
+        ['sdx-oauth2-security-schemes', Severity.Error, 'OAuth2 security scheme is missing for SDX Gateway authorization.', '/components/securitySchemes'],
       ],
     });
   });
@@ -100,7 +100,7 @@ components:
             protected-c: ""
       `,
       expected: [
-        ['sdx-oauth2-security-schemes', Severity.Error, 'OAuth2 scope "protected-c" in security scheme "oauth2" flow "clientCredentials" must have a non-empty description.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/protected-c'],
+        ['sdx-oauth2-security-schemes', Severity.Error, 'OAuth2 scope "protected-c" in security scheme "oauth2" flow "clientCredentials" has an empty or missing description.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/protected-c'],
       ],
     });
   });
@@ -135,7 +135,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-oauth2-security-schemes', Severity.Error, 'OpenID Connect security scheme "oidc" must use the same identity provider as an SDX OAuth2 security scheme.', '/components/securitySchemes/oidc/openIdConnectUrl'],
+        ['sdx-oauth2-security-schemes', Severity.Error, 'OpenID Connect security scheme "oidc" uses a different identity provider than the SDX OAuth2 security scheme.', '/components/securitySchemes/oidc/openIdConnectUrl'],
       ],
     });
   });

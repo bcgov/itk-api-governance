@@ -45,7 +45,7 @@ components:
             loads:read: Read load records with a different description.
       `,
       expected: [
-        ['sdx-oauth2-scope-descriptions-consistent', Severity.Error, 'OAuth2 scope "loads:read" in security scheme "oauth2" must use the same description in every flow.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/loads:read'],
+        ['sdx-oauth2-scope-descriptions-consistent', Severity.Error, 'OAuth2 scope "loads:read" in security scheme "oauth2" has inconsistent descriptions across flows.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/loads:read'],
       ],
     });
   });

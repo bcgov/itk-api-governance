@@ -42,7 +42,7 @@ export default (targetVal, _, context) => {
   // Check for newlines / multi-line content
   if (summary.includes('\n') || summary.includes('\r')) {
     errors.push({
-      message: 'Summary must be a single line (no newlines allowed)'
+      message: 'Summary contains one or more line breaks.'
     });
   }
 
@@ -62,7 +62,7 @@ export default (targetVal, _, context) => {
 
   if (markdownPatterns.some(pattern => pattern.test(summary))) {
     errors.push({
-      message: 'Summary must not contain Markdown formatting (plain text only)'
+      message: 'Summary contains Markdown formatting.'
     });
   }
 

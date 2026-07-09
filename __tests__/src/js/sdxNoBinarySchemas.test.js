@@ -47,7 +47,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-binary-schemas', Severity.Error, 'SDX does not support binary string schemas.', '/paths/~1loads/post/requestBody/content/application~1json/schema/properties/file/format'],
+        ['sdx-no-binary-schemas', Severity.Error, 'Schema uses a binary string format unsupported by SDX.', '/paths/~1loads/post/requestBody/content/application~1json/schema/properties/file/format'],
       ],
     });
   });

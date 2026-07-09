@@ -23,7 +23,7 @@ export default (securitySchemes, _options, context) => {
 
     if (!scheme.flows || typeof scheme.flows !== 'object' || Object.keys(scheme.flows).length === 0) {
       results.push({
-        message: `OAuth2 security scheme "${name}" must define at least one OAuth2 flow.`,
+        message: `OAuth2 security scheme "${name}" is missing OAuth2 flows.`,
         path: [...schemePath, 'flows'],
       });
       continue;
@@ -36,7 +36,7 @@ export default (securitySchemes, _options, context) => {
       if (flowName === 'authorizationCode' || flowName === 'implicit') {
         if (!isNonEmptyString(flow.authorizationUrl)) {
           results.push({
-            message: `OAuth2 flow "${flowName}" in security scheme "${name}" must define authorizationUrl.`,
+            message: `OAuth2 flow "${flowName}" in security scheme "${name}" is missing authorizationUrl.`,
             path: [...schemePath, 'flows', flowName, 'authorizationUrl'],
           });
         } else {
@@ -47,7 +47,7 @@ export default (securitySchemes, _options, context) => {
       if (flowName === 'authorizationCode' || flowName === 'clientCredentials' || flowName === 'password') {
         if (!isNonEmptyString(flow.tokenUrl)) {
           results.push({
-            message: `OAuth2 flow "${flowName}" in security scheme "${name}" must define tokenUrl.`,
+            message: `OAuth2 flow "${flowName}" in security scheme "${name}" is missing tokenUrl.`,
             path: [...schemePath, 'flows', flowName, 'tokenUrl'],
           });
         } else {
@@ -60,7 +60,7 @@ export default (securitySchemes, _options, context) => {
       for (const [scope, description] of Object.entries(flow.scopes)) {
         if (!isNonEmptyString(description)) {
           results.push({
-            message: `OAuth2 scope "${scope}" in security scheme "${name}" flow "${flowName}" must have a non-empty description.`,
+            message: `OAuth2 scope "${scope}" in security scheme "${name}" flow "${flowName}" has an empty or missing description.`,
             path: [...schemePath, 'flows', flowName, 'scopes', scope],
           });
         }
@@ -70,7 +70,7 @@ export default (securitySchemes, _options, context) => {
 
   if (!hasOauth2Scheme) {
     results.push({
-      message: 'At least one OAuth2 security scheme must be defined for SDX Gateway authorization.',
+      message: 'OAuth2 security scheme is missing for SDX Gateway authorization.',
       path: context.path,
     });
   }
@@ -91,7 +91,7 @@ export default (securitySchemes, _options, context) => {
       const origin = getUrlOrigin(openIdConnectUrl);
       if (origin && !oauth2IdentityProviderOrigins.has(origin)) {
         results.push({
-          message: `OpenID Connect security scheme "${name}" must use the same identity provider as an SDX OAuth2 security scheme.`,
+          message: `OpenID Connect security scheme "${name}" uses a different identity provider than the SDX OAuth2 security scheme.`,
           path: [...schemePath, 'openIdConnectUrl'],
         });
       }

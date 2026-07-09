@@ -20,7 +20,7 @@ export default (paths, _options, context) => {
 
       if (!Array.isArray(effectiveSecurity) || effectiveSecurity.length === 0) {
         results.push({
-          message: `Operation "${method.toUpperCase()} ${pathKey}" must define security that includes an SDX OAuth2 scheme.`,
+          message: `Operation "${method.toUpperCase()} ${pathKey}" is missing security that includes an SDX OAuth2 scheme.`,
           path: operationHasSecurity ? operationPath : [],
         });
         continue;
@@ -49,7 +49,7 @@ export default (paths, _options, context) => {
             }
           } else {
             results.push({
-              message: `Operation "${method.toUpperCase()} ${pathKey}" must declare OAuth2 scopes as an array for security scheme "${schemeName}".`,
+              message: `Operation "${method.toUpperCase()} ${pathKey}" declares OAuth2 scopes as a non-array value for security scheme "${schemeName}".`,
               path: [...operationPath, 'security', index, schemeName],
             });
           }
@@ -57,7 +57,7 @@ export default (paths, _options, context) => {
 
         if (!requirementHasOauth2) {
           results.push({
-            message: `Every security option for operation "${method.toUpperCase()} ${pathKey}" must include an SDX OAuth2 scheme.`,
+            message: `Security option for operation "${method.toUpperCase()} ${pathKey}" is missing an SDX OAuth2 scheme.`,
             path: [...effectiveSecurityPath, index],
           });
         }

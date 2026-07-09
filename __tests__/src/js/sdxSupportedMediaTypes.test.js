@@ -42,7 +42,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-supported-media-types', Severity.Error, 'SDX does not support this request or response media type.', '/paths/~1loads/get/responses/200/content'],
+        ['sdx-supported-media-types', Severity.Error, 'Request or response defines a media type unsupported by SDX.', '/paths/~1loads/get/responses/200/content'],
       ],
     });
   });

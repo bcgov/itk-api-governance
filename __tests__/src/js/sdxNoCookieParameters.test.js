@@ -49,8 +49,8 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-cookie-parameters', Severity.Error, 'SDX does not support cookie parameters.', '/paths/~1loads/get/parameters/0/in'],
-        ['sdx-no-cookie-parameters', Severity.Error, 'SDX does not support cookie parameters.', '/components/parameters/locale/in'],
+        ['sdx-no-cookie-parameters', Severity.Error, 'Parameter uses cookie location unsupported by SDX.', '/paths/~1loads/get/parameters/0/in'],
+        ['sdx-no-cookie-parameters', Severity.Error, 'Parameter uses cookie location unsupported by SDX.', '/components/parameters/locale/in'],
       ],
     });
   });

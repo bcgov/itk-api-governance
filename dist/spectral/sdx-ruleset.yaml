@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: sdx-ruleset.yaml
-# Generated: 2026-07-09T19:54:03.996Z
+# Generated: 2026-07-09T20:44:01.873Z
 extends: ./basic-ruleset.yaml
 functions:
   - sdx-no-internal-headers
@@ -53,7 +53,7 @@ rules:
       function: sdx-no-internal-headers
   sdx-no-webhooks:
     description: SDX API contracts must not define OpenAPI webhooks.
-    message: SDX does not support OpenAPI webhooks.
+    message: Document defines OpenAPI webhooks unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -62,7 +62,7 @@ rules:
       function: falsy
   sdx-no-callbacks:
     description: SDX API contracts must not define OpenAPI callbacks.
-    message: SDX does not support OpenAPI callbacks.
+    message: Operation defines OpenAPI callbacks unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -71,7 +71,7 @@ rules:
       function: falsy
   sdx-no-streaming-media-types:
     description: SDX API contracts must not define streaming media types.
-    message: SDX does not support streaming media types.
+    message: Request or response defines a streaming media type unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -90,7 +90,7 @@ rules:
               pattern: ^(text/event-stream|application/x-ndjson|application/stream\+json|application/json-seq)$
   sdx-no-websocket-server-urls:
     description: SDX API contracts must not define WebSocket server URLs.
-    message: SDX does not support WebSocket server URLs.
+    message: Server URL uses a WebSocket scheme unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -101,7 +101,7 @@ rules:
         notMatch: ^wss?://
   sdx-server-urls-http-only:
     description: SDX API contracts must only define HTTP, HTTPS, or relative server URLs.
-    message: SDX only supports HTTP, HTTPS, or relative server URLs.
+    message: Server URL uses a scheme unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -112,7 +112,7 @@ rules:
         match: ^(https?://|/|wss?://)
   sdx-no-operation-servers:
     description: SDX API contracts must not define operation-level servers.
-    message: SDX does not support operation-level servers.
+    message: Operation defines a server override unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -121,7 +121,7 @@ rules:
       function: falsy
   sdx-no-path-item-servers:
     description: SDX API contracts must not define path-item-level servers.
-    message: SDX does not support path-item-level servers.
+    message: Path item defines a server override unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -130,7 +130,7 @@ rules:
       function: falsy
   sdx-supported-http-methods:
     description: SDX API contracts must only define supported HTTP operations.
-    message: SDX supports GET, POST, PUT, PATCH, and DELETE operations only.
+    message: Operation uses an HTTP method unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -142,7 +142,7 @@ rules:
       function: falsy
   sdx-supported-media-types:
     description: SDX API contracts must not define unsupported request or response media types.
-    message: SDX does not support this request or response media type.
+    message: Request or response defines a media type unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -161,7 +161,7 @@ rules:
               pattern: ^(application/xml|text/xml|application/octet-stream|multipart/.+|image/.+|audio/.+|video/.+|application/pdf|application/zip)$
   sdx-no-binary-schemas:
     description: SDX API contracts must not define binary string schemas.
-    message: SDX does not support binary string schemas.
+    message: Schema uses a binary string format unsupported by SDX.
     severity: error
     formats:
       - oas3
@@ -172,7 +172,7 @@ rules:
         notMatch: ^(binary|byte)$
   sdx-no-cookie-parameters:
     description: SDX API contracts must not define cookie parameters.
-    message: SDX does not support cookie parameters.
+    message: Parameter uses cookie location unsupported by SDX.
     severity: error
     formats:
       - oas3

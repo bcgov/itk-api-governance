@@ -40,7 +40,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-operation-servers', Severity.Error, 'SDX does not support operation-level servers.', '/paths/~1loads/get/servers'],
+        ['sdx-no-operation-servers', Severity.Error, 'Operation defines a server override unsupported by SDX.', '/paths/~1loads/get/servers'],
       ],
     });
   });

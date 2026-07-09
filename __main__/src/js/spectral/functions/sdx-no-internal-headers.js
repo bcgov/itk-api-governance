@@ -16,7 +16,7 @@ function scan(value, path, results) {
 
   if (typeof value.name === 'string' && isInternalHeaderName(value.name) && value.in === 'header') {
     results.push({
-      message: `Header "${value.name}" exposes SDX internal transport details and must not be included in the external API contract.`,
+      message: `Header "${value.name}" exposes SDX internal transport details in the external API contract.`,
       path: [...path, 'name'],
     });
   }
@@ -26,7 +26,7 @@ function scan(value, path, results) {
       for (const headerName of Object.keys(child)) {
         if (isInternalHeaderName(headerName)) {
           results.push({
-            message: `Header "${headerName}" exposes SDX internal transport details and must not be included in the external API contract.`,
+            message: `Header "${headerName}" exposes SDX internal transport details in the external API contract.`,
             path: [...path, key, headerName],
           });
         }

@@ -15,7 +15,7 @@ describe('Spectral Validation', () => {
     await testInstance.validateOas({
       oasYaml: validSdxOas.replace('https://api.example.gov.bc.ca/sdx', 'ftp://api.example.gov.bc.ca/sdx'),
       expected: [
-        ['sdx-server-urls-http-only', Severity.Error, 'SDX only supports HTTP, HTTPS, or relative server URLs.', '/servers/0/url'],
+        ['sdx-server-urls-http-only', Severity.Error, 'Server URL uses a scheme unsupported by SDX.', '/servers/0/url'],
       ],
     });
   });

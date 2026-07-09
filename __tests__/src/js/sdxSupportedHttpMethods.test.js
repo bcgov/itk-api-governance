@@ -38,7 +38,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-supported-http-methods', Severity.Error, 'SDX supports GET, POST, PUT, PATCH, and DELETE operations only.', '/paths/~1loads/trace'],
+        ['sdx-supported-http-methods', Severity.Error, 'Operation uses an HTTP method unsupported by SDX.', '/paths/~1loads/trace'],
       ],
     });
   });

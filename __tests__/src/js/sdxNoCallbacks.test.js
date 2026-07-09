@@ -46,7 +46,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-callbacks', Severity.Error, 'SDX does not support OpenAPI callbacks.', '/paths/~1loads/get/callbacks'],
+        ['sdx-no-callbacks', Severity.Error, 'Operation defines OpenAPI callbacks unsupported by SDX.', '/paths/~1loads/get/callbacks'],
       ],
     });
   });

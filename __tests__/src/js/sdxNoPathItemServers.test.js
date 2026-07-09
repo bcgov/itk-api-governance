@@ -40,7 +40,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-path-item-servers', Severity.Error, 'SDX does not support path-item-level servers.', '/paths/~1loads/servers'],
+        ['sdx-no-path-item-servers', Severity.Error, 'Path item defines a server override unsupported by SDX.', '/paths/~1loads/servers'],
       ],
     });
   });

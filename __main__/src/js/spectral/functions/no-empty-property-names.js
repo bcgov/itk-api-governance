@@ -55,7 +55,7 @@ export default (schema, _, context) => {
       const violationPath = [...propertiesPath, ''];
 
       results.push({
-        message: `Empty string property name found in schema. Use 'additionalProperties' instead for dynamic or arbitrary keys.`,
+        message: `Schema contains an empty string property name. Use 'additionalProperties' for dynamic or arbitrary keys.`,
         path: violationPath,
       });
     }

@@ -50,8 +50,8 @@ components:
             loads:read: Read load records.
       `,
       expected: [
-        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Token" exposes SDX internal transport details and must not be included in the external API contract.', '/paths/~1loads/get/parameters/0/name'],
-        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Trace" exposes SDX internal transport details and must not be included in the external API contract.', '/paths/~1loads/get/responses/200/headers/X-Edge-Trace'],
+        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Token" exposes SDX internal transport details in the external API contract.', '/paths/~1loads/get/parameters/0/name'],
+        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Trace" exposes SDX internal transport details in the external API contract.', '/paths/~1loads/get/responses/200/headers/X-Edge-Trace'],
       ],
     });
   });

@@ -85,7 +85,7 @@ paths:
               type: string
       `,
       expected: [
-        ['query-param-camel-case', Severity.Error, 'Query parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1search/get/parameters/0/name'],
+        ['query-param-camel-case', Severity.Error, 'Query parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1search/get/parameters/0/name'],
       ],
     });
   });
@@ -123,7 +123,7 @@ paths:
                   type: string
       `,
       expected: [
-        ['query-param-camel-case', Severity.Error, 'Query parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1search/get/parameters/0/name'],
+        ['query-param-camel-case', Severity.Error, 'Query parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1search/get/parameters/0/name'],
       ],
     });
   });
@@ -161,7 +161,7 @@ paths:
                   type: string
       `,
       expected: [
-        ['query-param-camel-case', Severity.Error, 'Query parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1search/get/parameters/0/name'],
+        ['query-param-camel-case', Severity.Error, 'Query parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1search/get/parameters/0/name'],
       ],
     });
   });

@@ -64,7 +64,7 @@ paths:
           description: OK
       `,
       expected: [
-        ['path-segments-kebab-case', Severity.Error, 'Static path segments should be kebab-case (lowercase letters, numbers, hyphens only)', '/paths/~1helloWorld'],
+        ['path-segments-kebab-case', Severity.Error, "Static path segment 'helloWorld' is not kebab-case (lowercase letters, numbers, hyphens only).", '/paths/~1helloWorld'],
       ],
     });
   });
@@ -93,7 +93,7 @@ paths:
                 type: string
       `,
       expected: [
-        ['path-segments-kebab-case', Severity.Error, 'Static path segments should be kebab-case (lowercase letters, numbers, hyphens only)', '/paths/~1helloWorld'],
+        ['path-segments-kebab-case', Severity.Error, "Static path segment 'helloWorld' is not kebab-case (lowercase letters, numbers, hyphens only).", '/paths/~1helloWorld'],
       ],
     });
   });
@@ -122,7 +122,7 @@ paths:
                 type: string
       `,
       expected: [
-        ['path-segments-kebab-case', Severity.Error, 'Static path segments should be kebab-case (lowercase letters, numbers, hyphens only)', '/paths/~1helloWorld'],
+        ['path-segments-kebab-case', Severity.Error, "Static path segment 'helloWorld' is not kebab-case (lowercase letters, numbers, hyphens only).", '/paths/~1helloWorld'],
       ],
     });
   });

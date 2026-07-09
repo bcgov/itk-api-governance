@@ -510,8 +510,8 @@ paths:
         ['oas3_1-problem-details-response-structure', Severity.Error, 'Property \'location\' enum contains extra values not allowed in ProblemDetailResponse.errors.items: "extra"', '/paths/~1users/post/responses/400/content/application~1json/schema/properties/errors/items/properties/location'],
         ['oas3_1-problem-details-response-structure', Severity.Error, 'Property \'status\' type mismatch in ProblemDetailResponse: expected \'integer\', found \'string\'', '/paths/~1users/post/responses/400/content/application~1json/schema/properties/status'],
         ['oas3_1-problem-details-response-structure', Severity.Error, 'Property \'type\' type mismatch in ProblemDetailResponse.errors.items: expected \'string\', found \'string or null\'', '/paths/~1users/post/responses/400/content/application~1json/schema/properties/errors/items/properties/type'],
-        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'code\' in ProblemDetailResponse.errors.items must remain required (cannot become optional)', '/paths/~1users/post/responses/400/content/application~1json/schema/properties/errors/items/required'],
-        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'title\' in ProblemDetailResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/400/content/application~1json/schema/required'],
+        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'code\' in ProblemDetailResponse.errors.items changed from required to optional.', '/paths/~1users/post/responses/400/content/application~1json/schema/properties/errors/items/required'],
+        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'title\' in ProblemDetailResponse changed from required to optional.', '/paths/~1users/post/responses/400/content/application~1json/schema/required'],
       ],
     });
   });
@@ -547,10 +547,10 @@ paths:
         ['oas3_1-problem-details-response-structure', Severity.Error, 'Missing required property \'status\' in ProblemDetailResponse', '/paths/~1users/post/responses/400/content/application~1json/schema'],
         ['oas3_1-problem-details-response-structure', Severity.Error, 'Missing required property \'title\' in ProblemDetailResponse', '/paths/~1users/post/responses/400/content/application~1json/schema'],
         ['oas3_1-problem-details-response-structure', Severity.Error, 'Missing required property \'type\' in ProblemDetailResponse', '/paths/~1users/post/responses/400/content/application~1json/schema'],
-        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'errors\' in ProblemDetailResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/400/content/application~1json/schema'],
-        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'status\' in ProblemDetailResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/400/content/application~1json/schema'],
-        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'title\' in ProblemDetailResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/400/content/application~1json/schema'],
-        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'type\' in ProblemDetailResponse must remain required (cannot become optional)', '/paths/~1users/post/responses/400/content/application~1json/schema'],
+        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'errors\' in ProblemDetailResponse changed from required to optional.', '/paths/~1users/post/responses/400/content/application~1json/schema'],
+        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'status\' in ProblemDetailResponse changed from required to optional.', '/paths/~1users/post/responses/400/content/application~1json/schema'],
+        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'title\' in ProblemDetailResponse changed from required to optional.', '/paths/~1users/post/responses/400/content/application~1json/schema'],
+        ['oas3_1-problem-details-response-structure', Severity.Error, 'Required property \'type\' in ProblemDetailResponse changed from required to optional.', '/paths/~1users/post/responses/400/content/application~1json/schema'],
         ['oas3_1-problem-details-response-structure', Severity.Error, 'Schema type mismatch for ProblemDetailResponse: expected \'object\', found \'array\'', '/paths/~1users/post/responses/400/content/application~1json/schema'],
       ],
     });

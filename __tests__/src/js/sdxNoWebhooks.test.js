@@ -37,7 +37,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-webhooks', Severity.Error, 'SDX does not support OpenAPI webhooks.', '/webhooks'],
+        ['sdx-no-webhooks', Severity.Error, 'Document defines OpenAPI webhooks unsupported by SDX.', '/webhooks'],
       ],
     });
   });

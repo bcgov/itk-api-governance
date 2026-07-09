@@ -74,7 +74,7 @@ components:
       name: X-Provider-Key
       `,
       expected: [
-        ['sdx-operation-security-scopes', Severity.Error, 'Every security option for operation "GET /loads" must include an SDX OAuth2 scheme.', '/paths/~1loads/get/security/0'],
+        ['sdx-operation-security-scopes', Severity.Error, 'Security option for operation "GET /loads" is missing an SDX OAuth2 scheme.', '/paths/~1loads/get/security/0'],
       ],
     });
   });
@@ -107,7 +107,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-operation-security-scopes', Severity.Error, 'Operation "GET /health" must define security that includes an SDX OAuth2 scheme.', '/paths/~1health/get'],
+        ['sdx-operation-security-scopes', Severity.Error, 'Operation "GET /health" is missing security that includes an SDX OAuth2 scheme.', '/paths/~1health/get'],
       ],
     });
   });

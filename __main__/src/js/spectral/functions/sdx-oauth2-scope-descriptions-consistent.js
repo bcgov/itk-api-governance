@@ -27,7 +27,7 @@ export default (securitySchemes, _options, context) => {
         const first = descriptionsByScope.get(scope);
         if (description !== first.description) {
           results.push({
-            message: `OAuth2 scope "${scope}" in security scheme "${schemeName}" must use the same description in every flow.`,
+            message: `OAuth2 scope "${scope}" in security scheme "${schemeName}" has inconsistent descriptions across flows.`,
             path: [...context.path, schemeName, 'flows', flowName, 'scopes', scope],
           });
         }

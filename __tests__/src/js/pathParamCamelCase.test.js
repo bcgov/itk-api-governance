@@ -79,7 +79,7 @@ paths:
             type: string
       `,
       expected: [
-        ['path-param-camel-case', Severity.Error, 'Path parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{item-id}/get/parameters/0/name'],
+        ['path-param-camel-case', Severity.Error, 'Path parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{item-id}/get/parameters/0/name'],
       ],
     });
   });
@@ -114,7 +114,7 @@ paths:
                 type: string
       `,
       expected: [
-        ['path-param-camel-case', Severity.Error, 'Path parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{item-id}/get/parameters/0/name'],
+        ['path-param-camel-case', Severity.Error, 'Path parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{item-id}/get/parameters/0/name'],
       ],
     });
   });
@@ -149,7 +149,7 @@ paths:
                 type: string
       `,
       expected: [
-        ['path-param-camel-case', Severity.Error, 'Path parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{item-id}/get/parameters/0/name'],
+        ['path-param-camel-case', Severity.Error, 'Path parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)', '/paths/~1items~1{item-id}/get/parameters/0/name'],
       ],
     });
   });
