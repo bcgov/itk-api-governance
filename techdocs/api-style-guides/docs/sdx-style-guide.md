@@ -7,9 +7,6 @@ It extends the [Basic OpenAPI Style Guide](basic-style-guide.md), escalates SDX-
 warnings to errors, and adds SDX-specific gateway authorization and internal
 transport rules.
 
-For policy context and requirements that are not expressed as Spectral rules, see the
-[SDX API Standard](/docs/default/component/sdx-api-standards/).
-
 ## SDX Mandatory Basic Rules
 
 SDX provisioning requires these Basic rules to pass with zero errors.
@@ -278,6 +275,359 @@ paths:
               description: Internal trace header.
               schema:
                 type: string
+```
+
+---
+
+## SDX Unsupported OpenAPI Features
+
+
+---
+
+### sdx-no-webhooks
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support OpenAPI 3.1 webhooks.
+
+
+**Valid example:**
+```yaml
+openapi: 3.1.0
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+
+**Invalid example:**
+```yaml
+openapi: 3.1.0
+webhooks:
+  loadChanged:
+    post:
+      operationId: loadChanged
+      responses:
+        '202':
+          description: Load change accepted.
+```
+
+---
+
+### sdx-no-callbacks
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support OpenAPI callbacks.
+
+
+**Valid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+
+**Invalid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      callbacks:
+        onLoadChanged:
+          '{$request.body#/callbackUrl}':
+            post:
+              operationId: onLoadChanged
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+---
+
+### sdx-no-streaming-media-types
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support long-lived streaming media types.
+
+
+**Valid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+```
+
+
+**Invalid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: streamLoads
+      responses:
+        '200':
+          description: Loads streamed successfully.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+```
+
+---
+
+### sdx-no-websocket-server-urls
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support WebSocket server URLs.
+
+
+**Valid example:**
+```yaml
+servers:
+  - url: https://api.example.gov.bc.ca/sdx
+```
+
+
+**Invalid example:**
+```yaml
+servers:
+  - url: wss://api.example.gov.bc.ca/sdx
+```
+
+---
+
+### sdx-server-urls-http-only
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX can only proxy HTTP, HTTPS, or relative server URLs.
+
+
+**Valid example:**
+```yaml
+servers:
+  - url: /mass-haul
+```
+
+
+**Invalid example:**
+```yaml
+servers:
+  - url: ftp://api.example.gov.bc.ca/mass-haul
+```
+
+---
+
+### sdx-no-operation-servers
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX routing is controlled centrally and does not support operation-level
+server overrides.
+
+
+**Valid example:**
+```yaml
+servers:
+  - url: https://api.example.gov.bc.ca/sdx
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+
+**Invalid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      servers:
+        - url: https://operation.example.gov.bc.ca/sdx
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+---
+
+### sdx-no-path-item-servers
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX routing is controlled centrally and does not support path-item-level
+server overrides.
+
+
+**Valid example:**
+```yaml
+servers:
+  - url: https://api.example.gov.bc.ca/sdx
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+
+**Invalid example:**
+```yaml
+paths:
+  /loads:
+    servers:
+      - url: https://path.example.gov.bc.ca/sdx
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+---
+
+### sdx-supported-http-methods
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support TRACE, OPTIONS, or HEAD operations.
+
+
+**Valid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+```
+
+
+**Invalid example:**
+```yaml
+paths:
+  /loads:
+    trace:
+      operationId: traceLoads
+      responses:
+        '204':
+          description: Trace completed successfully.
+```
+
+---
+
+### sdx-supported-media-types
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support XML, binary, multipart, or other non-JSON-style
+request and response media types.
+
+
+**Valid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+```
+
+
+**Invalid example:**
+```yaml
+paths:
+  /loads:
+    get:
+      operationId: listLoads
+      responses:
+        '200':
+          description: Loads returned successfully.
+          content:
+            application/xml:
+              schema:
+                type: string
+```
+
+---
+
+### sdx-no-binary-schemas
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support binary string schemas.
+
+
+**Valid example:**
+```yaml
+schema:
+  type: object
+  properties:
+    documentId:
+      type: string
+```
+
+
+**Invalid example:**
+```yaml
+schema:
+  type: object
+  properties:
+    file:
+      type: string
+      format: binary
+```
+
+---
+
+### sdx-no-cookie-parameters
+#### Severity: <span style="color:red">ERROR</span>
+
+SDX does not support cookie-based API contracts.
+
+
+**Valid example:**
+```yaml
+parameters:
+  - name: requestId
+    in: header
+    schema:
+      type: string
+```
+
+
+**Invalid example:**
+```yaml
+parameters:
+  - name: session
+    in: cookie
+    schema:
+      type: string
 ```
 
 ---

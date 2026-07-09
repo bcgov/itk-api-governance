@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: sdx-ruleset.yaml
-# Generated: 2026-06-24T22:20:59.023Z
+# Generated: 2026-07-09T19:54:03.996Z
 extends: ./basic-ruleset.yaml
 functions:
   - sdx-no-internal-headers
@@ -51,3 +51,136 @@ rules:
     given: $
     then:
       function: sdx-no-internal-headers
+  sdx-no-webhooks:
+    description: SDX API contracts must not define OpenAPI webhooks.
+    message: SDX does not support OpenAPI webhooks.
+    severity: error
+    formats:
+      - oas3
+    given: $.webhooks
+    then:
+      function: falsy
+  sdx-no-callbacks:
+    description: SDX API contracts must not define OpenAPI callbacks.
+    message: SDX does not support OpenAPI callbacks.
+    severity: error
+    formats:
+      - oas3
+    given: $.paths[*][*].callbacks
+    then:
+      function: falsy
+  sdx-no-streaming-media-types:
+    description: SDX API contracts must not define streaming media types.
+    message: SDX does not support streaming media types.
+    severity: error
+    formats:
+      - oas3
+    given:
+      - $.paths[*][*].requestBody.content
+      - $.paths[*][*].responses[*].content
+      - $.components.requestBodies.*.content
+      - $.components.responses.*.content
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          propertyNames:
+            not:
+              pattern: ^(text/event-stream|application/x-ndjson|application/stream\+json|application/json-seq)$
+  sdx-no-websocket-server-urls:
+    description: SDX API contracts must not define WebSocket server URLs.
+    message: SDX does not support WebSocket server URLs.
+    severity: error
+    formats:
+      - oas3
+    given: $..servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ^wss?://
+  sdx-server-urls-http-only:
+    description: SDX API contracts must only define HTTP, HTTPS, or relative server URLs.
+    message: SDX only supports HTTP, HTTPS, or relative server URLs.
+    severity: error
+    formats:
+      - oas3
+    given: $..servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^(https?://|/|wss?://)
+  sdx-no-operation-servers:
+    description: SDX API contracts must not define operation-level servers.
+    message: SDX does not support operation-level servers.
+    severity: error
+    formats:
+      - oas3
+    given: $.paths[*][*].servers
+    then:
+      function: falsy
+  sdx-no-path-item-servers:
+    description: SDX API contracts must not define path-item-level servers.
+    message: SDX does not support path-item-level servers.
+    severity: error
+    formats:
+      - oas3
+    given: $.paths[*].servers
+    then:
+      function: falsy
+  sdx-supported-http-methods:
+    description: SDX API contracts must only define supported HTTP operations.
+    message: SDX supports GET, POST, PUT, PATCH, and DELETE operations only.
+    severity: error
+    formats:
+      - oas3
+    given:
+      - $.paths[*].trace
+      - $.paths[*].options
+      - $.paths[*].head
+    then:
+      function: falsy
+  sdx-supported-media-types:
+    description: SDX API contracts must not define unsupported request or response media types.
+    message: SDX does not support this request or response media type.
+    severity: error
+    formats:
+      - oas3
+    given:
+      - $.paths[*][*].requestBody.content
+      - $.paths[*][*].responses[*].content
+      - $.components.requestBodies.*.content
+      - $.components.responses.*.content
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          propertyNames:
+            not:
+              pattern: ^(application/xml|text/xml|application/octet-stream|multipart/.+|image/.+|audio/.+|video/.+|application/pdf|application/zip)$
+  sdx-no-binary-schemas:
+    description: SDX API contracts must not define binary string schemas.
+    message: SDX does not support binary string schemas.
+    severity: error
+    formats:
+      - oas3
+    given: $..format
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ^(binary|byte)$
+  sdx-no-cookie-parameters:
+    description: SDX API contracts must not define cookie parameters.
+    message: SDX does not support cookie parameters.
+    severity: error
+    formats:
+      - oas3
+    given:
+      - $.paths[*].parameters[*].in
+      - $.paths[*][*].parameters[*].in
+      - $.components.parameters.*.in
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ^cookie$

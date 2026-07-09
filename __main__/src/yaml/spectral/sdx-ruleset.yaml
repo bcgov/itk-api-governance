@@ -256,3 +256,398 @@ rules:
     given: $
     then:
       function: sdx-no-internal-headers
+
+  # Section: SDX Unsupported OpenAPI Features
+
+  # SDX does not support OpenAPI 3.1 webhooks.
+  #
+  # Valid example:
+  # ```yaml
+  # openapi: 3.1.0
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # openapi: 3.1.0
+  # webhooks:
+  #   loadChanged:
+  #     post:
+  #       operationId: loadChanged
+  #       responses:
+  #         '202':
+  #           description: Load change accepted.
+  # ```
+  sdx-no-webhooks:
+    description: SDX API contracts must not define OpenAPI webhooks.
+    message: SDX does not support OpenAPI webhooks.
+    severity: error
+    formats: [oas3]
+    given: $.webhooks
+    then:
+      function: falsy
+
+  # SDX does not support OpenAPI callbacks.
+  #
+  # Valid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       callbacks:
+  #         onLoadChanged:
+  #           '{$request.body#/callbackUrl}':
+  #             post:
+  #               operationId: onLoadChanged
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  sdx-no-callbacks:
+    description: SDX API contracts must not define OpenAPI callbacks.
+    message: SDX does not support OpenAPI callbacks.
+    severity: error
+    formats: [oas3]
+    given: $.paths[*][*].callbacks
+    then:
+      function: falsy
+
+  # SDX does not support long-lived streaming media types.
+  #
+  # Valid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 type: object
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: streamLoads
+  #       responses:
+  #         '200':
+  #           description: Loads streamed successfully.
+  #           content:
+  #             text/event-stream:
+  #               schema:
+  #                 type: string
+  # ```
+  sdx-no-streaming-media-types:
+    description: SDX API contracts must not define streaming media types.
+    message: SDX does not support streaming media types.
+    severity: error
+    formats: [oas3]
+    given:
+      - $.paths[*][*].requestBody.content
+      - $.paths[*][*].responses[*].content
+      - $.components.requestBodies.*.content
+      - $.components.responses.*.content
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          propertyNames:
+            not:
+              pattern: "^(text/event-stream|application/x-ndjson|application/stream\\+json|application/json-seq)$"
+
+  # SDX does not support WebSocket server URLs.
+  #
+  # Valid example:
+  # ```yaml
+  # servers:
+  #   - url: https://api.example.gov.bc.ca/sdx
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # servers:
+  #   - url: wss://api.example.gov.bc.ca/sdx
+  # ```
+  sdx-no-websocket-server-urls:
+    description: SDX API contracts must not define WebSocket server URLs.
+    message: SDX does not support WebSocket server URLs.
+    severity: error
+    formats: [oas3]
+    given: $..servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^wss?://"
+
+  # SDX can only proxy HTTP, HTTPS, or relative server URLs.
+  #
+  # Valid example:
+  # ```yaml
+  # servers:
+  #   - url: /mass-haul
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # servers:
+  #   - url: ftp://api.example.gov.bc.ca/mass-haul
+  # ```
+  sdx-server-urls-http-only:
+    description: SDX API contracts must only define HTTP, HTTPS, or relative server URLs.
+    message: SDX only supports HTTP, HTTPS, or relative server URLs.
+    severity: error
+    formats: [oas3]
+    given: $..servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(https?://|/|wss?://)"
+
+  # SDX routing is controlled centrally and does not support operation-level
+  # server overrides.
+  #
+  # Valid example:
+  # ```yaml
+  # servers:
+  #   - url: https://api.example.gov.bc.ca/sdx
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       servers:
+  #         - url: https://operation.example.gov.bc.ca/sdx
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  sdx-no-operation-servers:
+    description: SDX API contracts must not define operation-level servers.
+    message: SDX does not support operation-level servers.
+    severity: error
+    formats: [oas3]
+    given: $.paths[*][*].servers
+    then:
+      function: falsy
+
+  # SDX routing is controlled centrally and does not support path-item-level
+  # server overrides.
+  #
+  # Valid example:
+  # ```yaml
+  # servers:
+  #   - url: https://api.example.gov.bc.ca/sdx
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     servers:
+  #       - url: https://path.example.gov.bc.ca/sdx
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  sdx-no-path-item-servers:
+    description: SDX API contracts must not define path-item-level servers.
+    message: SDX does not support path-item-level servers.
+    severity: error
+    formats: [oas3]
+    given: $.paths[*].servers
+    then:
+      function: falsy
+
+  # SDX does not support TRACE, OPTIONS, or HEAD operations.
+  #
+  # Valid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     trace:
+  #       operationId: traceLoads
+  #       responses:
+  #         '204':
+  #           description: Trace completed successfully.
+  # ```
+  sdx-supported-http-methods:
+    description: SDX API contracts must only define supported HTTP operations.
+    message: SDX supports GET, POST, PUT, PATCH, and DELETE operations only.
+    severity: error
+    formats: [oas3]
+    given:
+      - $.paths[*].trace
+      - $.paths[*].options
+      - $.paths[*].head
+    then:
+      function: falsy
+
+  # SDX does not support XML, binary, multipart, or other non-JSON-style
+  # request and response media types.
+  #
+  # Valid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 type: object
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # paths:
+  #   /loads:
+  #     get:
+  #       operationId: listLoads
+  #       responses:
+  #         '200':
+  #           description: Loads returned successfully.
+  #           content:
+  #             application/xml:
+  #               schema:
+  #                 type: string
+  # ```
+  sdx-supported-media-types:
+    description: SDX API contracts must not define unsupported request or response media types.
+    message: SDX does not support this request or response media type.
+    severity: error
+    formats: [oas3]
+    given:
+      - $.paths[*][*].requestBody.content
+      - $.paths[*][*].responses[*].content
+      - $.components.requestBodies.*.content
+      - $.components.responses.*.content
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          propertyNames:
+            not:
+              pattern: "^(application/xml|text/xml|application/octet-stream|multipart/.+|image/.+|audio/.+|video/.+|application/pdf|application/zip)$"
+
+  # SDX does not support binary string schemas.
+  #
+  # Valid example:
+  # ```yaml
+  # schema:
+  #   type: object
+  #   properties:
+  #     documentId:
+  #       type: string
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # schema:
+  #   type: object
+  #   properties:
+  #     file:
+  #       type: string
+  #       format: binary
+  # ```
+  sdx-no-binary-schemas:
+    description: SDX API contracts must not define binary string schemas.
+    message: SDX does not support binary string schemas.
+    severity: error
+    formats: [oas3]
+    given: $..format
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(binary|byte)$"
+
+  # SDX does not support cookie-based API contracts.
+  #
+  # Valid example:
+  # ```yaml
+  # parameters:
+  #   - name: requestId
+  #     in: header
+  #     schema:
+  #       type: string
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # parameters:
+  #   - name: session
+  #     in: cookie
+  #     schema:
+  #       type: string
+  # ```
+  sdx-no-cookie-parameters:
+    description: SDX API contracts must not define cookie parameters.
+    message: SDX does not support cookie parameters.
+    severity: error
+    formats: [oas3]
+    given:
+      - $.paths[*].parameters[*].in
+      - $.paths[*][*].parameters[*].in
+      - $.components.parameters.*.in
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^cookie$"

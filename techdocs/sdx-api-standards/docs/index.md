@@ -24,8 +24,6 @@ The SDX API Standard currently does not define requirements for:
 - API versioning
 - URL parameters
 - Resource naming
-- HTTP verbs
-- Data interchange formats
 - Service responses
 - Standard units of measure
 - Standard data items
@@ -120,6 +118,36 @@ must not include unsafe script tags or `eval` expressions.
 The external API contract must not expose SDX internal transport details. Internal edge headers and
 `X-Edge-Token` must not be included in the OAD.
 
+### Unsupported OpenAPI Features
+
+SDX supports HTTP request and response API contracts that can be proxied and published consistently
+through the SDX Gateway and downstream catalogues.
+
+The OAD MUST NOT define asynchronous callback or event-driven API features:
+
+- OpenAPI 3.1 top-level `webhooks`.
+- Operation-level `callbacks`.
+- Streaming media types, including `text/event-stream`, `application/x-ndjson`,
+  `application/stream+json`, and `application/json-seq`.
+
+The OAD MUST use SDX-supported server and routing declarations:
+
+- Server URLs MUST use HTTP, HTTPS, or relative URLs.
+- Server URLs MUST NOT use WebSocket schemes such as `ws://` or `wss://`.
+- Server URLs MUST NOT use non-HTTP schemes such as `ftp://`, `sftp://`, `mqtt://`, or `amqp://`.
+- The OAD MUST NOT define path-item-level or operation-level `servers`.
+
+The OAD MUST only define `get`, `post`, `put`, `patch`, and `delete` operations. The OAD MUST NOT
+define `trace`, `options`, or `head` operations.
+
+The OAD MUST NOT define unsupported request or response media types. Unsupported media types include
+XML, `application/octet-stream`, `multipart/*`, image, audio, video, PDF, and ZIP media types.
+
+The OAD MUST NOT define large or binary file transfer contracts, including `type: string` schemas
+with `format: binary` or `format: byte`.
+
+The OAD MUST NOT define cookie parameters.
+
 ### Validation Rules
 
 The OAD will be validated against the SDX OpenAPI validation rules before the API is provisioned. The
@@ -148,6 +176,9 @@ The SDX ruleset will validate the following mandatory rules:
   Operation-level declarations override global declarations and must still include the SDX OAuth2
   scheme.
 - Exclusion of internal edge headers and `X-Edge-Token` from the external API contract.
+- Exclusion of unsupported OpenAPI features, including webhooks, callbacks, streaming media types,
+  unsupported server URL schemes, path-item and operation-level servers, unsupported HTTP methods,
+  unsupported media types, binary schemas, and cookie parameters.
 
 Refer to the [SDX API Style Guide](/docs/default/component/api-style-guides/sdx-style-guide/) for greater detail.
 
