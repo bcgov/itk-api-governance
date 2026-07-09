@@ -3,15 +3,21 @@ title: SDX API Standard
 ---
 # Secure Data Exchange (SDX) API Standard
 
-The Secure Data Exchange (SDX) provides a secure, standard platform for exchanging data between organizations. This documentation summarizes the SDX API Standard for published HTTP APIs.
+The Secure Data Exchange (SDX) provides a secure, standard platform for exchanging data between
+organizations. This documentation summarizes the SDX API Standard for published HTTP APIs.
 
-This page describes the current release of the SDX API Standard. Older releases can be accessed from tagged commits in the repository.
+This page describes the current release of the SDX API Standard. Older releases can be accessed from
+tagged commits in the repository.
 
-The API Standard is a living standard with named releases. Requirements use the keywords **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** as defined by [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
+The API Standard is a living standard with named releases. Requirements use the keywords **MUST**,
+**MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**,
+**RECOMMENDED**, **MAY**, and **OPTIONAL** as defined by
+[RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 
 ## Scope
 
-This standard applies to HTTP APIs. Standards for other API types, such as RESTful APIs or GraphQL APIs, may be defined later.
+This standard applies to HTTP APIs. Standards for other API types, such as RESTful APIs or GraphQL
+APIs, may be defined later.
 
 The SDX API Standard currently does not define requirements for:
 
@@ -36,15 +42,22 @@ All services published to the Service Catalog MUST conform to a version of the S
 
 ## Authoritative Data Registries
 
-APIs that are planned as Authoritative Data Registries MUST conform to the ADR API Standard when it is available. The ADR API Standard is expected to cover much of the API design scope that is excluded from this standard.
+APIs that are planned as Authoritative Data Registries MUST conform to the ADR API Standard when it
+is available. The ADR API Standard is expected to cover much of the API design scope that is excluded
+from this standard.
 
 ## Security Requirements
 
-Every request to an SDX API MUST include an OpenID Connect (OIDC) JWT access token issued by the Common Hosted Single Sign-On (CSS) Standard Realm. SDX uses the tokens **client_id** or **azp** claims to identify the requesting client.
+Every request to an SDX API MUST include an OpenID Connect (OIDC) JWT access token issued by the
+Common Hosted Single Sign-On (CSS) Standard Realm. SDX uses the tokens **client_id** or **azp**
+claims to identify the requesting client.
 
-SDX Gateway authorization is based on scopes. SDX inspects the access token for the scopes required by the requested operation before allowing the request to pass through the gateway.
+SDX Gateway authorization is based on scopes. SDX inspects the access token for the scopes required
+by the requested operation before allowing the request to pass through the gateway.
 
-The provider service MAY require other authentication or authorization mechanisms, but those mechanisms are outside the scope of SDX. The provider service MAY also implement additional authorization based on roles, data context, or other provider-owned access rules.
+The provider service MAY require other authentication or authorization mechanisms, but those
+mechanisms are outside the scope of SDX. The provider service MAY also implement additional
+authorization based on roles, data context, or other provider-owned access rules.
 
 Every operation:
 
@@ -56,41 +69,68 @@ Every operation:
 
 ### OpenAPI Description
 
-SDX APIs are documented with OpenAPI Descriptions (OADs). The OAD is the contract SDX uses to understand the API's operations, security requirements, scopes, and server information. 
+SDX APIs are documented with OpenAPI Descriptions (OADs). The OAD is the contract SDX uses to
+understand the API's operations, security requirements, scopes, and server information.
 
 An OAD with environment-specific URLs will need to be uploaded for each SDX environment provisioned.
 
 !!! note
-    Operations, security requirements, and scopes are expected to remain consistent across environments for the same OAD version; changes to those parts of the contract should typically be published as a different OAD version.
+    Operations, security requirements, and scopes are expected to remain consistent across
+    environments for the same OAD version; changes to those parts of the contract should typically be
+    published as a different OAD version.
 
 ### OAuth2 Security Scheme
 
-SDX Gateway authorization MUST be documented with an OpenAPI OAuth2 security scheme. OpenID Connect security schemes SHOULD NOT be used for SDX Gateway authorization. OpenID Connect security schemes MAY be present when they use the same identity provider as the SDX OAuth2 security scheme and do not conflict with the OAuth2 API contract. OpenID Connect security schemes can derive scopes from the identity provider's well-known configuration. In the CSS Standard Realm, that configuration can include many scopes that are unrelated to a specific API. An OAuth2 security scheme lets the API specification explicitly define only the scopes that are part of the API contract, which makes the OAD clearer for consumers and easier for SDX and downstream tooling to process consistently.
+SDX Gateway authorization MUST be documented with an OpenAPI OAuth2 security scheme. OpenID Connect
+security schemes SHOULD NOT be used for SDX Gateway authorization. OpenID Connect security schemes
+MAY be present when they use the same identity provider as the SDX OAuth2 security scheme and do not
+conflict with the OAuth2 API contract. OpenID Connect security schemes can derive scopes from the
+identity provider's well-known configuration. In the CSS Standard Realm, that configuration can
+include many scopes that are unrelated to a specific API. An OAuth2 security scheme lets the API
+specification explicitly define only the scopes that are part of the API contract, which makes the
+OAD clearer for consumers and easier for SDX and downstream tooling to process consistently.
 
-The OAuth2 security scheme MUST include the supported flows, token URLs, and authorization URLs required by those flows. OAuth2 scopes MAY be omitted when the API does not require scopes. When scopes are declared, each scope MUST include a description. When the same scope is declared under multiple OAuth2 flows, the description MUST be consistent.
+The OAuth2 security scheme MUST include the supported flows, token URLs, and authorization URLs
+required by those flows. OAuth2 scopes MAY be omitted when the API does not require scopes. When
+scopes are declared, each scope MUST include a description. When the same scope is declared under
+multiple OAuth2 flows, the description MUST be consistent.
 
-APIs MUST use OpenAPI `security` declarations to identify the SDX Gateway OAuth2 scheme and any scopes required to access operations. This can be declared globally at the OpenAPI document root, or locally on each operation. When an operation declares its own `security`, that local declaration overrides the global declaration and MUST still include the SDX OAuth2 scheme.
+APIs MUST use OpenAPI `security` declarations to identify the SDX Gateway OAuth2 scheme and any
+scopes required to access operations. This can be declared globally at the OpenAPI document root, or
+locally on each operation. When an operation declares its own `security`, that local declaration
+overrides the global declaration and MUST still include the SDX OAuth2 scheme.
 
 ### Well-Formed API Contract
 
-The OAD must use OpenAPI 3.x or newer. Swagger 2.0 is not supported for SDX because the validation and provisioning process depends on OpenAPI 3.x security, server, schema, and component structures.
+The OAD must use OpenAPI 3.x or newer. Swagger 2.0 is not supported for SDX because the validation
+and provisioning process depends on OpenAPI 3.x security, server, schema, and component structures.
 
-The OAD must be well formed and valid. This includes valid OpenAPI structure, references, path declarations, path parameters, operation parameters, schemas, examples, enum values, and operation security definitions. References must not have invalid siblings, enum entries must not be duplicated, and enum values must match their declared types.
+The OAD must be well formed and valid. This includes valid OpenAPI structure, references, path
+declarations, path parameters, operation parameters, schemas, examples, enum values, and operation
+security definitions. References must not have invalid siblings, enum entries must not be duplicated,
+and enum values must match their declared types.
 
-Operations and paths must be unambiguous. Operation IDs must be present for all operations, and operation IDs must be unique when provided. Path keys must not include query strings because query parameters must be documented as OpenAPI parameters.
+Operations and paths must be unambiguous. Operation IDs must be present for all operations, and
+operation IDs must be unique when provided. Path keys must not include query strings because query
+parameters must be documented as OpenAPI parameters.
 
-Descriptions and examples must be safe to render in SDX and downstream catalogues. Markdown content must not include unsafe script tags or `eval` expressions.
+Descriptions and examples must be safe to render in SDX and downstream catalogues. Markdown content
+must not include unsafe script tags or `eval` expressions.
 
-The external API contract must not expose SDX internal transport details. Internal edge headers and `X-Edge-Token` must not be included in the OAD.
+The external API contract must not expose SDX internal transport details. Internal edge headers and
+`X-Edge-Token` must not be included in the OAD.
 
 ### Validation Rules
 
-The OAD will be validated against the SDX OpenAPI validation rules before the API is provisioned. The OAD MUST pass with zero errors. The validation may produce warnings that can be used to further improve the OAD, but warnings alone will not prevent the API from being provisioned.
+The OAD will be validated against the SDX OpenAPI validation rules before the API is provisioned. The
+OAD MUST pass with zero errors. The validation may produce warnings that can be used to further
+improve the OAD, but warnings alone will not prevent the API from being provisioned.
 
 The SDX ruleset will validate the following mandatory rules:
 
 - OpenAPI 3.x or newer, rather than Swagger 2.0.
-- Valid OpenAPI structure, references, path declarations, path parameters, operation parameters, schemas, examples, enum values, and operation security definitions.
+- Valid OpenAPI structure, references, path declarations, path parameters, operation parameters,
+  schemas, examples, enum values, and operation security definitions.
 - Unique operation IDs where operation IDs are provided.
 - No query strings in path keys.
 - No invalid `$ref` siblings.
@@ -98,19 +138,27 @@ The SDX ruleset will validate the following mandatory rules:
 - Typed enum values.
 - Operation IDs for all operations.
 - No unsafe Markdown such as script tags or `eval`.
-- Use of an OpenAPI OAuth2 security scheme for SDX Gateway authorization. OpenID Connect security schemes SHOULD NOT be used for SDX Gateway authorization, but MAY be present when they use the same identity provider as the SDX OAuth2 security scheme and do not conflict with the OAuth2 API contract.
+- Use of an OpenAPI OAuth2 security scheme for SDX Gateway authorization. OpenID Connect security
+  schemes SHOULD NOT be used for SDX Gateway authorization, but MAY be present when they use the same
+  identity provider as the SDX OAuth2 security scheme and do not conflict with the OAuth2 API
+  contract.
 - OAuth2 flows, token URLs, authorization URLs, and scope descriptions when scopes are declared.
 - Consistent descriptions when the same scope is declared under multiple OAuth2 flows.
-- Global or operation-level `security` declarations for the SDX Gateway OAuth2 scheme and scopes. Operation-level declarations override global declarations and must still include the SDX OAuth2 scheme.
+- Global or operation-level `security` declarations for the SDX Gateway OAuth2 scheme and scopes.
+  Operation-level declarations override global declarations and must still include the SDX OAuth2
+  scheme.
 - Exclusion of internal edge headers and `X-Edge-Token` from the external API contract.
 
 Refer to the [SDX API Style Guide](/docs/default/component/api-style-guides/sdx-style-guide/) for greater detail.
 
 ### API Standard Release
 
-API specifications MAY include the custom OAD property `x-csbc-api-standard` within the OAD `info` object to indicate which API Standard release the OAD document conforms to.
+API specifications MAY include the custom OAD property `x-csbc-api-standard` within the OAD `info`
+object to indicate which API Standard release the OAD document conforms to.
 
-OAD documents that omit `x-csbc-api-standard` will be tested against the latest API Standard linting rules.  If the `x-csbc-api-standard` refers to an older, out of support version then the API will have to be updated to conform to a currently supported version.
+OAD documents that omit `x-csbc-api-standard` will be tested against the latest API Standard linting
+rules. If the `x-csbc-api-standard` refers to an older, out of support version then the API will have
+to be updated to conform to a currently supported version.
 
 ### Example OAD
 
@@ -158,7 +206,8 @@ paths:
 
 ## SDX Processing
 
-When SDX loads or imports a provided OAD, SDX will update and add SDX-specific metadata so that the API can be published consistently through SDX and downstream catalogues.
+When SDX loads or imports a provided OAD, SDX will update and add SDX-specific metadata so that the
+API can be published consistently through SDX and downstream catalogues.
 
 SDX will update:
 
@@ -173,9 +222,12 @@ SDX will add:
 
 SDX will remove:
 
-- The `info.contact` section because this contact information source may become stale. Contact information will be published in the ITK API catalogue where it can be kept up-to-date.
+- The `info.contact` section because this contact information source may become stale. Contact
+  information will be published in the ITK API catalogue where it can be kept up-to-date.
 
-SDX will not modify provider-owned `info.termsOfService` or `info.license` values. Except for the SDX-managed metadata listed above, SDX will not modify provider-owned API contract content before publication.
+SDX will not modify provider-owned `info.termsOfService` or `info.license` values. Except for the
+SDX-managed metadata listed above, SDX will not modify provider-owned API contract content before
+publication.
 
 Example SDX metadata:
 
