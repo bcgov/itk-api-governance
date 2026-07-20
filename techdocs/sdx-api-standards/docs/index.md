@@ -3,8 +3,29 @@ title: SDX API Standard
 ---
 # Secure Data Exchange (SDX) API Standard
 
-The Secure Data Exchange (SDX) provides a secure, standard platform for exchanging data between
-organizations. This documentation summarizes the SDX API Standard for published HTTP APIs.
+## What is SDX?
+
+Secure Data Exchange (SDX) is the secure exchange layer within Connected Services. It enables the
+controlled and protected transfer of approved data between participating organizations, with
+consistent authentication, authorization, validation, routing, and auditing controls.
+
+The SDX API Standard defines the requirements an API and its OpenAPI Description (OAD) must satisfy
+to be provisioned and published through SDX.
+
+For a broader overview, see
+[Secure Data Exchange (SDX)](/docs/default/component/connected-services-getting-started-techdocs/secure-data-exchange/)
+in the Getting Started with Connected Services documentation.
+
+## Ownership
+
+DataBC API Programme Services owns and maintains this standard. API provider teams remain
+responsible for their API design, implementation, data, and provider-owned authorization controls.
+
+## Who must follow this standard and when?
+
+Teams that provide an API through SDX MUST follow a supported release of this standard. API
+designers and developers should apply it when designing the API and OAD. Service owners are
+accountable for conformance before requesting SDX provisioning or publication.
 
 This page describes the current release of the SDX API Standard. Older releases can be accessed from
 tagged commits in the repository.
@@ -16,8 +37,11 @@ The API Standard is a living standard with named releases. Requirements use the 
 
 ## Scope
 
-This standard applies to HTTP APIs. Standards for other API types, such as RESTful APIs or GraphQL
-APIs, may be defined later.
+This standard applies to request-response APIs transported over HTTP and described with OpenAPI.
+
+This release does not define support for GraphQL, WebSocket, asynchronous event-driven, or
+non-HTTP APIs. It also excludes the specific HTTP and OpenAPI features listed under
+[Unsupported OpenAPI Features](#unsupported-openapi-features).
 
 The SDX API Standard currently does not define requirements for:
 
@@ -34,15 +58,15 @@ The SDX API Standard currently does not define requirements for:
 - Bulk operations
 - Caching
 
-## Service Catalog Requirements
+## Relationship to related services and standards
 
-All services published to the Service Catalog MUST conform to a version of the SDX API Standard.
+SDX APIs may also be published in the Integration Toolkit (ITK) Service Catalog or qualify as
+Authoritative Data Registry (ADR) APIs. Additional standards may apply in those contexts, but those
+requirements are outside the scope of this document.
 
-## Authoritative Data Registries
-
-APIs that are planned as Authoritative Data Registries MUST conform to the ADR API Standard when it
-is available. The ADR API Standard is expected to cover much of the API design scope that is excluded
-from this standard.
+The Common Hosted Single Sign-On (CSS) Standard Realm issues the access tokens accepted by the SDX
+Gateway. CSS establishes client identity; SDX applies operation and scope authorization before
+forwarding a request to the provider service.
 
 ## Security Requirements
 
@@ -140,12 +164,6 @@ The OAD MUST use SDX-supported server and routing declarations:
 The OAD MUST only define `get`, `post`, `put`, `patch`, and `delete` operations. The OAD MUST NOT
 define `trace`, `options`, or `head` operations.
 
-The OAD MUST NOT define unsupported request or response media types. Unsupported media types include
-XML, `application/octet-stream`, `multipart/*`, image, audio, video, PDF, and ZIP media types.
-
-The OAD MUST NOT define large or binary file transfer contracts, including `type: string` schemas
-with `format: binary` or `format: byte`.
-
 The OAD MUST NOT define cookie parameters.
 
 ### Validation Rules
@@ -178,7 +196,7 @@ The SDX ruleset will validate the following mandatory rules:
 - Exclusion of internal edge headers and `X-Edge-Token` from the external API contract.
 - Exclusion of unsupported OpenAPI features, including webhooks, callbacks, streaming media types,
   unsupported server URL schemes, path-item and operation-level servers, unsupported HTTP methods,
-  unsupported media types, binary schemas, and cookie parameters.
+  and cookie parameters.
 
 Refer to the [SDX API Style Guide](/docs/default/component/api-style-guides/sdx-style-guide/) for greater detail.
 
@@ -242,7 +260,10 @@ API can be published consistently through SDX and downstream catalogues.
 
 SDX will update:
 
-- OAuth token endpoint details, where applicable.
+- OAuth endpoint details for an OAuth2 scheme used for SDX Gateway authorization. When SDX publishes
+  an OAD for an environment, it replaces the provider-supplied endpoint values in that scheme with
+  the corresponding CSS Standard Realm endpoints for the target SDX environment. OAuth2 schemes that
+  are not used for SDX Gateway authorization are not rewritten.
 - The `servers` section.
 
 SDX will add:

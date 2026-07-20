@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: sdx-ruleset.yaml
-# Generated: 2026-07-09T20:44:01.873Z
+# Generated: 2026-07-20T19:16:26.142Z
 extends: ./basic-ruleset.yaml
 functions:
   - sdx-no-internal-headers
@@ -140,36 +140,6 @@ rules:
       - $.paths[*].head
     then:
       function: falsy
-  sdx-supported-media-types:
-    description: SDX API contracts must not define unsupported request or response media types.
-    message: Request or response defines a media type unsupported by SDX.
-    severity: error
-    formats:
-      - oas3
-    given:
-      - $.paths[*][*].requestBody.content
-      - $.paths[*][*].responses[*].content
-      - $.components.requestBodies.*.content
-      - $.components.responses.*.content
-    then:
-      function: schema
-      functionOptions:
-        schema:
-          type: object
-          propertyNames:
-            not:
-              pattern: ^(application/xml|text/xml|application/octet-stream|multipart/.+|image/.+|audio/.+|video/.+|application/pdf|application/zip)$
-  sdx-no-binary-schemas:
-    description: SDX API contracts must not define binary string schemas.
-    message: Schema uses a binary string format unsupported by SDX.
-    severity: error
-    formats:
-      - oas3
-    given: $..format
-    then:
-      function: pattern
-      functionOptions:
-        notMatch: ^(binary|byte)$
   sdx-no-cookie-parameters:
     description: SDX API contracts must not define cookie parameters.
     message: Parameter uses cookie location unsupported by SDX.
