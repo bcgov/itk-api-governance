@@ -23,13 +23,27 @@ on:
 jobs:
     test_techdocs_build_job:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                techdocs_directory:
+                    - techdocs/api-style-guides
+                    - techdocs/sdx-api-standards
 
-        name: Build TechDocs content
+        name: Build ${{ matrix.techdocs_directory }}
         steps:
             -   name: Checkout
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
                 with:
                     fetch-depth: '0'
+            -   name: Stage TechDocs component
+                env:
+                    TECHDOCS_DIRECTORY: ${{ matrix.techdocs_directory }}
+                run: |
+                    cp "${TECHDOCS_DIRECTORY}/catalog-info.yaml" catalog-info.techdocs.yaml
+                    cp "${TECHDOCS_DIRECTORY}/mkdocs.yml" mkdocs.yml
+                    cp -R "${TECHDOCS_DIRECTORY}/docs" docs
+                    find techdocs -type f \( -name catalog-info.yaml -o -name catalog-info.yml \) -delete
+                    mv catalog-info.techdocs.yaml catalog-info.yaml
             -   name: Build TechDocs
                 uses: bcgov/devhub-techdocs-publish@stable
                 id: build_and_publish
