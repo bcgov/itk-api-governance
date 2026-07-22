@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: strict-ruleset.yaml
-# Generated: 2026-02-19T17:31:11.103Z
+# Generated: 2026-07-09T20:44:01.863Z
 extends: ./basic-ruleset.yaml
 rules:
   no-eval-in-markdown: error

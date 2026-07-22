@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-style-guides
+  title: API Style Guides
+  description: Generated API Governance Spectral style guides.
+  annotations:
+    github.com/project-slug: bcgov/itk-api-governance
+    backstage.io/techdocs-ref: dir:.
+    bcgovpubcode.gov.bc.ca/ministry: CITZ
+    bcgovpubcode.gov.bc.ca/product_description: Generated API Governance Spectral style guides.
+    bcgovpubcode.gov.bc.ca/product_owner: Stainton, Drew
+    bcgovpubcode.gov.bc.ca/hosting_platform: Not-Applicable
+    backstage.io/source-template: template:default/docs-template
+  tags:
+    - api-governance
+    - api-standards
+    - spectral
+    - style-guide
+spec:
+  type: documentation
+  lifecycle: experimental
+  owner: group:default/databc-aps

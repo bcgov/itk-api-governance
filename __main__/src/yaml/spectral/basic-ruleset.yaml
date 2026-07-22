@@ -1152,7 +1152,7 @@ rules:
   # ```
   operation-id-camel-case:
     description: operationId should be camelCase (starts with lowercase letter, no separators)
-    message: "operationId should be camelCase (starts with lowercase letter, no separators)"
+    message: "operationId is not camelCase (starts with lowercase letter, no separators)"
     severity: warn
     given: $..operationId
     then:
@@ -1197,6 +1197,7 @@ rules:
   # ```
   path-segments-kebab-case:
     description: Static path segments should be kebab-case (lowercase letters, numbers, hyphens only)
+    message: "{{error}}"
     severity: warn
     given: $.paths.*
     then:
@@ -1233,7 +1234,7 @@ rules:
   # ```
   path-param-camel-case:
     description: Path parameter names should be camelCase
-    message: "Path parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)"
+    message: "Path parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)"
     severity: warn
     given: $.paths..parameters[?(@.in == 'path')].name
     then:
@@ -1276,7 +1277,7 @@ rules:
   # ```
   query-param-camel-case:
     description: Query parameter names should be camelCase
-    message: "Query parameter names should be camelCase (start with lowercase letter, no special characters except letters and numbers)"
+    message: "Query parameter name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)"
     severity: warn
     given: $.paths..parameters[?(@.in == 'query')].name
     then:
@@ -1320,7 +1321,7 @@ rules:
   # ```
   schema-property-camel-case:
     description: Schema property names should be camelCase
-    message: "Schema property names should be camelCase (start with lowercase letter, no special characters except letters and numbers)"
+    message: "Schema property name is not camelCase (starts with lowercase letter, no special characters except letters and numbers)"
     severity: warn
     resolved: false   # Key: Run on the unresolved (raw) document to see $ref keywords
     given:
@@ -1642,7 +1643,7 @@ rules:
       In OAS 3.1, prefer 'examples' over the deprecated 'example'.
       Warn only when 'example' is used **without** 'examples' (i.e. prefer 'examples' when providing examples).
       No warning if both are present, only 'examples' is present, or neither is present.
-    message: "Use 'examples' instead of (or in addition to) the deprecated 'example' in OAS 3.1 schemas"
+    message: "Schema uses deprecated 'example' without 'examples'. Use 'examples' for OAS 3.1 schemas."
     severity: warn
     formats: [oas3_1]
     given:
@@ -1683,7 +1684,7 @@ rules:
   # ```
   oas2-require-openapi-3:
     description: Document must use OpenAPI 3.x (or newer). Swagger 2.0 is not allowed.
-    message: "Swagger 2.0 detected (uses 'swagger' key). Use 'openapi: 3.x.x' instead."
+    message: "Document uses Swagger 2.0 through the 'swagger' key. Use 'openapi: 3.x.x' for OpenAPI 3.x."
     severity: warn
     given: $
     then:
@@ -1891,7 +1892,7 @@ rules:
   # ```
   schema-description:
     description: Every schema in components/schemas must have a description
-    message: Schema '{{value}}' is missing a description
+    message: Schema is missing a description.
     severity: warn
     given: $.components.schemas.*
     then:
@@ -1917,7 +1918,7 @@ rules:
   # ```
   requestBody-description:
     description: Every requestBody in components/requestBodies must have a description
-    message: RequestBody '{{value}}' is missing a description
+    message: RequestBody is missing a description.
     severity: warn
     given: $.components.requestBodies.*
     then:
@@ -1943,7 +1944,7 @@ rules:
   # ```
   header-description:
     description: Every header in components/headers must have a description
-    message: Header '{{value}}' is missing a description
+    message: Header is missing a description.
     severity: warn
     given: $.components.headers.*
     then:
@@ -1969,7 +1970,7 @@ rules:
   # ```
   securityScheme-description:
     description: Every securityScheme in components/securitySchemes must have a description
-    message: SecurityScheme '{{value}}' is missing a description
+    message: SecurityScheme is missing a description.
     severity: warn
     given: $.components.securitySchemes.*
     then:
@@ -2307,7 +2308,7 @@ rules:
   # ```
   path-item-summary:
     description: Every path item must have a summary
-    message: Path '{{value}}' is missing a summary
+    message: Path item is missing a summary.
     severity: warn
     given: $.paths.*
     then:

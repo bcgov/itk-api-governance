@@ -1,5 +1,5 @@
 {
-  "name": "bcgov/csit-api-governance-spectral-style-guide",
+  "name": "bcgov/itk-api-governance",
   "version": "2.0.0",
   "description": "OpenAPI specification for BC Gov's API Governance v1.",
   "type": "module",
@@ -29,14 +29,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bcgov/csit-api-governance-spectral-style-guide.git"
+    "url": "git+https://github.com/bcgov/itk-api-governance.git"
   },
   "author": "API Programme Services, BC Gov",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/bcgov/csit-api-governance-spectral-style-guide/issues"
+    "url": "https://github.com/bcgov/itk-api-governance/issues"
   },
-  "homepage": "https://github.com/bcgov/csit-api-governance-spectral-style-guide#readme",
+  "homepage": "https://github.com/bcgov/itk-api-governance#readme",
   "dependencies": {
     "wink-pos-tagger": "^2.2.2"
   }

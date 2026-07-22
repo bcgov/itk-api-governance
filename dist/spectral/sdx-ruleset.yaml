@@ -1,0 +1,156 @@
+---
+# Fully dereferenced Spectral ruleset (all $ref resolved)
+# Original: sdx-ruleset.yaml
+# Generated: 2026-07-20T19:16:26.142Z
+extends: ./basic-ruleset.yaml
+functions:
+  - sdx-no-internal-headers
+  - sdx-oauth2-scope-descriptions-consistent
+  - sdx-oauth2-security-schemes
+  - sdx-operation-security-scopes
+rules:
+  oas2-require-openapi-3: error
+  operation-operationId: error
+  no-eval-in-markdown: error
+  no-script-tags-in-markdown: error
+  oas3-valid-media-example: error
+  oas3-valid-schema-example: error
+  sdx-oauth2-security-schemes:
+    description: SDX security schemes must include OAuth2 schemes with complete flow metadata, and OpenID Connect schemes must not conflict with the OAuth2 identity provider.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.components.securitySchemes
+    then:
+      function: sdx-oauth2-security-schemes
+  sdx-oauth2-scope-descriptions-consistent:
+    description: OAuth2 scope descriptions must be consistent across flows.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.components.securitySchemes
+    then:
+      function: sdx-oauth2-scope-descriptions-consistent
+  sdx-operation-security-scopes:
+    description: Every operation security option must include an SDX OAuth2 scheme.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.paths
+    then:
+      function: sdx-operation-security-scopes
+  sdx-no-internal-headers:
+    description: External API contracts must not expose SDX internal transport headers.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $
+    then:
+      function: sdx-no-internal-headers
+  sdx-no-webhooks:
+    description: SDX API contracts must not define OpenAPI webhooks.
+    message: Document defines OpenAPI webhooks unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given: $.webhooks
+    then:
+      function: falsy
+  sdx-no-callbacks:
+    description: SDX API contracts must not define OpenAPI callbacks.
+    message: Operation defines OpenAPI callbacks unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given: $.paths[*][*].callbacks
+    then:
+      function: falsy
+  sdx-no-streaming-media-types:
+    description: SDX API contracts must not define streaming media types.
+    message: Request or response defines a streaming media type unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given:
+      - $.paths[*][*].requestBody.content
+      - $.paths[*][*].responses[*].content
+      - $.components.requestBodies.*.content
+      - $.components.responses.*.content
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          propertyNames:
+            not:
+              pattern: ^(text/event-stream|application/x-ndjson|application/stream\+json|application/json-seq)$
+  sdx-no-websocket-server-urls:
+    description: SDX API contracts must not define WebSocket server URLs.
+    message: Server URL uses a WebSocket scheme unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given: $..servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ^wss?://
+  sdx-server-urls-http-only:
+    description: SDX API contracts must only define HTTP, HTTPS, or relative server URLs.
+    message: Server URL uses a scheme unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given: $..servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^(https?://|/|wss?://)
+  sdx-no-operation-servers:
+    description: SDX API contracts must not define operation-level servers.
+    message: Operation defines a server override unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given: $.paths[*][*].servers
+    then:
+      function: falsy
+  sdx-no-path-item-servers:
+    description: SDX API contracts must not define path-item-level servers.
+    message: Path item defines a server override unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given: $.paths[*].servers
+    then:
+      function: falsy
+  sdx-supported-http-methods:
+    description: SDX API contracts must only define supported HTTP operations.
+    message: Operation uses an HTTP method unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given:
+      - $.paths[*].trace
+      - $.paths[*].options
+      - $.paths[*].head
+    then:
+      function: falsy
+  sdx-no-cookie-parameters:
+    description: SDX API contracts must not define cookie parameters.
+    message: Parameter uses cookie location unsupported by SDX.
+    severity: error
+    formats:
+      - oas3
+    given:
+      - $.paths[*].parameters[*].in
+      - $.paths[*][*].parameters[*].in
+      - $.components.parameters.*.in
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ^cookie$

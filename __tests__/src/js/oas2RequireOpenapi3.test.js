@@ -57,7 +57,7 @@ info:
   description: Test API definition
       `,
       expected: [
-        ['oas2-require-openapi-3', Severity.Error, 'Swagger 2.0 detected (uses \'swagger\' key). Use \'openapi: 3.x.x\' instead.', '/swagger'],
+        ['oas2-require-openapi-3', Severity.Error, 'Document uses Swagger 2.0 through the \'swagger\' key. Use \'openapi: 3.x.x\' for OpenAPI 3.x.', '/swagger'],
       ],
     });
   });

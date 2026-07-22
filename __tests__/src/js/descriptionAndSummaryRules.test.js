@@ -464,7 +464,7 @@ components:
       #description: JWT-based bearer token authentication mechanism for securing API access with scoped permissions
       `,
       expected: [
-        ['header-description', Severity.Error, 'Header \'[object Object]\' is missing a description', '/components/headers/RequestID'],
+        ['header-description', Severity.Error, 'Header is missing a description.', '/components/headers/RequestID'],
         ['info-description', Severity.Error, 'Info "description" must be present and non-empty string.', '/info'],
         ['oas3_1_info-summary', Severity.Error, 'Info is missing a summary or it is empty.', '/info'],
         ['oas3-parameter-description', Severity.Error, 'Parameter objects must have "description".', '/paths/~1users~1{id}/parameters/0'],
@@ -476,11 +476,11 @@ components:
         ['oas3-schema', Severity.Error, '"NotFound" property must have required property "description".', '/components/responses/NotFound'],
         ['operation-description', Severity.Error, 'Operation "description" must be present and non-empty string.', '/paths/~1users~1{id}/get'],
         ['operation-summary', Severity.Error, 'Operation is missing a summary or it is empty.', '/paths/~1users~1{id}/get'],
-        ['path-item-summary', Severity.Error, 'Path \'[object Object]\' is missing a summary', '/paths/~1users~1{id}'],
-        ['requestBody-description', Severity.Error, 'RequestBody \'[object Object]\' is missing a description', '/components/requestBodies/UpdateUserBody'],
-        ['schema-description', Severity.Error, 'Schema \'[object Object]\' is missing a description', '/components/schemas/User'],
-        ['schema-description', Severity.Error, 'Schema \'[object Object]\' is missing a description', '/components/schemas/Error'],
-        ['securityScheme-description', Severity.Error, 'SecurityScheme \'[object Object]\' is missing a description', '/components/securitySchemes/BearerAuth'],
+        ['path-item-summary', Severity.Error, 'Path item is missing a summary.', '/paths/~1users~1{id}'],
+        ['requestBody-description', Severity.Error, 'RequestBody is missing a description.', '/components/requestBodies/UpdateUserBody'],
+        ['schema-description', Severity.Error, 'Schema is missing a description.', '/components/schemas/User'],
+        ['schema-description', Severity.Error, 'Schema is missing a description.', '/components/schemas/Error'],
+        ['securityScheme-description', Severity.Error, 'SecurityScheme is missing a description.', '/components/securitySchemes/BearerAuth'],
         ['tag-description', Severity.Error, 'Tag object must have "description".', '/tags/0'],
       ],
     });
@@ -692,12 +692,12 @@ components:
           description: Full legal or display name of the user as provided during registration or updated through profile management endpoints.
       `,
       expected: [
-        ['summary-no-markdown-single-line', Severity.Error, 'Summary must be a single line (no newlines allowed)', '/info/summary'],
-        ['summary-no-markdown-single-line', Severity.Error, 'Summary must be a single line (no newlines allowed)', '/paths/~1users~1{id}/summary'],
-        ['summary-no-markdown-single-line', Severity.Error, 'Summary must be a single line (no newlines allowed)', '/paths/~1users~1{id}/get/summary'],
-        ['summary-no-markdown-single-line', Severity.Error, 'Summary must not contain Markdown formatting (plain text only)', '/info/summary'],
-        ['summary-no-markdown-single-line', Severity.Error, 'Summary must not contain Markdown formatting (plain text only)', '/paths/~1users~1{id}/summary'],
-        ['summary-no-markdown-single-line', Severity.Error, 'Summary must not contain Markdown formatting (plain text only)', '/paths/~1users~1{id}/get/summary'],
+        ['summary-no-markdown-single-line', Severity.Error, 'Summary contains one or more line breaks.', '/info/summary'],
+        ['summary-no-markdown-single-line', Severity.Error, 'Summary contains one or more line breaks.', '/paths/~1users~1{id}/summary'],
+        ['summary-no-markdown-single-line', Severity.Error, 'Summary contains one or more line breaks.', '/paths/~1users~1{id}/get/summary'],
+        ['summary-no-markdown-single-line', Severity.Error, 'Summary contains Markdown formatting.', '/info/summary'],
+        ['summary-no-markdown-single-line', Severity.Error, 'Summary contains Markdown formatting.', '/paths/~1users~1{id}/summary'],
+        ['summary-no-markdown-single-line', Severity.Error, 'Summary contains Markdown formatting.', '/paths/~1users~1{id}/get/summary'],
       ],
     });
   });

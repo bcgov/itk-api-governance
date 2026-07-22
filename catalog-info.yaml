@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: api-governance-spectral-style-guide-techdocs-location
+  title: API Governance Spectral Style Guide TechDocs Location
+  description: The Location for API Governance Spectral Style Guide TechDocs.
+  tags:
+    - api-governance
+    - spectral
+spec:
+  targets:
+    - ./techdocs/api-style-guides/catalog-info.yaml
+    - ./techdocs/sdx-api-standards/catalog-info.yaml

@@ -64,7 +64,7 @@ paths:
           description: OK
       `,
       expected: [
-        ['operation-id-camel-case', Severity.Error, 'operationId should be camelCase (starts with lowercase letter, no separators)', '/paths/~1helloworld/get/operationId'],
+        ['operation-id-camel-case', Severity.Error, 'operationId is not camelCase (starts with lowercase letter, no separators)', '/paths/~1helloworld/get/operationId'],
       ],
     });
   });
@@ -93,7 +93,7 @@ paths:
                 type: string
       `,
       expected: [
-        ['operation-id-camel-case', Severity.Error, 'operationId should be camelCase (starts with lowercase letter, no separators)', '/paths/~1helloworld/get/operationId'],
+        ['operation-id-camel-case', Severity.Error, 'operationId is not camelCase (starts with lowercase letter, no separators)', '/paths/~1helloworld/get/operationId'],
       ],
     });
   });
@@ -122,7 +122,7 @@ paths:
                 type: string
       `,
       expected: [
-        ['operation-id-camel-case', Severity.Error, 'operationId should be camelCase (starts with lowercase letter, no separators)', '/paths/~1helloworld/get/operationId'],
+        ['operation-id-camel-case', Severity.Error, 'operationId is not camelCase (starts with lowercase letter, no separators)', '/paths/~1helloworld/get/operationId'],
       ],
     });
   });

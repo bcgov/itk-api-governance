@@ -1,0 +1,14 @@
+site_name: "API Style Guides"
+site_description: "Generated API Governance Spectral style guides"
+docs_dir: "docs"
+repo_url: "https://github.com/bcgov/itk-api-governance"
+edit_uri: ""
+nav:
+    - Overview: index.md
+    - basic-style-guide.md
+    - sdx-style-guide.md
+    - strict-style-guide.md
+plugins:
+    - techdocs-core
+markdown_extensions:
+    - md_in_html

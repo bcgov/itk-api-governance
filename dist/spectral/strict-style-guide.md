@@ -1,10 +1,10 @@
 # Strict OpenAPI Style Guide
 
-This Spectral ruleset extends the Basic OpenAPI Style Guide and applies stricter enforcement 
+This Spectral ruleset extends the [Basic OpenAPI Style Guide](basic-style-guide.md) and applies stricter enforcement 
 by elevating many recommended best practices to errors, adding mandatory content requirements, 
 and enforcing stricter structural and documentation standards.
 
-Key conventions and enforcements (in addition to all rules from the basic ruleset):
+Key conventions and enforcements (in addition to all rules from the [Basic OpenAPI Style Guide](basic-style-guide.md)):
 
 - All built-in best-practice rules from spectral:oas that were warnings are now errors
 - Mandatory descriptions required for: info, tags, operations, parameters, schemas, requestBodies, headers, securitySchemes
@@ -33,7 +33,7 @@ and long-term maintainability.
 
 No injecting eval() JavaScript statements
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#no-eval-in-markdown)
+See [Basic Style Guide](basic-style-guide.md#no-eval-in-markdown)
 
 ---
 
@@ -42,7 +42,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#no-eval-in-markdown)
 
 No injecting script tags
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#no-script-tags-in-markdown)
+See [Basic Style Guide](basic-style-guide.md#no-script-tags-in-markdown)
 
 ---
 
@@ -51,7 +51,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#no-script-tags-in-markdown)
 
 OpenAPI object should have alphabetical tags. 
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#openapi-tags-alphabetical)
+See [Basic Style Guide](basic-style-guide.md#openapi-tags-alphabetical)
 
 ---
 
@@ -60,7 +60,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#openapi-tags-alphabetical)
 
 OpenAPI object must not have duplicated tag names (identifiers).
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#openapi-tags-uniqueness)
+See [Basic Style Guide](basic-style-guide.md#openapi-tags-uniqueness)
 
 ---
 
@@ -69,7 +69,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#openapi-tags-uniqueness)
 
 Operation must have an operationId
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-operationId)
+See [Basic Style Guide](basic-style-guide.md#operation-operationid)
 
 ---
 
@@ -78,7 +78,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-operationId)
 
 Operation must have at least one 2xx or 3xx response.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-success-response)
+See [Basic Style Guide](basic-style-guide.md#operation-success-response)
 
 ---
 
@@ -87,7 +87,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-success-response)
 
 Keep trailing slashes off of paths, as it can causes ambiguity.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-keys-no-trailing-slash)
+See [Basic Style Guide](basic-style-guide.md#path-keys-no-trailing-slash)
 
 ---
 
@@ -96,7 +96,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-keys-no-trailing-slash)
 
 Schemas with type: array, require a sibling items field.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#array-items)
+See [Basic Style Guide](basic-style-guide.md#array-items)
 
 ---
 
@@ -105,7 +105,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#array-items)
 
 OpenAPI host must be present and non-empty string.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-api-host)
+See [Basic Style Guide](basic-style-guide.md#oas2-api-host)
 
 ---
 
@@ -114,7 +114,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-api-host)
 
 OpenAPI host schemes must be present and non-empty array.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-api-schemes)
+See [Basic Style Guide](basic-style-guide.md#oas2-api-schemes)
 
 ---
 
@@ -123,7 +123,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-api-schemes)
 
 The discriminator property MUST be defined at this schema and it MUST be in the required property list.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-discriminator)
+See [Basic Style Guide](basic-style-guide.md#oas2-discriminator)
 
 ---
 
@@ -132,7 +132,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-discriminator)
 
 Server URL should not point to example.com.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-host-not-example)
+See [Basic Style Guide](basic-style-guide.md#oas2-host-not-example)
 
 ---
 
@@ -141,7 +141,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-host-not-example)
 
 Server URL should not have a trailing slash.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-host-trailing-slash)
+See [Basic Style Guide](basic-style-guide.md#oas2-host-trailing-slash)
 
 ---
 
@@ -150,7 +150,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-host-trailing-slash)
 
 Operations with an in: formData parameter must include application/x-www-form-urlencoded or multipart/form-data in their consumes property.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-operation-formData-consume-check)
+See [Basic Style Guide](basic-style-guide.md#oas2-operation-formdata-consume-check)
 
 ---
 
@@ -159,7 +159,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-operation-formData-consume-che
 
 Operation security values must match a scheme defined in the securityDefinitions object.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-operation-security-defined)
+See [Basic Style Guide](basic-style-guide.md#oas2-operation-security-defined)
 
 ---
 
@@ -168,7 +168,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-operation-security-defined)
 
 Potential unused reusable definition entry has been detected.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-unused-definition)
+See [Basic Style Guide](basic-style-guide.md#oas2-unused-definition)
 
 ---
 
@@ -177,7 +177,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-unused-definition)
 
 Examples must be valid against their defined schema.  This rule is applied to Media Type objects.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-valid-media-example)
+See [Basic Style Guide](basic-style-guide.md#oas2-valid-media-example)
 
 ---
 
@@ -186,7 +186,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-valid-media-example)
 
 Examples must be valid against their defined schema. This rule is applied to Schema objects.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-valid-schema-example)
+See [Basic Style Guide](basic-style-guide.md#oas2-valid-schema-example)
 
 ---
 
@@ -195,7 +195,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-valid-schema-example)
 
 A callback should not be defined within another callback.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-callbacks-in-callbacks)
+See [Basic Style Guide](basic-style-guide.md#oas3-callbacks-in-callbacks)
 
 ---
 
@@ -204,7 +204,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-callbacks-in-callbacks)
 
 Server URL should not point to example.com.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-server-not-example.com)
+See [Basic Style Guide](basic-style-guide.md#oas3-server-not-examplecom)
 
 ---
 
@@ -213,7 +213,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-server-not-example.com)
 
 Server URL should not have a trailing slash.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-server-trailing-slash)
+See [Basic Style Guide](basic-style-guide.md#oas3-server-trailing-slash)
 
 ---
 
@@ -222,7 +222,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-server-trailing-slash)
 
 This rule ensures that server variables defined in OpenAPI Specification 3 (OAS3) and 3.1 are valid, not unused, and result in a valid URL. 
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-server-variables)
+See [Basic Style Guide](basic-style-guide.md#oas3-server-variables)
 
 ---
 
@@ -231,7 +231,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-server-variables)
 
 Potential unused reusable components entry has been detected.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-unused-component)
+See [Basic Style Guide](basic-style-guide.md#oas3-unused-component)
 
 ---
 
@@ -240,7 +240,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-unused-component)
 
 Examples must be valid against their defined schema. This rule is applied to Media Type objects.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-valid-media-example)
+See [Basic Style Guide](basic-style-guide.md#oas3-valid-media-example)
 
 ---
 
@@ -249,7 +249,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-valid-media-example)
 
 Examples must be valid against their defined schema. This rule is applied to Schema objects.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-valid-schema-example)
+See [Basic Style Guide](basic-style-guide.md#oas3-valid-schema-example)
 
 ---
 
@@ -258,7 +258,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-valid-schema-example)
 
 Callbacks should not be defined in a webhook.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-callbacks-in-webhook)
+See [Basic Style Guide](basic-style-guide.md#oas3_1-callbacks-in-webhook)
 
 ---
 
@@ -267,7 +267,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-callbacks-in-webhook)
 
 Servers should not be defined in a webhook.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-servers-in-webhook)
+See [Basic Style Guide](basic-style-guide.md#oas3_1-servers-in-webhook)
 
 ---
 
@@ -276,7 +276,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-servers-in-webhook)
 
 Operation Ids must use camelCase. 
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-id-camel-case)
+See [Basic Style Guide](basic-style-guide.md#operation-id-camel-case)
 
 ---
 
@@ -285,7 +285,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-id-camel-case)
 
 Path segments mustuse kebab-case (lowercase with hyphens). 
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-segments-kebab-case)
+See [Basic Style Guide](basic-style-guide.md#path-segments-kebab-case)
 
 ---
 
@@ -294,7 +294,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-segments-kebab-case)
 
 Path parameters must use camelCase.  
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-param-camel-case)
+See [Basic Style Guide](basic-style-guide.md#path-param-camel-case)
 
 ---
 
@@ -303,7 +303,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-param-camel-case)
 
 Query parameters must use camelCase. 
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#query-param-camel-case)
+See [Basic Style Guide](basic-style-guide.md#query-param-camel-case)
 
 ---
 
@@ -312,7 +312,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#query-param-camel-case)
 
 Schema properties (JSON payload fields) must use camelCase.  
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#schema-property-camel-case)
+See [Basic Style Guide](basic-style-guide.md#schema-property-camel-case)
 
 ---
 
@@ -321,7 +321,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#schema-property-camel-case)
 
 Empty strings cannot be used for Schema property names.  
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#no-empty-property-names)
+See [Basic Style Guide](basic-style-guide.md#no-empty-property-names)
 
 ---
 
@@ -332,7 +332,7 @@ Every top-level schema object in OpenAPI 3.0.x documents should include a non-em
 'example' to improve API documentation clarity, enable better code generation, and help
 API consumers quickly understand the expected data shape and realistic values.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_0-schema-requires-example)
+See [Basic Style Guide](basic-style-guide.md#oas3_0-schema-requires-example)
 
 ---
 
@@ -343,7 +343,7 @@ Every top-level schema object in OpenAPI 3.1.x documents should include at least
 example to improve API documentation clarity, support better mocking/code generation,
 and help consumers understand realistic data shapes and values.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-schema-requires-example)
+See [Basic Style Guide](basic-style-guide.md#oas3_1-schema-requires-example)
 
 ---
 
@@ -354,7 +354,7 @@ In OpenAPI 3.1.x, the singular `example` keyword inside Schema Objects is deprec
 in favor of the standard JSON Schema `examples` (plural) keyword, which supports
 multiple named or unnamed examples as an array.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-prefer-examples-over-example)
+See [Basic Style Guide](basic-style-guide.md#oas3_1-prefer-examples-over-example)
 
 ---
 
@@ -363,7 +363,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-prefer-examples-over-example
 
 Enforce OpenAPI 3.x only (no Swagger 2.0)
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-require-openapi-3)
+See [Basic Style Guide](basic-style-guide.md#oas2-require-openapi-3)
 
 ---
 
@@ -372,7 +372,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-require-openapi-3)
 
 Strict enforcement: known verb anti-patterns
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-segments-no-verbs-blacklist)
+See [Basic Style Guide](basic-style-guide.md#path-segments-no-verbs-blacklist)
 
 ---
 
@@ -381,7 +381,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-segments-no-verbs-blacklist)
 
 OpenAPI object info description must be present and non-empty string.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#info-description)
+See [Basic Style Guide](basic-style-guide.md#info-description)
 
 ---
 
@@ -393,7 +393,7 @@ of operations it represents. This helps API consumers understand the purpose and
 of each tag/category.
 Requires a non-empty description string.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#tag-description)
+See [Basic Style Guide](basic-style-guide.md#tag-description)
 
 ---
 
@@ -402,7 +402,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#tag-description)
 
 Parameter objects should have a description.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-parameter-description)
+See [Basic Style Guide](basic-style-guide.md#oas3-parameter-description)
 
 ---
 
@@ -411,7 +411,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3-parameter-description)
 
 Ensures that all parameters defined in an OpenAPI 2.0 document have a meaningful description.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-parameter-description)
+See [Basic Style Guide](basic-style-guide.md#oas2-parameter-description)
 
 ---
 
@@ -420,7 +420,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas2-parameter-description)
 
 Operation must have a description
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-description)
+See [Basic Style Guide](basic-style-guide.md#operation-description)
 
 ---
 
@@ -429,7 +429,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-description)
 
 Ensures every schema defined in components has a description.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#schema-description)
+See [Basic Style Guide](basic-style-guide.md#schema-description)
 
 ---
 
@@ -438,7 +438,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#schema-description)
 
 Ensures every requestBody defined in components has a description.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#requestBody-description)
+See [Basic Style Guide](basic-style-guide.md#requestbody-description)
 
 ---
 
@@ -447,7 +447,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#requestBody-description)
 
 Ensures every header defined in components has a description.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#header-description)
+See [Basic Style Guide](basic-style-guide.md#header-description)
 
 ---
 
@@ -456,7 +456,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#header-description)
 
 Ensures every securityScheme defined in components has a description.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#securityScheme-description)
+See [Basic Style Guide](basic-style-guide.md#securityscheme-description)
 
 ---
 
@@ -465,7 +465,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#securityScheme-description)
 
 Enforces that operation descriptions are meaningful and contain sufficient detail.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#operation-description-min-length)
 
 ---
 
@@ -474,7 +474,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-description-min-length)
 
 Ensures the top-level API info.description provides a meaningful overview of the entire API.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#info-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#info-description-min-length)
 
 ---
 
@@ -483,7 +483,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#info-description-min-length)
 
 Ensures each server entry includes a meaningful description explaining its purpose or environment.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#server-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#server-description-min-length)
 
 ---
 
@@ -492,7 +492,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#server-description-min-length)
 
 Ensures each tag includes a clear description explaining the group of operations it represents.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#tag-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#tag-description-min-length)
 
 ---
 
@@ -501,7 +501,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#tag-description-min-length)
 
 Ensures reusable header parameters in components include meaningful descriptions.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#header-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#header-description-min-length)
 
 ---
 
@@ -510,7 +510,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#header-description-min-length)
 
 Ensures security scheme definitions include a clear description of how authentication works.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#security-scheme-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#security-scheme-description-min-length)
 
 ---
 
@@ -519,7 +519,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#security-scheme-description-min-len
 
 Ensures schema property descriptions are detailed enough to explain their purpose and usage.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#property-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#property-description-min-length)
 
 ---
 
@@ -528,7 +528,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#property-description-min-length)
 
 Requires parameter descriptions to be descriptive enough to explain purpose and usage.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#parameter-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#parameter-description-min-length)
 
 ---
 
@@ -538,7 +538,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#parameter-description-min-length)
 Ensures response descriptions are informative and explain the meaning/conditions
 of each response code. Minimum 20 characters to avoid meaningless entries.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#response-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#response-description-min-length)
 
 ---
 
@@ -546,7 +546,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#response-description-min-length)
 #### Severity: <span style="color:red">ERROR</span>
 
 Requires schema objects (reusable or inline) to have a meaningful description
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#schema-description-min-length)
+See [Basic Style Guide](basic-style-guide.md#schema-description-min-length)
 
 ---
 
@@ -555,7 +555,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#schema-description-min-length)
 
 Ensures the top-level info object includes a concise summary of the entire API.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1_info-summary)
+See [Basic Style Guide](basic-style-guide.md#oas3_1_info-summary)
 
 ---
 
@@ -565,7 +565,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1_info-summary)
 Ensures every path item includes a summary describing the resource or group of operations
 it represents.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-item-summary)
+See [Basic Style Guide](basic-style-guide.md#path-item-summary)
 
 ---
 
@@ -575,7 +575,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#path-item-summary)
 Every operation must have a summary (short one-line overview)
 Summary is ideal for list views and quick scanning in tools like Swagger UI.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-summary)
+See [Basic Style Guide](basic-style-guide.md#operation-summary)
 
 ---
 
@@ -584,7 +584,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#operation-summary)
 
 Enforces that summaries (info, path-item, and operations) are plain text and single-line.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#summary-no-markdown-single-line)
+See [Basic Style Guide](basic-style-guide.md#summary-no-markdown-single-line)
 
 ---
 
@@ -594,7 +594,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#summary-no-markdown-single-line)
 Ensures that when both summary and description are present,
 the summary is shorter than the description.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#summary-shorter-than-description)
+See [Basic Style Guide](basic-style-guide.md#summary-shorter-than-description)
 
 ---
 
@@ -608,7 +608,7 @@ the required fields (type, title, status, errors), correct types, and respects
 nullable/optional fields as defined in the reference schema.
 Allows additional properties for future extension but prevents breaking the core contract.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_0-problem-details-response-structure)
+See [Basic Style Guide](basic-style-guide.md#oas3_0-problem-details-response-structure)
 
 ---
 
@@ -622,7 +622,7 @@ the required fields (type, title, status, errors), correct types, and respects
 nullable/optional fields as defined in the reference schema.
 Allows additional properties for future extension but prevents breaking the core contract.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-problem-details-response-structure)
+See [Basic Style Guide](basic-style-guide.md#oas3_1-problem-details-response-structure)
 
 ---
 
@@ -636,7 +636,7 @@ the required fields (error, message), correct types, and respects
 nullable/optional fields as defined in the reference schema.
 Allows additional properties for future extension but prevents breaking the core contract.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_0-internal-error-response-structure)
+See [Basic Style Guide](basic-style-guide.md#oas3_0-internal-error-response-structure)
 
 ---
 
@@ -650,7 +650,7 @@ the required fields (error, message), correct types, and respects
 nullable/optional fields as defined in the reference schema.
 Allows additional properties for future extension but prevents breaking the core contract.
 
-See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-internal-error-response-structure)
+See [Basic Style Guide](basic-style-guide.md#oas3_1-internal-error-response-structure)
 
 ---
 
@@ -664,7 +664,7 @@ See [Basic Style Guide](BASIC_STYLE_GUIDE.md#oas3_1-internal-error-response-stru
 
 OpenAPI object should have non-empty tags array.
 
-See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-style-guide/blob/main/STYLE_GUIDE.md)
+See [Basic Style Guide](basic-style-guide.md#openapi-tags)
 
 ---
 
@@ -673,7 +673,7 @@ See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-st
 
 Use just one tag for an operation
 
-See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-style-guide/blob/main/STYLE_GUIDE.md)
+See [Basic Style Guide](basic-style-guide.md#operation-singular-tag)
 
 ---
 
@@ -682,7 +682,7 @@ See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-st
 
 Operation should have non-empty tags array.
 
-See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-style-guide/blob/main/STYLE_GUIDE.md)
+See [Basic Style Guide](basic-style-guide.md#operation-tag-defined)
 
 ---
 
@@ -691,7 +691,7 @@ See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-st
 
 Operation tags should be defined in global tags.
 
-See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-style-guide/blob/main/STYLE_GUIDE.md)
+See [Basic Style Guide](basic-style-guide.md#operation-tags)
 
 ---
 
@@ -700,6 +700,6 @@ See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-st
 
 Softer guidance: probable verbs detected by NLP 
 
-See [Basic Style Guide](https://github.com/bcgov/csit-api-governance-spectral-style-guide/blob/main/STYLE_GUIDE.md)
+See [Basic Style Guide](basic-style-guide.md#path-segments-no-verbs-probable)
 
 ---

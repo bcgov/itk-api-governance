@@ -42,7 +42,7 @@ export default (targetVal, _, context) => {
     if (!kebabRegex.test(segment)) {
 
       results.push({
-        message: `Static path segment '${segment}' should be kebab-case (lowercase letters, numbers, hyphens only)`,
+        message: `Static path segment '${segment}' is not kebab-case (lowercase letters, numbers, hyphens only).`,
         path: context.path, // Keep logical path at the operation level
       });
     }
