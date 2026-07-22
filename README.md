@@ -1,4 +1,4 @@
-# csit-api-governance-spectral-style-guide
+# itk-api-governance
 
 This repository provides **style guides** for developing REST APIs and corresponding Spectral
 rulesets that can be used to provide guidance and enforce adherence.

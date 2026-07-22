@@ -5,7 +5,7 @@ metadata:
   title: API Style Guides
   description: Generated API Governance Spectral style guides.
   annotations:
-    github.com/project-slug: bcgov/csit-api-governance-spectral-style-guide
+    github.com/project-slug: bcgov/itk-api-governance
     backstage.io/techdocs-ref: dir:.
     bcgovpubcode.gov.bc.ca/ministry: CITZ
     bcgovpubcode.gov.bc.ca/product_description: Generated API Governance Spectral style guides.

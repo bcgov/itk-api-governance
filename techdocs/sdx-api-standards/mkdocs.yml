@@ -1,7 +1,7 @@
 site_name: "SDX API Standards"
 site_description: "Secure Data Exchange (SDX) API standards documentation"
 docs_dir: "docs"
-repo_url: "https://github.com/bcgov/csit-api-governance-spectral-style-guide"
+repo_url: "https://github.com/bcgov/itk-api-governance"
 edit_uri: edit/main/techdocs/sdx-api-standards/docs
 nav:
     - index.md

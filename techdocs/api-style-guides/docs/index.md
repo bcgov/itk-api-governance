@@ -66,21 +66,21 @@ Use the generated ruleset URL that matches your governance context:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/basic-ruleset.yaml
+  - https://raw.githubusercontent.com/bcgov/itk-api-governance/dev-ruleset-v1.0.0/dist/spectral/basic-ruleset.yaml
 ```
 
 For stricter validation, extend the Strict ruleset instead:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/strict-ruleset.yaml
+  - https://raw.githubusercontent.com/bcgov/itk-api-governance/dev-ruleset-v1.0.0/dist/spectral/strict-ruleset.yaml
 ```
 
 For APIs published through SDX, extend the SDX ruleset:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/sdx-ruleset.yaml
+  - https://raw.githubusercontent.com/bcgov/itk-api-governance/dev-ruleset-v1.0.0/dist/spectral/sdx-ruleset.yaml
 ```
 
 ### Ruleset Versions
@@ -169,7 +169,7 @@ npx @stoplight/spectral-cli lint openapi.yaml --ruleset .spectral.yaml
 You can also lint directly against one of the generated rulesets:
 
 ```bash
-npx @stoplight/spectral-cli lint openapi.yaml --ruleset https://raw.githubusercontent.com/bcgov/csit-api-governance-spectral-style-guide/dev-ruleset-v1.0.0/dist/spectral/basic-ruleset.yaml
+npx @stoplight/spectral-cli lint openapi.yaml --ruleset https://raw.githubusercontent.com/bcgov/itk-api-governance/dev-ruleset-v1.0.0/dist/spectral/basic-ruleset.yaml
 ```
 
 ### Generated Files
