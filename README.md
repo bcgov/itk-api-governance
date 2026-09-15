@@ -22,6 +22,24 @@ Current TechDocs components:
 | [api-style-guides](techdocs/api-style-guides) | Generated API Governance Spectral style guides |
 | [sdx-api-standards](techdocs/sdx-api-standards) | Secure Data Exchange (SDX) API standards documentation |
 
+### Publishing TechDocs
+
+The [publishing workflow](.github/workflows/publish-techdocs.yaml) builds both TechDocs
+components when documentation, catalog, MkDocs, or publishing workflow/script changes are
+merged into `test` or `main`:
+
+- `test` publishes to the S3 `dev/` prefix shared by DevHub Dev and Test.
+- `main` publishes to production at the bucket root and also updates `dev/`.
+- Pull requests targeting either branch build and validate without publishing.
+
+Manual runs can select all components or a single component and choose `dev` (the default)
+or `prod`. The manual destination takes precedence over the selected branch. Publishing
+runs are serialized per component because production also updates `dev/`.
+
+Publishing requires the repository secrets `TECHDOCS_S3_BUCKET_NAME`,
+`TECHDOCS_AWS_ACCESS_KEY_ID`, `TECHDOCS_AWS_SECRET_ACCESS_KEY`, `TECHDOCS_AWS_REGION`,
+and `TECHDOCS_AWS_ENDPOINT`.
+
 ## Using the rulesets
 
 The generated rulesets in `dist/spectral/` are intended to be reused across API projects and tooling

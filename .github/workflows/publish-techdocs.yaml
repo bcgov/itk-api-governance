@@ -1,57 +1,90 @@
-name: Build TechDocs with DevHub TechDocs Publish Action
+name: Build and publish TechDocs
 
 permissions:
-    contents: read
+  contents: read
 
 on:
-    workflow_dispatch:
-    push:
-        branches: [ main ]
-        paths:
-            - "catalog-info.yaml"
-            - "**/catalog-info.yaml"
-            - "**/mkdocs.yml"
-            - "**/docs/**"
-    pull_request:
-        branches: [ main ]
-        paths:
-            - "catalog-info.yaml"
-            - "**/catalog-info.yaml"
-            - "**/mkdocs.yml"
-            - "**/docs/**"
+  workflow_dispatch:
+    inputs:
+      deploy_location:
+        description: "Publish to dev (DevHub Dev/Test) or prod (root and dev)"
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - prod
+      project:
+        description: "TechDocs project to publish"
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - techdocs/api-style-guides
+          - techdocs/sdx-api-standards
+  push:
+    branches: [test, main]
+    paths:
+      - "catalog-info.yaml"
+      - "**/catalog-info.yaml"
+      - "**/catalog-info.yml"
+      - "**/mkdocs.yml"
+      - "**/mkdocs.yaml"
+      - "**/docs/**"
+      - ".github/workflows/publish-techdocs.yaml"
+      - ".github/scripts/stage-techdocs.sh"
+  pull_request:
+    branches: [test, main]
+    paths:
+      - "catalog-info.yaml"
+      - "**/catalog-info.yaml"
+      - "**/catalog-info.yml"
+      - "**/mkdocs.yml"
+      - "**/mkdocs.yaml"
+      - "**/docs/**"
+      - ".github/workflows/publish-techdocs.yaml"
+      - ".github/scripts/stage-techdocs.sh"
 
 jobs:
-    test_techdocs_build_job:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                techdocs_directory:
-                    - techdocs/api-style-guides
-                    - techdocs/sdx-api-standards
+  techdocs:
+    name: Build ${{ matrix.techdocs_directory }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        techdocs_directory: ${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.project != 'all' && format('["{0}"]', inputs.project) || '["techdocs/api-style-guides","techdocs/sdx-api-standards"]') }}
+    # Production also writes to dev, so serialize all publishing for each project.
+    concurrency:
+      group: techdocs-${{ matrix.techdocs_directory }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'publish' }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout selected branch
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
-        name: Build ${{ matrix.techdocs_directory }}
-        steps:
-            -   name: Checkout
-                uses: actions/checkout@v5
-                with:
-                    fetch-depth: '0'
-            -   name: Stage TechDocs component
-                env:
-                    TECHDOCS_DIRECTORY: ${{ matrix.techdocs_directory }}
-                run: |
-                    cp "${TECHDOCS_DIRECTORY}/catalog-info.yaml" catalog-info.techdocs.yaml
-                    cp "${TECHDOCS_DIRECTORY}/mkdocs.yml" mkdocs.yml
-                    cp -R "${TECHDOCS_DIRECTORY}/docs" docs
-                    find techdocs -type f \( -name catalog-info.yaml -o -name catalog-info.yml \) -delete
-                    mv catalog-info.techdocs.yaml catalog-info.yaml
-            -   name: Build TechDocs
-                uses: bcgov/devhub-techdocs-publish@stable
-                id: build_and_publish
-                with:
-                    publish: 'true'
-                    production:  ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
-                    bucket_name: ${{ secrets.TECHDOCS_S3_BUCKET_NAME }}
-                    s3_access_key_id: ${{ secrets.TECHDOCS_AWS_ACCESS_KEY_ID }}
-                    s3_secret_access_key: ${{ secrets.TECHDOCS_AWS_SECRET_ACCESS_KEY }}
-                    s3_region: ${{ secrets.TECHDOCS_AWS_REGION }}
-                    s3_endpoint: ${{ secrets.TECHDOCS_AWS_ENDPOINT }}
+      - name: Stage TechDocs project
+        env:
+          TECHDOCS_DIRECTORY: ${{ matrix.techdocs_directory }}
+        run: bash .github/scripts/stage-techdocs.sh
+
+      - name: Validate pull request without publishing
+        if: github.event_name == 'pull_request'
+        uses: bcgov/devhub-techdocs-publish@stable
+        with:
+          publish: 'false'
+
+      - name: Build and publish TechDocs
+        if: github.event_name != 'pull_request'
+        uses: bcgov/devhub-techdocs-publish@stable
+        with:
+          publish: 'true'
+          # A manual destination takes precedence over the selected branch.
+          production: ${{ ((github.event_name == 'workflow_dispatch' && inputs.deploy_location == 'prod') || (github.event_name == 'push' && github.ref == 'refs/heads/main')) && 'true' || 'false' }}
+          bucket_name: ${{ secrets.TECHDOCS_S3_BUCKET_NAME }}
+          s3_access_key_id: ${{ secrets.TECHDOCS_AWS_ACCESS_KEY_ID }}
+          s3_secret_access_key: ${{ secrets.TECHDOCS_AWS_SECRET_ACCESS_KEY }}
+          s3_region: ${{ secrets.TECHDOCS_AWS_REGION }}
+          s3_endpoint: ${{ secrets.TECHDOCS_AWS_ENDPOINT }}
