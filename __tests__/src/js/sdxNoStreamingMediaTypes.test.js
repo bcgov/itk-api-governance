@@ -20,14 +20,14 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: streamLoads
+      operationId: streamPermits
       security:
         - oauth2: []
       responses:
         '200':
-          description: Loads streamed successfully.
+          description: Permits streamed successfully.
           content:
             text/event-stream:
               schema:
@@ -42,7 +42,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-streaming-media-types', Severity.Error, 'Request or response defines a streaming media type unsupported by SDX.', '/paths/~1loads/get/responses/200/content'],
+        ['sdx-no-streaming-media-types', Severity.Error, 'Request or response defines a streaming media type unsupported by SDX.', '/paths/~1permits/get/responses/200/content'],
       ],
     });
   });

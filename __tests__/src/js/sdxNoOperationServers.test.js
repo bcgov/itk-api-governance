@@ -20,16 +20,16 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2: []
       servers:
         - url: https://operation.example.gov.bc.ca/sdx
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oauth2:
@@ -40,7 +40,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-operation-servers', Severity.Error, 'Operation defines a server override unsupported by SDX.', '/paths/~1loads/get/servers'],
+        ['sdx-no-operation-servers', Severity.Error, 'Operation defines a server override unsupported by SDX.', '/paths/~1permits/get/servers'],
       ],
     });
   });

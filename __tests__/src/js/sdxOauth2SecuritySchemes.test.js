@@ -50,15 +50,15 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oidc:
-            - loads:read
+            - for:permit:read
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oidc:
@@ -80,15 +80,15 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2:
-            - protected-c
+            - for:permit:read
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oauth2:
@@ -97,10 +97,10 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            protected-c: ""
+            for:permit:read: ""
       `,
       expected: [
-        ['sdx-oauth2-security-schemes', Severity.Error, 'OAuth2 scope "protected-c" in security scheme "oauth2" flow "clientCredentials" has an empty or missing description.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/protected-c'],
+        ['sdx-oauth2-security-schemes', Severity.Error, 'OAuth2 scope "for:permit:read" in security scheme "oauth2" flow "clientCredentials" has an empty or missing description.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/for:permit:read'],
       ],
     });
   });
@@ -114,14 +114,14 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2: []
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oidc:

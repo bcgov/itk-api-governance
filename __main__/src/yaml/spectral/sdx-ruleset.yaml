@@ -66,7 +66,7 @@ rules:
   #         clientCredentials:
   #           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
   #           scopes:
-  #             loads:read: Read load records.
+  #             for:permit:read: Read permit records.
   #     sdxOidc:
   #       type: openIdConnect
   #       openIdConnectUrl: https://sso.example.gov.bc.ca/.well-known/openid-configuration
@@ -109,11 +109,11 @@ rules:
   #           authorizationUrl: https://sso.example.gov.bc.ca/oauth2/authorize
   #           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
   #           scopes:
-  #             loads:read: Read load records.
+  #             for:permit:read: Read permit records.
   #         clientCredentials:
   #           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
   #           scopes:
-  #             loads:read: Read load records.
+  #             for:permit:read: Read permit records.
   # ```
   #
   # Invalid example:
@@ -127,11 +127,11 @@ rules:
   #           authorizationUrl: https://sso.example.gov.bc.ca/oauth2/authorize
   #           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
   #           scopes:
-  #             loads:read: Read load records.
+  #             for:permit:read: Read permit records.
   #         clientCredentials:
   #           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
   #           scopes:
-  #             loads:read: Read load summaries.
+  #             for:permit:read: Read permit summaries.
   # ```
   sdx-oauth2-scope-descriptions-consistent:
     description: OAuth2 scope descriptions must be consistent across flows.
@@ -151,14 +151,14 @@ rules:
   # ```yaml
   # security:
   #   - sdxOAuth2:
-  #       - loads:read
+  #       - for:permit:read
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # components:
   #   securitySchemes:
   #     sdxOAuth2:
@@ -167,23 +167,23 @@ rules:
   #         clientCredentials:
   #           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
   #           scopes:
-  #             loads:read: Read load records.
+  #             for:permit:read: Read permit records.
   # ```
   #
   # Invalid example:
   # ```yaml
   # security:
   #   - sdxOAuth2:
-  #       - loads:read
+  #       - for:permit:read
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       security:
   #         - providerApiKey: []
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # components:
   #   securitySchemes:
   #     sdxOAuth2:
@@ -192,7 +192,7 @@ rules:
   #         clientCredentials:
   #           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
   #           scopes:
-  #             loads:read: Read load records.
+  #             for:permit:read: Read permit records.
   #     providerApiKey:
   #       type: apiKey
   #       in: header
@@ -215,9 +215,9 @@ rules:
   # Valid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       parameters:
   #         - name: X-Correlation-ID
   #           in: header
@@ -225,15 +225,15 @@ rules:
   #             type: string
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   #
   # Invalid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       parameters:
   #         - name: X-Edge-Token
   #           in: header
@@ -241,7 +241,7 @@ rules:
   #             type: string
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   #           headers:
   #             X-Edge-Trace:
   #               description: Internal trace header.
@@ -265,24 +265,24 @@ rules:
   # ```yaml
   # openapi: 3.1.0
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   #
   # Invalid example:
   # ```yaml
   # openapi: 3.1.0
   # webhooks:
-  #   loadChanged:
+  #   permitChanged:
   #     post:
-  #       operationId: loadChanged
+  #       operationId: permitChanged
   #       responses:
   #         '202':
-  #           description: Load change accepted.
+  #           description: Permit change accepted.
   # ```
   sdx-no-webhooks:
     description: SDX API contracts must not define OpenAPI webhooks.
@@ -298,28 +298,28 @@ rules:
   # Valid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   #
   # Invalid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       callbacks:
-  #         onLoadChanged:
+  #         onPermitChanged:
   #           '{$request.body#/callbackUrl}':
   #             post:
-  #               operationId: onLoadChanged
+  #               operationId: onPermitChanged
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   sdx-no-callbacks:
     description: SDX API contracts must not define OpenAPI callbacks.
@@ -335,12 +335,12 @@ rules:
   # Valid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   #           content:
   #             application/json:
   #               schema:
@@ -350,12 +350,12 @@ rules:
   # Invalid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: streamLoads
+  #       operationId: streamPermits
   #       responses:
   #         '200':
-  #           description: Loads streamed successfully.
+  #           description: Permits streamed successfully.
   #           content:
   #             text/event-stream:
   #               schema:
@@ -409,13 +409,13 @@ rules:
   # Valid example:
   # ```yaml
   # servers:
-  #   - url: /mass-haul
+  #   - url: /forests
   # ```
   #
   # Invalid example:
   # ```yaml
   # servers:
-  #   - url: ftp://api.example.gov.bc.ca/mass-haul
+  #   - url: ftp://api.example.gov.bc.ca/forests
   # ```
   sdx-server-urls-http-only:
     description: SDX API contracts must only define HTTP, HTTPS, or relative server URLs.
@@ -436,25 +436,25 @@ rules:
   # servers:
   #   - url: https://api.example.gov.bc.ca/sdx
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   #
   # Invalid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       servers:
   #         - url: https://operation.example.gov.bc.ca/sdx
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   sdx-no-operation-servers:
     description: SDX API contracts must not define operation-level servers.
@@ -473,25 +473,25 @@ rules:
   # servers:
   #   - url: https://api.example.gov.bc.ca/sdx
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   #
   # Invalid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     servers:
   #       - url: https://path.example.gov.bc.ca/sdx
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   sdx-no-path-item-servers:
     description: SDX API contracts must not define path-item-level servers.
@@ -507,20 +507,20 @@ rules:
   # Valid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     get:
-  #       operationId: listLoads
+  #       operationId: listPermits
   #       responses:
   #         '200':
-  #           description: Loads returned successfully.
+  #           description: Permits returned successfully.
   # ```
   #
   # Invalid example:
   # ```yaml
   # paths:
-  #   /loads:
+  #   /permits:
   #     trace:
-  #       operationId: traceLoads
+  #       operationId: tracePermits
   #       responses:
   #         '204':
   #           description: Trace completed successfully.

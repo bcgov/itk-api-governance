@@ -20,12 +20,12 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 webhooks:
-  loadChanged:
+  permitChanged:
     post:
-      operationId: loadChanged
+      operationId: permitChanged
       responses:
         '202':
-          description: Load change accepted.
+          description: Permit change accepted.
 paths: {}
 components:
   securitySchemes:

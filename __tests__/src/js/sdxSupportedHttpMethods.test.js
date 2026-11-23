@@ -20,9 +20,9 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     trace:
-      operationId: traceLoads
+      operationId: tracePermits
       security:
         - oauth2: []
       responses:
@@ -38,7 +38,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-supported-http-methods', Severity.Error, 'Operation uses an HTTP method unsupported by SDX.', '/paths/~1loads/trace'],
+        ['sdx-supported-http-methods', Severity.Error, 'Operation uses an HTTP method unsupported by SDX.', '/paths/~1permits/trace'],
       ],
     });
   });

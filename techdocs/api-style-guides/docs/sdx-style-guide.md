@@ -93,7 +93,7 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
     sdxOidc:
       type: openIdConnect
       openIdConnectUrl: https://sso.example.gov.bc.ca/.well-known/openid-configuration
@@ -135,11 +135,11 @@ components:
           authorizationUrl: https://sso.example.gov.bc.ca/oauth2/authorize
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
 ```
 
 
@@ -154,11 +154,11 @@ components:
           authorizationUrl: https://sso.example.gov.bc.ca/oauth2/authorize
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load summaries.
+            for:permit:read: Read permit summaries.
 ```
 
 ---
@@ -176,14 +176,14 @@ security and must still include SDX OAuth2.
 ```yaml
 security:
   - sdxOAuth2:
-      - loads:read
+      - for:permit:read
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     sdxOAuth2:
@@ -192,7 +192,7 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
 ```
 
 
@@ -200,16 +200,16 @@ components:
 ```yaml
 security:
   - sdxOAuth2:
-      - loads:read
+      - for:permit:read
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - providerApiKey: []
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     sdxOAuth2:
@@ -218,7 +218,7 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
     providerApiKey:
       type: apiKey
       in: header
@@ -242,9 +242,9 @@ X-Edge-Token and other X-Edge-* headers.
 **Valid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       parameters:
         - name: X-Correlation-ID
           in: header
@@ -252,16 +252,16 @@ paths:
             type: string
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 
 **Invalid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       parameters:
         - name: X-Edge-Token
           in: header
@@ -269,7 +269,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
           headers:
             X-Edge-Trace:
               description: Internal trace header.
@@ -294,12 +294,12 @@ SDX does not support OpenAPI 3.1 webhooks.
 ```yaml
 openapi: 3.1.0
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 
@@ -307,12 +307,12 @@ paths:
 ```yaml
 openapi: 3.1.0
 webhooks:
-  loadChanged:
+  permitChanged:
     post:
-      operationId: loadChanged
+      operationId: permitChanged
       responses:
         '202':
-          description: Load change accepted.
+          description: Permit change accepted.
 ```
 
 ---
@@ -326,29 +326,29 @@ SDX does not support OpenAPI callbacks.
 **Valid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 
 **Invalid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       callbacks:
-        onLoadChanged:
+        onPermitChanged:
           '{$request.body#/callbackUrl}':
             post:
-              operationId: onLoadChanged
+              operationId: onPermitChanged
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 ---
@@ -362,12 +362,12 @@ SDX does not support long-lived streaming media types.
 **Valid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
           content:
             application/json:
               schema:
@@ -378,12 +378,12 @@ paths:
 **Invalid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: streamLoads
+      operationId: streamPermits
       responses:
         '200':
-          description: Loads streamed successfully.
+          description: Permits streamed successfully.
           content:
             text/event-stream:
               schema:
@@ -422,14 +422,14 @@ SDX can only proxy HTTP, HTTPS, or relative server URLs.
 **Valid example:**
 ```yaml
 servers:
-  - url: /mass-haul
+  - url: /forests
 ```
 
 
 **Invalid example:**
 ```yaml
 servers:
-  - url: ftp://api.example.gov.bc.ca/mass-haul
+  - url: ftp://api.example.gov.bc.ca/forests
 ```
 
 ---
@@ -446,26 +446,26 @@ server overrides.
 servers:
   - url: https://api.example.gov.bc.ca/sdx
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 
 **Invalid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       servers:
         - url: https://operation.example.gov.bc.ca/sdx
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 ---
@@ -482,26 +482,26 @@ server overrides.
 servers:
   - url: https://api.example.gov.bc.ca/sdx
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 
 **Invalid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     servers:
       - url: https://path.example.gov.bc.ca/sdx
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 ---
@@ -515,21 +515,21 @@ SDX does not support TRACE, OPTIONS, or HEAD operations.
 **Valid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 ```
 
 
 **Invalid example:**
 ```yaml
 paths:
-  /loads:
+  /permits:
     trace:
-      operationId: traceLoads
+      operationId: tracePermits
       responses:
         '204':
           description: Trace completed successfully.

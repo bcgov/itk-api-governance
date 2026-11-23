@@ -216,12 +216,12 @@ Example OAD:
 ```yaml
 openapi: 3.0
 info:
-  title: Mass Haul API
+  title: Forest Permits API
   version: 1.2.0
-  description: Manage and track the excavation of earth materials.
+  description: Review and approve forest permit applications.
   x-csbc-api-standard: "R2026.1"
 servers:
-  - url: /mass-haul
+  - url: /forests
 components:
   securitySchemes:
     oauth2:
@@ -231,26 +231,33 @@ components:
           authorizationUrl: https://example.gov.bc.ca/oauth2/authorize
           tokenUrl: https://example.gov.bc.ca/oauth2/token
           scopes:
-            mass-haul:read: Read mass haul records.
-            mass-haul:write: Create and update mass haul records.
+            for:permit:read: Read permit records.
+            for:permit:approve: Approve permit applications.
 paths:
-  /loads:
+  /permits:
     get:
-      summary: List mass haul loads.
+      summary: List permits.
       security:
         - oauth2:
-            - mass-haul:read
+            - for:permit:read
       responses:
         "200":
-          description: Mass haul loads returned.
+          description: Permits returned.
+  /permits/{permitId}/approval:
     post:
-      summary: Create a mass haul load.
+      summary: Approve a permit application.
+      parameters:
+        - name: permitId
+          in: path
+          required: true
+          schema:
+            type: string
       security:
         - oauth2:
-            - mass-haul:write
+            - for:permit:approve
       responses:
         "201":
-          description: Mass haul load created.
+          description: Permit approved.
 ```
 
 ## SDX Processing
@@ -314,7 +321,7 @@ components:
         type: string
       description: Demonstration of Proof-of-Possession token required when enabled by SDX configuration.
 paths:
-  /loads:
+  /permits:
     post:
       parameters:
         - $ref: "#/components/parameters/ContentDigest"
