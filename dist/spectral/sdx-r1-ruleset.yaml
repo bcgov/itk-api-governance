@@ -1,0 +1,116 @@
+---
+# Fully dereferenced Spectral ruleset (all $ref resolved)
+# Original: sdx-r1-ruleset.yaml
+# Generated: 2026-11-23T22:53:38.953Z
+extends: ./sdx-ruleset.yaml
+functions:
+  - sdx-r1-scope-namespace
+rules:
+  sdx-r1-resource-scope-format:
+    description: OAuth2 scopes must use the SDX resource scope format namespace:resource{:resource}:action.
+    message: OAuth2 scope "{{property}}" must use the format namespace:resource{:resource}:action, with lowercase identifiers.
+    severity: error
+    formats:
+      - oas3
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        match: ^[a-z][a-z0-9_-]*(:[a-z][a-z0-9_-]*){2,}$
+  sdx-r1-no-oidc-scopes-in-oauth2:
+    description: OAuth2 security schemes must not declare OpenID Connect scopes; use an openIdConnect security scheme instead.
+    message: OAuth2 scope "{{property}}" is an OpenID Connect scope. Declare it in an openIdConnect security scheme instead.
+    severity: error
+    formats:
+      - oas3
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        notMatch: ^(openid|profile|email|address|phone|offline_access)$
+  sdx-r1-registered-scope-namespace:
+    description: OAuth2 scope namespaces must be registered SDX scope namespaces.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    then:
+      field: '@key'
+      function: sdx-r1-scope-namespace
+      functionOptions:
+        namespaces:
+          - af
+          - ag
+          - ajc
+          - alc
+          - aud
+          - bcaa
+          - bcer
+          - bchp
+          - bcic
+          - bcim
+          - bclc
+          - bcpc
+          - bcr
+          - bcs
+          - bct
+          - bcuc
+          - citz
+          - clbc
+          - co
+          - cpc
+          - dbc
+          - eab
+          - ebc
+          - ecc
+          - ecs
+          - emcr
+          - env
+          - exec
+          - fii
+          - fin
+          - for
+          - fpb
+          - fsa
+          - hlth
+          - hma
+          - ibc
+          - icbc
+          - igrs
+          - inbc
+          - inf
+          - ipc
+          - irr
+          - jeg
+          - jibc
+          - judi
+          - kwnc
+          - lass
+          - lbr
+          - lgov
+          - lss
+          - mcf
+          - mcm
+          - nrs
+          - oci
+          - ohrc
+          - ombd
+          - omc
+          - opcc
+          - pct
+          - penc
+          - prem
+          - psa
+          - psfs
+          - pssg
+          - puki
+          - rbcm
+          - rcy
+          - sdpr
+          - tacs
+          - tic
+          - tt
+          - wlrs
