@@ -127,6 +127,10 @@ the list stops teams from colliding by accident. To add a namespace, open a
 pull request that adds it to
 [managed-namespaces.yaml](https://github.com/bcgov/itk-api-governance/blob/main/__main__/src/yaml/spectral/sdx-scope-namespaces/managed-namespaces.yaml).
 
+For early development, a scope can use the temporary namespace `tmp`, for
+example `tmp:permit:read`. Before the service moves forward, switch its
+scopes to the organization's namespace.
+
 
 **Valid example:**
 ```yaml

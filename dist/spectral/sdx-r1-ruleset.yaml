@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: sdx-r1-ruleset.yaml
-# Generated: 2026-11-23T22:53:38.953Z
+# Generated: 2026-11-24T17:21:57.106Z
 extends: ./sdx-ruleset.yaml
 functions:
   - sdx-r1-scope-namespace
@@ -112,5 +112,6 @@ rules:
           - sdpr
           - tacs
           - tic
+          - tmp
           - tt
           - wlrs

@@ -73,5 +73,6 @@ namespaces:
   - sdpr # SDPR: Ministry of Social Development and Poverty Reduction
   - tacs # TACS: Ministry of Tourism, Arts, Culture and Sport
   - tic # TIC: Transportation Investment Corporation
+  - tmp # managed: Temporary namespace for early development; move to the organization's namespace before going forward.
   - tt # TT: Ministry of Transportation and Transit
   - wlrs # WLRS: Ministry of Water, Land and Resource Stewardship

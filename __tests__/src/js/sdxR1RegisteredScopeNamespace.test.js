@@ -67,6 +67,24 @@ describe('SDX R1 registered scope namespace', () => {
     }
   });
 
+  test('accepts the temporary tmp namespace', async () => {
+    await testInstance.validateOas({
+      oasYaml: oasWithScopes(['tmp:permit:read', 'tmp:permit:amendment:approve']),
+      notExpected: [RULE],
+    });
+  });
+
+  test('rejects namespaces that only start with tmp', async () => {
+    const scopes = ['tmp-permits:permit:read', 'tmpfoo:permit:read', 'tmp_foo:permit:read', 'xtmp:permit:read'];
+    await testInstance.validateOas({
+      oasYaml: oasWithScopes(scopes),
+      expected: scopes.map((scope) => [
+        RULE, Severity.Error, message(scope, scope.split(':')[0]),
+        `/components/securitySchemes/oauth2/flows/authorizationCode/scopes/${scope}`,
+      ]),
+    });
+  });
+
   test('skips scopes without a namespace', async () => {
     await testInstance.validateOas({
       oasYaml: oasWithScopes(['openid', 'case']),
