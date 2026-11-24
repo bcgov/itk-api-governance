@@ -9,7 +9,9 @@ const HTTP_METHODS = new Set(['get', 'put', 'post', 'delete', 'options', 'head',
 
 var sdxR1OperationScopes = (paths, _options, context) => {
   const results = [];
-  const root = context.document?.data ?? {};
+  // Use the resolved document so security schemes written as a `$ref` are seen
+  // with their `type`, as the other rules see them.
+  const root = context.documentInventory?.resolved ?? context.document?.data ?? {};
 
   if (!paths || typeof paths !== 'object') return results;
 

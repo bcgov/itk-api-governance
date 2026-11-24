@@ -45,6 +45,8 @@ components:
       type: apiKey
       in: header
       name: X-Provider-Key
+    oauth2Alias:
+      $ref: '#/components/securitySchemes/oauth2'
 `;
 }
 
@@ -58,6 +60,17 @@ describe('SDX R1 operation scopes', () => {
       oasYaml: oas({
         rootSecurity: `security:
   - oauth2:
+      - for:permit:read`,
+      }),
+      notExpected: [RULE],
+    });
+  });
+
+  test('accepts a scope required through an OAuth2 security scheme that is a $ref', async () => {
+    await testInstance.validateOas({
+      oasYaml: oas({
+        rootSecurity: `security:
+  - oauth2Alias:
       - for:permit:read`,
       }),
       notExpected: [RULE],
