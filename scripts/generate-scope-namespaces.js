@@ -36,6 +36,14 @@ function readYaml(file) {
   return yaml.load(fs.readFileSync(file, 'utf8'));
 }
 
+// Returns the list under `key`, and fails if it is absent, null or not a list.
+// A wrong file, a renamed key or an empty file must not produce a shorter list.
+function listOf(doc, key, file) {
+  const list = doc?.[key];
+  if (!Array.isArray(list)) fail(`${file} has no "${key}" list.`);
+  return list;
+}
+
 function memberIdOf(org) {
   const tag = (org.tags || []).find((t) => typeof t === 'string' && t.startsWith('member_id:'));
   return tag ? tag.slice('member_id:'.length).trim() : undefined;
@@ -44,7 +52,10 @@ function memberIdOf(org) {
 const entries = new Map(); // namespace -> comment
 const errors = [];
 
-for (const org of readYaml(organizationsFile)?.organizations || []) {
+const organizations = listOf(readYaml(organizationsFile), 'organizations', organizationsFile);
+if (organizations.length === 0) fail(`${organizationsFile} lists no organizations.`);
+
+for (const org of organizations) {
   const memberId = memberIdOf(org);
   if (!memberId) {
     errors.push(`Organization "${org.name}" has no member_id tag.`);
@@ -62,7 +73,7 @@ for (const org of readYaml(organizationsFile)?.organizations || []) {
   entries.set(namespace, `${memberId}: ${org.title || org.name}`);
 }
 
-for (const item of readYaml(MANAGED_FILE)?.namespaces || []) {
+for (const item of listOf(readYaml(MANAGED_FILE), 'namespaces', MANAGED_FILE)) {
   const namespace = item?.namespace;
   if (typeof namespace !== 'string' || !IDENTIFIER.test(namespace)) {
     errors.push(`Managed namespace "${namespace}" is not a valid scope namespace.`);
@@ -87,5 +98,16 @@ const lines = [
   '',
 ];
 
+const previous = new Set(
+  fs.existsSync(OUTPUT_FILE) ? (yaml.load(fs.readFileSync(OUTPUT_FILE, 'utf8'))?.namespaces ?? []) : [],
+);
+const added = [...entries.keys()].filter((ns) => !previous.has(ns)).sort();
+const removed = [...previous].filter((ns) => !entries.has(ns)).sort();
+
 fs.writeFileSync(OUTPUT_FILE, lines.join('\n'), 'utf8');
 console.log(`✔ Wrote ${entries.size} namespaces to ${path.relative(process.cwd(), OUTPUT_FILE)}`);
+console.log(`  Added (${added.length}): ${added.join(', ') || 'none'}`);
+console.log(`  Removed (${removed.length}): ${removed.join(', ') || 'none'}`);
+if (removed.length > 0) {
+  console.warn('⚠ Namespaces were removed. Check that the organizations file is the current one before committing.');
+}

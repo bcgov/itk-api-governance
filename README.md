@@ -93,8 +93,11 @@ npm run build
 
 The generator reads `../api-serv-infra/.sdx/org-onboarding/organizations.yaml` by default. Pass
 another path as an argument (`npm run generate-scope-namespaces -- <path>`) or set
-`SDX_ORGANIZATIONS_FILE`. It fails if a member ID is not a valid namespace, or if a managed
-namespace is already a member ID.
+`SDX_ORGANIZATIONS_FILE`. It fails if the organizations file has no `organizations` list or an
+empty one, if a member ID is not a valid namespace, or if a managed namespace is already a member
+ID. When it finishes it lists the namespaces it added and removed, and warns if any were removed.
+Check the removed namespaces before committing, since a stale api-serv-infra checkout shortens the
+list.
 
 Commit the updated `scope-namespaces.yaml` and `dist/spectral/` files. The change reaches API teams
 with the next ruleset release.
