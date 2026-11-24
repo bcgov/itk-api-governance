@@ -41,6 +41,38 @@ components:
     });
   });
 
+  test('allows an SDX OAuth2 security scheme that is a $ref', async () => {
+    await testInstance.validateOas({
+      oasYaml: `
+openapi: 3.0.3
+info:
+  title: SDX API
+  version: 1.0.0
+  description: API published through Secure Data Exchange.
+security:
+  - oauth2Alias: []
+paths:
+  /permits:
+    get:
+      operationId: listPermits
+      responses:
+        '200':
+          description: Permits returned successfully.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
+          scopes: {}
+    oauth2Alias:
+      $ref: '#/components/securitySchemes/oauth2'
+      `,
+      notExpected: ['sdx-operation-security-scopes'],
+    });
+  });
+
   test('test rule triggers for local security overrides that omit SDX OAuth2 security', async () => {
     await testInstance.validateOas({
       oasYaml: `
