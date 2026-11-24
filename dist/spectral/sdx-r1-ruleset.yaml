@@ -1,7 +1,7 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: sdx-r1-ruleset.yaml
-# Generated: 2026-11-24T20:27:19.614Z
+# Generated: 2026-11-24T22:27:50.194Z
 extends: ./sdx-ruleset.yaml
 functions:
   - sdx-r1-operation-scopes
@@ -13,7 +13,7 @@ rules:
     severity: error
     formats:
       - oas3
-    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[authorizationCode,clientCredentials,implicit,password].scopes
     then:
       field: '@key'
       function: pattern
@@ -25,7 +25,7 @@ rules:
     severity: error
     formats:
       - oas3
-    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[authorizationCode,clientCredentials,implicit,password].scopes
     then:
       field: '@key'
       function: pattern
@@ -37,7 +37,7 @@ rules:
     severity: error
     formats:
       - oas3
-    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[authorizationCode,clientCredentials,implicit,password].scopes
     then:
       field: '@key'
       function: sdx-r1-scope-namespace

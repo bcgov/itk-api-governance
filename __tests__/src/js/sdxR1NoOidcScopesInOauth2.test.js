@@ -78,4 +78,32 @@ describe('SDX R1 resource scope format with OIDC scopes', () => {
       ]),
     });
   });
+
+  test('ignores x- extension properties of the OAuth flows object', async () => {
+    await testInstance.validateOas({
+      oasYaml: `
+openapi: 3.0.3
+info:
+  title: SDX API
+  version: 1.0.0
+  description: API published through Secure Data Exchange.
+paths: {}
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
+          scopes:
+            for:permit:read: Read permit records.
+        x-provider-metadata:
+          scopes:
+            openid: Not an OAuth2 scope.
+            BadScope: Not an OAuth2 scope.
+            unknown:permit:read: Not an OAuth2 scope.
+`,
+      notExpected: [RULE],
+    });
+  });
 });

@@ -67,7 +67,7 @@ rules:
     message: 'OAuth2 scope "{{property}}" must use the format namespace:resource{:resource}:action, with lowercase identifiers.'
     severity: error
     formats: [oas3]
-    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[authorizationCode,clientCredentials,implicit,password].scopes
     then:
       field: "@key"
       function: pattern
@@ -118,7 +118,7 @@ rules:
     message: 'OAuth2 scope "{{property}}" is an OpenID Connect scope. Declare it in an openIdConnect security scheme instead.'
     severity: error
     formats: [oas3]
-    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[authorizationCode,clientCredentials,implicit,password].scopes
     then:
       field: "@key"
       function: pattern
@@ -170,7 +170,7 @@ rules:
     message: "{{error}}"
     severity: error
     formats: [oas3]
-    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
+    given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[authorizationCode,clientCredentials,implicit,password].scopes
     then:
       field: "@key"
       function: sdx-r1-scope-namespace
