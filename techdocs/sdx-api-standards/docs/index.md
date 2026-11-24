@@ -1,6 +1,7 @@
 ---
 title: SDX API Standard
 ---
+
 # Secure Data Exchange (SDX) API Standard
 
 ## What is SDX?
@@ -18,7 +19,7 @@ in the Getting Started with Connected Services documentation.
 
 ## Ownership
 
-DataBC API Programme Services owns and maintains this standard. API provider teams remain
+API Program Services owns and maintains this standard. API provider teams remain
 responsible for their API design, implementation, data, and provider-owned authorization controls.
 
 ## Who must follow this standard and when?
@@ -84,7 +85,8 @@ authorization based on roles, data context, or other provider-owned access rules
 Every operation:
 
 - MUST require a JWT access token issued by the CSS Standard Realm to access the operation.
-- MAY require one or more scopes to access the operation.
+- MAY require one or more scopes to access the operation. Services that use the
+  SDX.R1.00 policy MUST require at least one scope for the operation (see [Resource Scopes](#resource-scopes)).
 - MAY be further restricted by provider-owned authentication or authorization controls outside the scope of SDX.
 
 ## API Documentation Requirements
@@ -96,10 +98,13 @@ understand the API's operations, security requirements, scopes, and server infor
 
 An OAD with environment-specific URLs will need to be uploaded for each SDX environment provisioned.
 
+<!-- markdownlint-disable MD046 -->
+<!-- prettier-ignore -->
 !!! note
     Operations, security requirements, and scopes are expected to remain consistent across
     environments for the same OAD version; changes to those parts of the contract should typically be
     published as a different OAD version.
+<!-- markdownlint-enable MD046 -->
 
 ### OAuth2 Security Scheme
 
@@ -121,6 +126,38 @@ APIs MUST use OpenAPI `security` declarations to identify the SDX Gateway OAuth2
 scopes required to access operations. This can be declared globally at the OpenAPI document root, or
 locally on each operation. When an operation declares its own `security`, that local declaration
 overrides the global declaration and MUST still include the SDX OAuth2 scheme.
+
+### Resource Scopes
+
+This section applies to services whose SDX connections use the
+[SDX.R1.00 connection policy](/docs/default/component/aps-infra-platform-docs/how-to/sdx-connection-resources/#sdxr100-policy).
+Under SDX.R1.00, clients authenticate with Common SSO (CSS) tokens, SDX exchanges tokens when a
+request crosses privacy zones, and access is granted through resource scopes. A consumer
+[requests access through CSS](/docs/default/component/aps-infra-platform-docs/how-to/sdx-connections/)
+by choosing scopes from the service's OAD. The provider's Access Manager then approves or rejects
+that request in the SDX UI. The scopes in the OAD are therefore the access contract that consumers
+request and providers approve.
+
+For these services, every operation MUST require at least one scope from an OAuth2 security
+scheme. When an operation's `security` lists more than one security option, each option MUST
+require a scope, because a consumer can satisfy any one of them.
+
+Every scope declared in an OAuth2 security scheme:
+
+- MUST use the format `namespace:resource{:resource}:action`, where each part starts with a
+  lowercase letter and contains only lowercase letters, digits, `-` and `_`. For example,
+  `for:permit:read`.
+- MUST use a registered SDX scope namespace. The namespace is usually the organization's SDX member ID
+  in lowercase, such as `for` for the Ministry of Forests.
+- MUST NOT be an OpenID Connect scope such as `openid`, `profile` or `email`. Declare those in an
+  `openIdConnect` security scheme instead.
+
+The temporary namespace `tmp` MAY be used during early development. Scopes MUST move to a registered
+organization namespace before the service goes forward to the non-prod (`bct`) and prod (`bc`) environments.
+
+Refer to the
+[SDX R1 API Style Guide](/docs/default/component/api-style-guides/sdx-r1-style-guide/) for the
+registered namespaces and examples.
 
 ### Well-Formed API Contract
 
@@ -200,26 +237,43 @@ The SDX ruleset will validate the following mandatory rules:
 
 Refer to the [SDX API Style Guide](/docs/default/component/api-style-guides/sdx-style-guide/) for greater detail.
 
+For services whose connections use the SDX.R1.00 policy, the SDX R1 ruleset also validates the
+[Resource Scopes](#resource-scopes) requirements:
+
+- Scope format `namespace:resource{:resource}:action` with lowercase identifiers.
+- Registered SDX scope namespaces.
+- No OpenID Connect scopes in OAuth2 security schemes.
+- At least one OAuth2 scope required by every operation, in every security option.
+
+Refer to the [SDX R1 API Style Guide](/docs/default/component/api-style-guides/sdx-r1-style-guide/)
+for greater detail.
+
 ### API Standard Release
 
 API specifications MAY include the custom OAD property `x-csbc-api-standard` within the OAD `info`
-object to indicate which API Standard release the OAD document conforms to.
+object to choose the validation ruleset version the OAD is validated against. The value MUST be a
+ruleset version that the SDX validation service supports, such as `v1.1.0`. See
+[Ruleset Versions](/docs/default/component/api-style-guides/#ruleset-versions) for how versions are
+published.
 
-OAD documents that omit `x-csbc-api-standard` will be tested against the latest API Standard linting
-rules. If the `x-csbc-api-standard` refers to an older, out of support version then the API will have
-to be updated to conform to a currently supported version.
+OAD documents that omit `x-csbc-api-standard` are validated against the ruleset version SDX is
+configured to use, which is normally the latest. If `x-csbc-api-standard` names a version that SDX
+does not support, registration fails, and the OAD must be updated to a supported version.
+
+When SDX registers the OAD, it sets `x-csbc-api-standard` and `x-csbc-api-standard-ruleset` to the
+ruleset version and ruleset that were used.
 
 ### Example OAD
 
 Example OAD:
 
 ```yaml
-openapi: 3.0
+openapi: 3.0.3
 info:
   title: Forest Permits API
   version: 1.2.0
   description: Review and approve forest permit applications.
-  x-csbc-api-standard: "R2026.1"
+  x-csbc-api-standard: "v1.1.0"
 servers:
   - url: /forests
 components:
@@ -236,6 +290,7 @@ components:
 paths:
   /permits:
     get:
+      operationId: listPermits
       summary: List permits.
       security:
         - oauth2:
@@ -245,6 +300,7 @@ paths:
           description: Permits returned.
   /permits/{permitId}/approval:
     post:
+      operationId: approvePermit
       summary: Approve a permit application.
       parameters:
         - name: permitId
@@ -278,6 +334,8 @@ SDX will add:
 - SDX documentation in the OAD description.
 - An external reference to these SDX TechDocs.
 - SDX-related external API headers.
+- `x-csbc-api-standard` and `x-csbc-api-standard-ruleset` in `info`, recording the ruleset version
+  and ruleset used to validate the OAD.
 
 SDX will remove:
 

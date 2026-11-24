@@ -123,9 +123,9 @@ namespace. The list is built from the lowercase member IDs of SDX
 organizations plus namespaces added by hand, and is published in
 [scope-namespaces.yaml](https://github.com/bcgov/itk-api-governance/blob/main/__main__/src/yaml/spectral/sdx-scope-namespaces/scope-namespaces.yaml).
 Registering a namespace does not give an organization exclusive use of it;
-the list stops teams from colliding by accident. To add a namespace, open a
-pull request that adds it to
-[managed-namespaces.yaml](https://github.com/bcgov/itk-api-governance/blob/main/__main__/src/yaml/spectral/sdx-scope-namespaces/managed-namespaces.yaml).
+the list stops teams from colliding by accident. If your organization's
+namespace is not listed, or you need a namespace that is not a member ID,
+contact API Program Services.
 
 For early development, a scope can use the temporary namespace `tmp`, for
 example `tmp:permit:read`. Before the service moves forward, switch its
@@ -159,6 +159,55 @@ components:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
             myteam:permit:read: Uses an unregistered namespace.
+```
+
+---
+
+### sdx-r1-operation-scopes
+#### Severity: <span style="color:red">ERROR</span>
+
+Every operation must require at least one OAuth2 scope, so that a
+consumer can only call it after the provider approves access to that scope.
+Each security option is an alternative way to call the operation, so every
+option must include a scope. The operation's own `security` applies when it
+declares one; otherwise the document-level `security` applies.
+
+
+**Valid example:**
+```yaml
+security:
+  - sdxOAuth2:
+      - for:permit:read
+paths:
+  /permits:
+    get:
+      operationId: listPermits
+      responses:
+        '200':
+          description: Permits returned successfully.
+  /permits/{permitId}/approval:
+    post:
+      operationId: approvePermit
+      security:
+        - sdxOAuth2:
+            - for:permit:approve
+      responses:
+        '201':
+          description: Permit approved.
+```
+
+
+**Invalid example:**
+```yaml
+paths:
+  /permits:
+    get:
+      operationId: listPermits
+      security:
+        - sdxOAuth2: []
+      responses:
+        '200':
+          description: Permits returned successfully.
 ```
 
 ---

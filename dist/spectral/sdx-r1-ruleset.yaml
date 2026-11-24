@@ -1,9 +1,10 @@
 ---
 # Fully dereferenced Spectral ruleset (all $ref resolved)
 # Original: sdx-r1-ruleset.yaml
-# Generated: 2026-11-24T17:21:57.106Z
+# Generated: 2026-11-24T20:27:19.614Z
 extends: ./sdx-ruleset.yaml
 functions:
+  - sdx-r1-operation-scopes
   - sdx-r1-scope-namespace
 rules:
   sdx-r1-resource-scope-format:
@@ -115,3 +116,12 @@ rules:
           - tmp
           - tt
           - wlrs
+  sdx-r1-operation-scopes:
+    description: Every operation must require at least one OAuth2 scope in every security option.
+    message: '{{error}}'
+    severity: error
+    formats:
+      - oas3
+    given: $.paths
+    then:
+      function: sdx-r1-operation-scopes

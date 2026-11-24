@@ -32,7 +32,7 @@
     "type": "git",
     "url": "git+https://github.com/bcgov/itk-api-governance.git"
   },
-  "author": "API Programme Services, BC Gov",
+  "author": "API Program Services, BC Gov",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/bcgov/itk-api-governance/issues"

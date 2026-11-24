@@ -7,6 +7,7 @@
 extends: ./sdx-ruleset.yaml
 
 functions:
+  - sdx-r1-operation-scopes
   - sdx-r1-scope-namespace
 
 rules:
@@ -68,10 +69,10 @@ rules:
     formats: [oas3]
     given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
     then:
-      field: '@key'
+      field: "@key"
       function: pattern
       functionOptions:
-        match: '^[a-z][a-z0-9_-]*(:[a-z][a-z0-9_-]*){2,}$'
+        match: "^[a-z][a-z0-9_-]*(:[a-z][a-z0-9_-]*){2,}$"
 
   # OpenID Connect scopes (`openid`, `profile`, `email`, `address`, `phone` and
   # `offline_access`) describe what a client application learns about the
@@ -119,19 +120,19 @@ rules:
     formats: [oas3]
     given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
     then:
-      field: '@key'
+      field: "@key"
       function: pattern
       functionOptions:
-        notMatch: '^(openid|profile|email|address|phone|offline_access)$'
+        notMatch: "^(openid|profile|email|address|phone|offline_access)$"
 
   # The namespace of every OAuth2 scope must be a registered SDX scope
   # namespace. The list is built from the lowercase member IDs of SDX
   # organizations plus namespaces added by hand, and is published in
   # [scope-namespaces.yaml](https://github.com/bcgov/itk-api-governance/blob/main/__main__/src/yaml/spectral/sdx-scope-namespaces/scope-namespaces.yaml).
   # Registering a namespace does not give an organization exclusive use of it;
-  # the list stops teams from colliding by accident. To add a namespace, open a
-  # pull request that adds it to
-  # [managed-namespaces.yaml](https://github.com/bcgov/itk-api-governance/blob/main/__main__/src/yaml/spectral/sdx-scope-namespaces/managed-namespaces.yaml).
+  # the list stops teams from colliding by accident. If your organization's
+  # namespace is not listed, or you need a namespace that is not a member ID,
+  # contact API Program Services.
   #
   # For early development, a scope can use the temporary namespace `tmp`, for
   # example `tmp:permit:read`. Before the service moves forward, switch its
@@ -166,13 +167,63 @@ rules:
   # ```
   sdx-r1-registered-scope-namespace:
     description: OAuth2 scope namespaces must be registered SDX scope namespaces.
-    message: '{{error}}'
+    message: "{{error}}"
     severity: error
     formats: [oas3]
     given: $.components.securitySchemes[?(@.type == 'oauth2')].flows[*].scopes
     then:
-      field: '@key'
+      field: "@key"
       function: sdx-r1-scope-namespace
       functionOptions:
         namespaces:
           $ref: ./sdx-scope-namespaces/scope-namespaces.yaml#/namespaces
+
+  # Every operation must require at least one OAuth2 scope, so that a
+  # consumer can only call it after the provider approves access to that scope.
+  # Each security option is an alternative way to call the operation, so every
+  # option must include a scope. The operation's own `security` applies when it
+  # declares one; otherwise the document-level `security` applies.
+  #
+  # Valid example:
+  # ```yaml
+  # security:
+  #   - sdxOAuth2:
+  #       - for:permit:read
+  # paths:
+  #   /permits:
+  #     get:
+  #       operationId: listPermits
+  #       responses:
+  #         '200':
+  #           description: Permits returned successfully.
+  #   /permits/{permitId}/approval:
+  #     post:
+  #       operationId: approvePermit
+  #       security:
+  #         - sdxOAuth2:
+  #             - for:permit:approve
+  #       responses:
+  #         '201':
+  #           description: Permit approved.
+  # ```
+  #
+  # Invalid example:
+  # ```yaml
+  # paths:
+  #   /permits:
+  #     get:
+  #       operationId: listPermits
+  #       security:
+  #         - sdxOAuth2: []
+  #       responses:
+  #         '200':
+  #           description: Permits returned successfully.
+  # ```
+  sdx-r1-operation-scopes:
+    description: Every operation must require at least one OAuth2 scope in every security option.
+    message: '{{error}}'
+    severity: error
+    formats: [oas3]
+    given: $.paths
+    then:
+      function: sdx-r1-operation-scopes

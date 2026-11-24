@@ -36,6 +36,20 @@ transport details from external API contracts.
 
 Use this ruleset for OpenAPI descriptions that will be provisioned or published through SDX.
 
+### SDX R1 Style Guide
+
+R1 refers to the
+[SDX.R1.00 connection policy](/docs/default/component/aps-infra-platform-docs/how-to/sdx-connection-resources/#sdxr100-policy),
+under which consumers request access to a service by choosing scopes from its OAD through Common SSO (CSS). See
+[Resource Scopes](/docs/default/component/sdx-api-standards-techdocs/#resource-scopes) in the SDX API
+Standard for what R1 means for an API's scopes.
+
+The [SDX R1 Style Guide](sdx-r1-style-guide.md) extends the SDX Style Guide and adds rules for SDX
+resource scopes. Every SDX rule still applies.
+
+Use this ruleset for SDX services whose connections use the SDX.R1.00 policy. Start using it when you
+design the service's scopes, before you register the OAD with SDX.
+
 ## Reading A Rule
 
 Each rule page includes:
@@ -53,6 +67,8 @@ Choose the lowest ruleset that matches the API's governance context:
 - Use **Basic** for broad OpenAPI quality and shared API governance conventions.
 - Use **Strict** when documentation completeness and stronger enforcement are required.
 - Use **SDX** when the API must satisfy Secure Data Exchange provisioning requirements.
+- Use **SDX R1** when an SDX service's connections use the SDX.R1.00 policy, where consumers request
+  access by scope.
 
 ## Using The Rulesets
 
@@ -80,8 +96,17 @@ For APIs published through SDX, extend the SDX ruleset:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/bcgov/itk-api-governance/dev-ruleset-v1.0.0/dist/spectral/sdx-ruleset.yaml
+  - https://raw.githubusercontent.com/bcgov/itk-api-governance/dev-ruleset-v1.1.0/dist/spectral/sdx-ruleset.yaml
 ```
+
+For SDX APIs that use resource scopes, extend the SDX R1 ruleset:
+
+```yaml
+extends:
+  - https://raw.githubusercontent.com/bcgov/itk-api-governance/dev-ruleset-v1.1.0/dist/spectral/sdx-r1-ruleset.yaml
+```
+
+The SDX and SDX R1 rulesets are available from ruleset version `v1.1.0`.
 
 ### Ruleset Versions
 
@@ -107,11 +132,11 @@ are ignored by that validation API.
 
 Ruleset releases are promoted through environments by creating the corresponding environment tag:
 
-| Environment | Tag prefix | Example tag |
-| ----------- | ---------- | ----------- |
-| Dev | `dev-ruleset-` | `dev-ruleset-v1.0.0` |
-| Test | `test-ruleset-` | `test-ruleset-v1.0.0` |
-| Prod | `prod-ruleset-` | `prod-ruleset-v1.0.0` |
+| Environment | Tag prefix      | Example tag           |
+| ----------- | --------------- | --------------------- |
+| Dev         | `dev-ruleset-`  | `dev-ruleset-v1.0.0`  |
+| Test        | `test-ruleset-` | `test-ruleset-v1.0.0` |
+| Prod        | `prod-ruleset-` | `prod-ruleset-v1.0.0` |
 
 Using different tag prefixes allows a new ruleset version to move through development and testing
 before it becomes available in production.
@@ -137,6 +162,7 @@ For example:
 
 ```text
 /versions/v1.0.0/rulesets/basic-ruleset/validations
+/versions/v1.1.0/rulesets/sdx-r1-ruleset/validations
 ```
 
 When validating APIs through SDX tooling, use a published ruleset version rather than `main`. The
