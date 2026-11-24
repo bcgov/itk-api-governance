@@ -94,7 +94,7 @@ const lines = [
   '# To add a namespace, edit managed-namespaces.yaml and run',
   '# `npm run generate-scope-namespaces`.',
   'namespaces:',
-  ...[...entries.keys()].sort().map((ns) => `  - ${ns} # ${entries.get(ns).replace(/\s+/g, ' ')}`),
+  ...[...entries.keys()].sort().map((ns) => `  - "${ns}" # ${entries.get(ns).replace(/\s+/g, ' ')}`),
   '',
 ];
 
