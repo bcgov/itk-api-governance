@@ -8,6 +8,7 @@
     "dereference-rulesets": "node scripts/dereference-rulesets.js",
     "generate-styleguide": "node scripts/generate-styleguide.js",
     "bundle-functions": "node scripts/bundle-spectral-functions.js",
+    "generate-scope-namespaces": "node scripts/generate-scope-namespaces.js",
     "build": "npm run clean && npm run dereference-rulesets && npm run bundle-functions && npm run generate-styleguide",
     "test": "jest"
   },
@@ -31,7 +32,7 @@
     "type": "git",
     "url": "git+https://github.com/bcgov/itk-api-governance.git"
   },
-  "author": "API Programme Services, BC Gov",
+  "author": "API Program Services, BC Gov",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/bcgov/itk-api-governance/issues"

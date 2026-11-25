@@ -6,8 +6,10 @@ rulesets that can be used to provide guidance and enforce adherence.
 Markdown formatted versions of the style guide can be found for each ruleset in the spectral
 directory.
 
-See [basic-style-guide.md](/dist/spectral/basic-style-guide.md) and
-[strict-style-guide.md](/dist/spectral/strict-style-guide.md)
+See [basic-style-guide.md](/dist/spectral/basic-style-guide.md),
+[strict-style-guide.md](/dist/spectral/strict-style-guide.md),
+[sdx-style-guide.md](/dist/spectral/sdx-style-guide.md) and
+[sdx-r1-style-guide.md](/dist/spectral/sdx-r1-style-guide.md)
 
 ## TechDocs
 
@@ -17,9 +19,9 @@ directory under `techdocs/` with its own `catalog-info.yaml`, `mkdocs.yml`, and 
 
 Current TechDocs components:
 
-| Component | Description |
-| --------- | ----------- |
-| [api-style-guides](techdocs/api-style-guides) | Generated API Governance Spectral style guides |
+| Component                                       | Description                                            |
+| ----------------------------------------------- | ------------------------------------------------------ |
+| [api-style-guides](techdocs/api-style-guides)   | Generated API Governance Spectral style guides         |
 | [sdx-api-standards](techdocs/sdx-api-standards) | Secure Data Exchange (SDX) API standards documentation |
 
 ## Using the rulesets
@@ -63,6 +65,42 @@ npm run build
 
 The script should be rerun after any updates to the functions are made and the updated spectral
 directory must be committed to Git.
+
+### Managing SDX scope namespaces
+
+The SDX R1 ruleset only accepts OAuth2 scopes whose namespace is in
+[scope-namespaces.yaml](__main__/src/yaml/spectral/sdx-scope-namespaces/scope-namespaces.yaml).
+That file is generated. Do not edit it by hand. It combines:
+
+- the lowercase SDX member ID of every organization in api-serv-infra
+  `.sdx/org-onboarding/organizations.yaml`
+- the namespaces in
+  [managed-namespaces.yaml](__main__/src/yaml/spectral/sdx-scope-namespaces/managed-namespaces.yaml),
+  which are namespaces that are not member IDs, such as test service namespaces and the temporary
+  `tmp` namespace
+
+Registering a namespace gives no ownership of it. The list only stops teams from colliding by
+accident.
+
+To add a namespace that is not a member ID, add it with a description to
+`managed-namespaces.yaml`. To pick up new or changed organizations, update your
+local api-serv-infra checkout. Then regenerate the list and rebuild:
+
+```bash
+npm run generate-scope-namespaces
+npm run build
+```
+
+The generator reads `../api-serv-infra/.sdx/org-onboarding/organizations.yaml` by default. Pass
+another path as an argument (`npm run generate-scope-namespaces -- <path>`) or set
+`SDX_ORGANIZATIONS_FILE`. It fails if the organizations file has no `organizations` list or an
+empty one, if a member ID is not a valid namespace, or if a managed namespace is already a member
+ID. When it finishes it lists the namespaces it added and removed, and warns if any were removed.
+Check the removed namespaces before committing, since a stale api-serv-infra checkout shortens the
+list.
+
+Commit the updated `scope-namespaces.yaml` and `dist/spectral/` files. The change reaches API teams
+with the next ruleset release.
 
 ### Generating the Style Guides
 

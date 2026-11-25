@@ -20,12 +20,12 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2:
-            - loads:read
+            - for:permit:read
       parameters:
         - name: X-Edge-Token
           in: header
@@ -33,7 +33,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
           headers:
             X-Edge-Trace:
               description: Internal trace header.
@@ -47,11 +47,11 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
       `,
       expected: [
-        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Token" exposes SDX internal transport details in the external API contract.', '/paths/~1loads/get/parameters/0/name'],
-        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Trace" exposes SDX internal transport details in the external API contract.', '/paths/~1loads/get/responses/200/headers/X-Edge-Trace'],
+        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Token" exposes SDX internal transport details in the external API contract.', '/paths/~1permits/get/parameters/0/name'],
+        ['sdx-no-internal-headers', Severity.Error, 'Header "X-Edge-Trace" exposes SDX internal transport details in the external API contract.', '/paths/~1permits/get/responses/200/headers/X-Edge-Trace'],
       ],
     });
   });

@@ -1,0 +1,22 @@
+# Managed SDX scope namespaces.
+#
+# Namespaces that are not an organization's SDX member ID go here: test
+# namespaces and namespaces that existing services already use. Organization
+# member IDs are added automatically from the SDX organization list, so do not
+# repeat them here.
+#
+# After editing this file, run `npm run generate-scope-namespaces` to rebuild
+# scope-namespaces.yaml, then `npm run build`.
+#
+# A namespace starts with a lowercase letter and contains only lowercase
+# letters, digits, `-` and `_`. Registering a namespace does not give anyone
+# ownership of it; the list exists so teams do not collide by accident.
+namespaces:
+  - namespace: ajc
+    description: Used by the VEHICLES test service.
+  - namespace: nrs
+    description: Used by the WIDGETS test service.
+  - namespace: puki
+    description: Used by the TOYS test service.
+  - namespace: tmp
+    description: Temporary namespace for early development; move to the organization's namespace before going forward.

@@ -22,17 +22,17 @@ info:
 servers:
   - url: https://api.example.gov.bc.ca/sdx
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
-      summary: List loads
-      description: Returns loads available to the requesting client.
+      operationId: listPermits
+      summary: List permits
+      description: Returns permits available to the requesting client.
       security:
         - oauth2:
-            - loads:read
+            - for:permit:read
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
           content:
             application/json:
               schema:
@@ -41,7 +41,7 @@ paths:
                   id:
                     type: string
                 example:
-                  id: load-1
+                  id: permit-1
 components:
   securitySchemes:
     oauth2:
@@ -50,8 +50,8 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
-            protected-c: Access operations that exchange Protected-C data.
+            for:permit:read: Read permit records.
+            for:permit:approve: Approve permit applications.
 `;
 
 module.exports = {

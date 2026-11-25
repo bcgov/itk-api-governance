@@ -20,22 +20,22 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2: []
       callbacks:
-        onLoadChanged:
+        onPermitChanged:
           '{$request.body#/callbackUrl}':
             post:
-              operationId: onLoadChanged
+              operationId: onPermitChanged
               responses:
                 '202':
                   description: Callback accepted.
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oauth2:
@@ -46,7 +46,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-callbacks', Severity.Error, 'Operation defines OpenAPI callbacks unsupported by SDX.', '/paths/~1loads/get/callbacks'],
+        ['sdx-no-callbacks', Severity.Error, 'Operation defines OpenAPI callbacks unsupported by SDX.', '/paths/~1permits/get/callbacks'],
       ],
     });
   });

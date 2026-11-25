@@ -2,7 +2,9 @@ const HTTP_METHODS = new Set(['get', 'put', 'post', 'delete', 'options', 'head',
 
 export default (paths, _options, context) => {
   const results = [];
-  const root = context.document?.data ?? {};
+  // Use the resolved document so security schemes written as a `$ref` are seen
+  // with their `type`.
+  const root = context.documentInventory?.resolved ?? context.document?.data ?? {};
   const oauth2Schemes = getOauth2SecuritySchemes(root);
 
   if (!paths || typeof paths !== 'object') return results;

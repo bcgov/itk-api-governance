@@ -22,12 +22,12 @@ info:
 security:
   - oauth2: []
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oauth2:
@@ -36,6 +36,38 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes: {}
+      `,
+      notExpected: ['sdx-operation-security-scopes'],
+    });
+  });
+
+  test('allows an SDX OAuth2 security scheme that is a $ref', async () => {
+    await testInstance.validateOas({
+      oasYaml: `
+openapi: 3.0.3
+info:
+  title: SDX API
+  version: 1.0.0
+  description: API published through Secure Data Exchange.
+security:
+  - oauth2Alias: []
+paths:
+  /permits:
+    get:
+      operationId: listPermits
+      responses:
+        '200':
+          description: Permits returned successfully.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
+          scopes: {}
+    oauth2Alias:
+      $ref: '#/components/securitySchemes/oauth2'
       `,
       notExpected: ['sdx-operation-security-scopes'],
     });
@@ -52,14 +84,14 @@ info:
 security:
   - oauth2: []
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - providerApiKey: []
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oauth2:
@@ -74,7 +106,7 @@ components:
       name: X-Provider-Key
       `,
       expected: [
-        ['sdx-operation-security-scopes', Severity.Error, 'Security option for operation "GET /loads" is missing an SDX OAuth2 scheme.', '/paths/~1loads/get/security/0'],
+        ['sdx-operation-security-scopes', Severity.Error, 'Security option for operation "GET /permits" is missing an SDX OAuth2 scheme.', '/paths/~1permits/get/security/0'],
       ],
     });
   });
@@ -121,15 +153,15 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2:
-            - loads:write
+            - for:permit:approve
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oauth2:
@@ -138,10 +170,10 @@ components:
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
       `,
       expected: [
-        ['sdx-operation-security-scopes', Severity.Error, 'Operation "GET /loads" uses OAuth2 scope "loads:write" that is not declared by security scheme "oauth2".', '/paths/~1loads/get/security/0/oauth2/0'],
+        ['sdx-operation-security-scopes', Severity.Error, 'Operation "GET /permits" uses OAuth2 scope "for:permit:approve" that is not declared by security scheme "oauth2".', '/paths/~1permits/get/security/0/oauth2/0'],
       ],
     });
   });

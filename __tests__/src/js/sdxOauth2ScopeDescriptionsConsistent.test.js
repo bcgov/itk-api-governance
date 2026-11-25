@@ -20,15 +20,15 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2:
-            - loads:read
+            - for:permit:read
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   securitySchemes:
     oauth2:
@@ -38,14 +38,14 @@ components:
           authorizationUrl: https://sso.example.gov.bc.ca/oauth2/authorize
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records.
+            for:permit:read: Read permit records.
         clientCredentials:
           tokenUrl: https://sso.example.gov.bc.ca/oauth2/token
           scopes:
-            loads:read: Read load records with a different description.
+            for:permit:read: Read permit records with a different description.
       `,
       expected: [
-        ['sdx-oauth2-scope-descriptions-consistent', Severity.Error, 'OAuth2 scope "loads:read" in security scheme "oauth2" has inconsistent descriptions across flows.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/loads:read'],
+        ['sdx-oauth2-scope-descriptions-consistent', Severity.Error, 'OAuth2 scope "for:permit:read" in security scheme "oauth2" has inconsistent descriptions across flows.', '/components/securitySchemes/oauth2/flows/clientCredentials/scopes/for:permit:read'],
       ],
     });
   });

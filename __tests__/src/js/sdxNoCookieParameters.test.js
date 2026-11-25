@@ -20,9 +20,9 @@ info:
   version: 1.0.0
   description: API published through Secure Data Exchange.
 paths:
-  /loads:
+  /permits:
     get:
-      operationId: listLoads
+      operationId: listPermits
       security:
         - oauth2: []
       parameters:
@@ -32,7 +32,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Loads returned successfully.
+          description: Permits returned successfully.
 components:
   parameters:
     locale:
@@ -49,7 +49,7 @@ components:
           scopes: {}
       `,
       expected: [
-        ['sdx-no-cookie-parameters', Severity.Error, 'Parameter uses cookie location unsupported by SDX.', '/paths/~1loads/get/parameters/0/in'],
+        ['sdx-no-cookie-parameters', Severity.Error, 'Parameter uses cookie location unsupported by SDX.', '/paths/~1permits/get/parameters/0/in'],
         ['sdx-no-cookie-parameters', Severity.Error, 'Parameter uses cookie location unsupported by SDX.', '/components/parameters/locale/in'],
       ],
     });
